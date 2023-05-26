@@ -1,0 +1,13 @@
+<!--pages/index/index.wxml-->
+<view>front page</view>
+<button type="default" bindtap="getData">get data</button>
+<view wx:for="{{dataObj}}">{{item.name}}</view>
+-
+<button type="default" bindtap="addData">add data</button>
+-
+<form bindsubmit="btnSubmit">
+  <input name="name" placeholder="请输入姓名"></input>
+  <input name="birthday" placeholder="请输入生日"></input>
+  <input name="gender" placeholder="请输入性别"></input>
+  <button type="default" form-type="submit">提交</button>
+</form>
