@@ -14,9 +14,18 @@ Page({
   getData(){
     db.collection("testdb").get().then(res => {
       this.setData({
-        dataObj: res.data
+        dataObj: res.data,
+        show: true
       })
     });
+  },
+
+  hideData(){
+    setTimeout(function () {
+      this.setData({
+        show: false
+      })
+    }.bind(this))
   },
 
   addData() {
