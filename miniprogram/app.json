@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/me/me"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -14,22 +15,16 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/tab-bar/index/index",
-        "iconPath": "image/icon_component.png",
-        "selectedIconPath": "image/icon_component_HL.png",
-        "text": "会议"
+        "text": "会议",
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icons/home.png"
+        
       },
       {
-        "pagePath": "pages/tab-bar/cart/cart",
-        "iconPath": "image/icon_API.png",
-        "selectedIconPath": "image/icon_API_HL.png",
-        "text": "会议"
-      },
-      {
-        "pagePath": "pages/tab-bar/user/user",
-        "iconPath": "image/icon_component.png",
-        "selectedIconPath": "image/icon_component_HL.png",
-        "text": "我"
+        "text": "我",
+        "pagePath": "pages/me/me",
+        "iconPath": "images/icons/me.png"
+
       }
     ]
   }
