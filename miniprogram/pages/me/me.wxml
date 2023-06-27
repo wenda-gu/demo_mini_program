@@ -1,2 +1,4 @@
 <!--pages/me/me.wxml-->
-<view>hello world</view>
+<view class="account">
+  <image src="/images/icons/flower.jpeg" />
+</view>

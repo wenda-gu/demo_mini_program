@@ -1,4 +1,15 @@
 <!--pages/index/index.wxml-->
+<!-- <root-portal class="mask"></root-portal> -->
+<scroll-view class="ribbon" scroll-x>
+  <view class="poster">1</view>
+  <view class="poster">2</view>
+  <view class="poster">3</view>
+  <view class="poster">4</view>
+  <view class="poster">5</view>
+  <view class="poster">6</view>
+  <view class="poster">7</view>
+  <view class="poster">8</view>
+</scroll-view>
 <h1>报名</h1>
 <!-- 
 
@@ -15,4 +26,6 @@
 <button type="default" bindtap="getData">获取信息</button>
 -
 <button type="default" bindtap="hideData">隐藏信息</button>
-<view wx:if="{{show}}" wx:for="{{dataObj}}">{{item.name}}</view>
+<view wx:if="{{show}}" wx:for="{{dataObj}}">
+  {{item.name}}
+</view>
