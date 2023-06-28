@@ -1,4 +1,4 @@
-// pages/me/me.js
+// pages/invoice/invoice.js
 const db = wx.cloud.database();
 
 Page({
@@ -15,13 +15,28 @@ Page({
       phone: 18916718618
     }).get().then(res => {
       console.log(res)
-      let userStr = JSON.stringify(this.data)
-      wx.navigateTo({
-        url: '/pages/invoice/invoice?data='+userStr,
+      this.setData({
+        dataObj: res.data,
+        show: true
       })
-      
     });
-    
+  },
+
+  addData() {
+    wx.showLoading({
+      title: '提交中',
+      mask: true,
+    });
+    db.collection("testdb").add({
+      data: {
+        name: "王五",
+        gender: "男",
+        birthday: new Date()
+      }
+    }).then(res => {
+      console.log(res);
+      wx.hideLoading();
+    });
   },
 
   /**

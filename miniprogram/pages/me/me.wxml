@@ -1,4 +1,7 @@
 <!--pages/me/me.wxml-->
 <view class="account">
-  <image src="/images/icons/flower.jpeg" />
+  <image src="/static/images/icons/flower.jpeg" />
 </view>
+<button bindtap="getData">
+  go to invoice
+</button>

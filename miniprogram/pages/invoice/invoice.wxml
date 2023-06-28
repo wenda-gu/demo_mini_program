@@ -1,0 +1,12 @@
+<!--pages/invoice/invoice.wxml-->
+<button bindtap="getData">click me</button>
+<view class="invoice-item" wx:if="{{show}}" wx:for="{{dataObj}}">
+  <view class="invoice-1st-line">
+    <text class="invoice-company-name" nbsp>{{item.name}} </text>
+    <text class="invoice-default" nbsp wx:if="{{item.default}}">默认</text>
+  </view>
+  <view class="invoice-2nd-line">
+    <text class="invoice-company-number" nbsp>税号：{{item.number}}</text>
+  </view>
+</view>
+
