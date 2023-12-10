@@ -2,6 +2,11 @@
 <view class="account">
   <image src="/static/images/icons/flower.jpeg" />
 </view>
-<button bindtap="getData">
-  go to invoice
-</button>
+<view class="me-memu">
+  <MenuItem itemName="我的报名" route = "/pages/registration/registration"></MenuItem>
+  <button bindtap="getData">
+    go to invoice
+  </button>
+  <MenuItem itemName="开票信息" route = "/pages/invoice/invoice"></MenuItem>
+  <MenuItem itemName="联系我们" route = "/pages/contact/contact"></MenuItem>
+</view>

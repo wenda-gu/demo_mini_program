@@ -1,0 +1,2 @@
+<!--components/menu-item/menu-item.wxml-->
+<button bindtap="onTapNavTo">{{itemName}}</button>
