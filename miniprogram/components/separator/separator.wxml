@@ -1,2 +1,4 @@
 <!--components/separator/separator.wxml-->
-<view class="line"></view>
+<view class="container">
+  <view class="line" style="width: {{w}}\%;"></view>
+</view>

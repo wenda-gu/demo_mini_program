@@ -5,7 +5,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    w: {
+      type: Number,
+      value: 100
+    },
   },
 
   /**

@@ -1,7 +1,18 @@
 /* components/separator/separator.wxss */
+:root {
+  --thickness--: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  /* centering start */
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  /* centering end */
+}
+
 .line {
   position: relative;
-  width: 100%;
 }
 
 .line:after {
