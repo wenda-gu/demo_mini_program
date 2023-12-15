@@ -4,7 +4,9 @@
     "pages/me/me",
     "pages/invoice/invoice",
     "pages/registration/registration",
-    "pages/contact/contact"
+    "pages/contact/contact",
+    "pages/history/history",
+    "pages/personalInfo/personalInfo"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -34,6 +36,9 @@
     ]
   },
   "usingComponents": {
-    "MenuItem": "components/menu-item/menu-item"
+    "MenuItem": "components/menu-item/menu-item",
+    "UserInfoCard": "components/user-info-card/user-info-card",
+    "Spacer": "components/spacer/spacer",
+    "Separator": "components/separator/separator"
   }
 }

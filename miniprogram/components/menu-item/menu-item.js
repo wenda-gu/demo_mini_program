@@ -12,6 +12,10 @@ Component({
     route:{
       type: String,
       value: ''
+    },
+    img: {
+      type: String,
+      value: ''
     }
   },
 

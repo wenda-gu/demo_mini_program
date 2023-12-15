@@ -1,0 +1,78 @@
+/* components/user-info-card/user-info-card.wxss */
+
+.card-border {
+  width: 100%; 
+  height: 30vh;
+  overflow: hidden;
+  text-align: left;
+  /* centering start */
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  /* centering end */
+  /* margin: 10% 0 10% 0; */
+  /* background-color: brown; */
+}
+
+.card {
+  height: 100%;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: blue; */
+}
+
+.image-container {
+  box-sizing: border-box; /* Include padding and borders in the element's width and height */
+  padding-right: 3vh;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: aqua; */
+}
+
+.image-cropper {
+  margin-left: auto; /* to align to the right */
+  width:90%;
+  padding-top: 90%; /* same as width for a square */
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  /* margin: 20px; /* 注意适配 */
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); Optional: adds a subtle shadow */
+}
+
+.profile-pic {
+  /* align to image-cropper start */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /* align to image-cropper end */
+  display: inline;
+  margin: 0 auto;
+  height: 100%; /* Make the image fill the container */
+  width: auto;
+}
+.text-container {
+  width: 50%;
+  flex: 1; /* Allows text container to grow to fill space */
+}
+
+.name {
+  font-weight: bold;
+  font-size: x-large;
+}
+.title {
+  font-weight: 300;
+  font-size: small;
+}
+
+
+
+

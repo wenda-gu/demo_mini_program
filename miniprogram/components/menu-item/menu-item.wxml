@@ -1,2 +1,13 @@
 <!--components/menu-item/menu-item.wxml-->
-<button bindtap="onTapNavTo">{{itemName}}</button>
+<view class="border" bindtap="onTapNavTo">
+  <view class="content">
+    <view class="image-cropper">
+      <image class="icon" src="{{img}}"></image>
+    </view>
+    <text class="title">{{itemName}}</text>
+    <view class="image-cropper-right">
+      <image class="arrow" src="/static/images/icons/arrow.png"></image>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,2 @@
+<!--components/spacer/spacer.wxml-->
+<view class="spacer" style="height: {{h}}vh"></view>

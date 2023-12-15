@@ -1,3 +1,8 @@
 <!--pages/contact/contact.wxml-->
-<text>联系电话：13817510016
-Email：services@blueseachina.net</text>
+<view class="box">
+  <view class="content">
+    <view class="phone">联系电话：13817510016</view>
+    <view class="email">E-mail：services@blueseachina.net</view>
+  </view>
+</view>
+

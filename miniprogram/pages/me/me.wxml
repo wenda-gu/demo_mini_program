@@ -1,12 +1,22 @@
 <!--pages/me/me.wxml-->
-<view class="account">
-  <image src="/static/images/icons/flower.jpeg" />
-</view>
+<UserInfoCard userName="戴满花" userTitle="新疆维吾尔自治区克拉玛依市第二人民医院妇科主治医师"></UserInfoCard>
 <view class="me-memu">
-  <MenuItem itemName="我的报名" route = "/pages/registration/registration"></MenuItem>
-  <button bindtap="getData">
+  <Separator></Separator>
+  <MenuItem itemName="我的报名" route="/pages/registration/registration" img="/static/images/icons/fillin.png"></MenuItem>
+  <Separator></Separator>
+  <MenuItem itemName="参会历史" route="/pages/history/history" img="/static/images/icons/content.png"></MenuItem>
+  <Separator></Separator>
+  <!-- <button bindtap="getData">
     go to invoice
-  </button>
-  <MenuItem itemName="开票信息" route = "/pages/invoice/invoice"></MenuItem>
-  <MenuItem itemName="联系我们" route = "/pages/contact/contact"></MenuItem>
+  </button> -->
+  <Spacer></Spacer>
+  <Separator></Separator>
+  <MenuItem itemName="我的信息" route="/pages/personalInfo/personalInfo" img="/static/images/icons/edit.png"></MenuItem>
+  <Separator></Separator>
+  <MenuItem itemName="开票信息" route="/pages/invoice/invoice" img="/static/images/icons/text.png"></MenuItem>
+  <Separator></Separator>
+  <Spacer></Spacer>
+  <Separator></Separator>
+  <MenuItem itemName="联系我们" route="/pages/contact/contact" img="/static/images/icons/chat.png"></MenuItem>
+  <Separator></Separator>
 </view>
