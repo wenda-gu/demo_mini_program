@@ -39,6 +39,7 @@
     "MenuItem": "components/menu-item/menu-item",
     "UserInfoCard": "components/user-info-card/user-info-card",
     "Spacer": "components/spacer/spacer",
-    "Separator": "components/separator/separator"
+    "Separator": "components/separator/separator",
+    "Footer": "components/footer/footer"
   }
 }

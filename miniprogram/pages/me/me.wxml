@@ -6,9 +6,6 @@
   <Separator></Separator>
   <MenuItem itemName="参会历史" route="/pages/history/history" img="/static/images/icons/content.png"></MenuItem>
   <Separator></Separator>
-  <!-- <button bindtap="getData">
-    go to invoice
-  </button> -->
   <Spacer></Spacer>
   <Separator></Separator>
   <MenuItem itemName="我的信息" route="/pages/personalInfo/personalInfo" img="/static/images/icons/edit.png"></MenuItem>
@@ -20,3 +17,8 @@
   <MenuItem itemName="联系我们" route="/pages/contact/contact" img="/static/images/icons/chat.png"></MenuItem>
   <Separator></Separator>
 </view>
+
+
+  <!-- <button bindtap="getData">
+    go to invoice
+  </button> -->

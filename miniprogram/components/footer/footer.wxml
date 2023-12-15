@@ -1,0 +1,4 @@
+<!--components/footer/footer.wxml-->
+<Spacer h="{{d}}"></Spacer>
+<view class="footer-text">{{content}}</view>
+<Spacer></Spacer>

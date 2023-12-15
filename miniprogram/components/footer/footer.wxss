@@ -1,0 +1,9 @@
+/* components/footer/footer.wxss */
+
+.footer-text {
+  text-align: center;
+  font-size: x-small;
+  font-weight: 300;
+  color: lightgray;
+  /* background-color: darkblue; */
+}
