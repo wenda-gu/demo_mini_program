@@ -1,9 +1,9 @@
-// components/menu-item/menu-item.js
+// components/conference-item/conference-item.js
 Component({
+
   /**
    * 组件的属性列表
    */
-  
   properties: {
     itemName: {
       type: String,
@@ -13,9 +13,13 @@ Component({
       type: String,
       value: ''
     },
-    img: {
-      type: String,
+    itemDate: {
+      type: Date,
       value: ''
+    },
+    itemIsComplete: {
+      type: Boolean,
+      value: false
     }
   },
 
@@ -30,11 +34,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onTapNavTo: function() {
-      const r = this.properties.route;
-      if (r) {
-        wx.navigateTo( {url: r,} );
-      }
-    },
+
   }
 })

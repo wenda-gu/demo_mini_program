@@ -4,8 +4,8 @@
   <Separator></Separator>
   <MenuItem itemName="我的报名" route="/pages/registration/registration" img="/static/images/icons/fillin.png"></MenuItem>
   <Separator></Separator>
-  <MenuItem itemName="参会历史" route="/pages/history/history" img="/static/images/icons/content.png"></MenuItem>
-  <Separator></Separator>
+  <!-- <MenuItem itemName="参会历史" route="/pages/history/history" img="/static/images/icons/content.png"></MenuItem>
+  <Separator></Separator> -->
   <Spacer></Spacer>
   <Separator></Separator>
   <MenuItem itemName="我的信息" route="/pages/personalInfo/personalInfo" img="/static/images/icons/edit.png"></MenuItem>
@@ -22,3 +22,7 @@
   <!-- <button bindtap="getData">
     go to invoice
   </button> -->
+
+<!-- 
+  参会历史隐藏，之后上线
+-->

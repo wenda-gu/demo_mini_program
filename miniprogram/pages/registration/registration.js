@@ -5,14 +5,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    dataObj: "",
+    show: true /* remember to set to false in getData methods */
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    wx.setNavigationBarTitle({ title: '我的报名' })
   },
 
   /**

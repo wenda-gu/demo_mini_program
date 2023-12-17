@@ -1,4 +1,4 @@
-/* components/menu-item/menu-item.wxss */
+/* components/conference-item/conference-item.wxss */
 .border {
   box-sizing: border-box; /* Include padding and borders in the element's width and height */
   height: 6vh;
@@ -13,26 +13,29 @@
 }
 
 .content {
-  width: 90%;
+  width: 92%;
   height: 80%;
-  padding-left: 3vh; /* controls left, right side controlled by image-cropper-right's margin-right */
   font-weight: 400;
   font-size: 1.7vh;
+  text-align: left;
   /* centering start */
-  display: flex;
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
   /* centering end */
+  /* grid start */
+  display: grid;
+  grid-template-columns: 1fr 6fr 4fr 3fr 1fr;
+  gap: 1vh;
+  /* grid end */
   /* background-color: cyan; */
 }
 
 .image-cropper {
-  width:5%;
-  padding-top: 5%; /* same as width for a square */
+  width:100%;
+  padding-top: 100%; /* same as width for a square */
   position: relative;
   display: inline-flex;
   overflow: hidden;
-  margin-right: 1vh;
   /* background-color: darkblue; */
 }
 
@@ -48,18 +51,23 @@
   width: 100%;
 }
 
-.title {
+/* .title {
   width: 50%;
+  text-align: left;
+} */
+
+.isComplete {
+  margin-left: auto;
+  /* background-color: lightgreen; */
 }
 
 .image-cropper-right {
-  width:2%;
-  padding-top: 4%; /* keep the ratio to width */
+  width:50%;
+  padding-top: 100%; /* keep the ratio to width */
   position: relative;
   display: inline-flex;
   overflow: hidden;
   margin-left: auto;
-  margin-right: 2vh;
   /* background-color: darkblue; */
 }
 

@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dataObj: ""
+    dataObj: "",
+    show: false
   },
 
   getData(){
@@ -43,7 +44,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    wx.setNavigationBarTitle({ title: '开票信息' })
   },
 
   /**

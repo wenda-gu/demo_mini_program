@@ -40,6 +40,7 @@
     "UserInfoCard": "components/user-info-card/user-info-card",
     "Spacer": "components/spacer/spacer",
     "Separator": "components/separator/separator",
-    "Footer": "components/footer/footer"
+    "Footer": "components/footer/footer",
+    "ConferenceItem": "components/conference-item/conference-item"
   }
 }

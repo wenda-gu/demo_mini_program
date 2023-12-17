@@ -1,2 +1,25 @@
 <!--pages/registration/registration.wxml-->
-<text>This is registration</text>
+<!-- <Separator wx:if="{{show}}"></Separator>
+<view class="conference-item" wx:if="{{show}}" wx:for="{{dataObj}}">
+  <ConferenceItem itemName="{{item.name}}" itemDate="{{item.date}}" itemIsComplete="{{item.isComplete}}"></ConferenceItem>
+  <Separator></Separator>
+</view>
+<Footer wx:if="{{show}}" content="到底啦"></Footer>
+<Footer wx:else content="您尚未报名任何会议"></Footer> -->
+
+
+<Separator></Separator>
+<ConferenceItem itemName="会议1" itemDate="2024-02-08" itemIsComplete="{{true}}"></ConferenceItem>
+<Separator></Separator>
+<ConferenceItem itemName="会议2" itemDate="2024-03-08" itemIsComplete="{{false}}"></ConferenceItem>
+<Separator></Separator> 
+<Footer content="到底啦"></Footer>
+
+
+
+
+
+<!-- sort item by isComplete and then itemDate ascendingly -->
+<!-- needs database connection and methods -->
+<!-- in the future, may need filter or tabs -->
+

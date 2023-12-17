@@ -1,14 +1,14 @@
 <!--components/user-info-card/user-info-card.wxml-->
 
 
-<!-- 默认头像为微信头像，可以更改 -->
+
 <view class="card-border">
   <view class="card">
-    <view class="image-container">
+    <!-- <view class="image-container">
       <view class="image-cropper">
         <image src="/static/images/icons/flower.jpeg" alt="Profile Image" class="profile-pic" ></image>
       </view>
-    </view>
+    </view> -->
     <view class="text-container">
       <view class="name">{{userName}}</view>
       <view class="title">{{userTitle}}</view>
@@ -16,4 +16,7 @@
   </view>
 </view>
 
-
+<!-- 
+  头像隐藏，之后上线
+  默认头像为微信头像，可以更改 
+-->

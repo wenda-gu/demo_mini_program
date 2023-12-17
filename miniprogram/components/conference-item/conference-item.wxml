@@ -1,0 +1,14 @@
+<!--components/conference-item/conference-item.wxml-->
+<view class="border" bindtap="onTapNavTo">
+  <view class="content">
+    <view class="image-cropper">
+      <image class="icon" src="/static/images/icons/content.png"></image>
+    </view>
+    <text class="title">{{itemName}}</text>
+    <text class="date">{{itemDate}}</text>
+    <text class="isComplete">{{itemIsComplete == true ? "已报名" : "正在报名"}}</text>
+    <view class="image-cropper-right">
+      <image class="arrow" src="/static/images/icons/arrow.png"></image>
+    </view>
+  </view>
+</view>
