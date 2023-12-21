@@ -66,11 +66,11 @@
 
 .name {
   font-weight: bold;
-  font-size: x-large;
+  font-size: xx-large;
 }
 .title {
   font-weight: 300;
-  font-size: small;
+  font-size: medium;
 }
 
 

@@ -4,5 +4,4 @@
   display: grid;
   grid-template-columns: 2fr 5fr;
   align-items: center; /* Center vertically */
-  font-size: 2vh;
 }

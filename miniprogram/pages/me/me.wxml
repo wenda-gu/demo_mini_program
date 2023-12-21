@@ -1,6 +1,6 @@
 <!--pages/me/me.wxml-->
 <UserInfoCard userName="戴满花" userTitle="新疆维吾尔自治区克拉玛依市第二人民医院妇科主治医师"></UserInfoCard>
-<view class="me-memu">
+<view class="me-menu">
   <Separator></Separator>
   <MenuItem itemName="我的报名" route="/pages/registration/registration" img="/static/images/icons/fillin.png"></MenuItem>
   <Separator></Separator>

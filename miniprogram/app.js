@@ -1,6 +1,7 @@
 // app.js
 App({
   onLaunch: function () {
+    // Cloud Env
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力');
     } else {
@@ -10,10 +11,22 @@ App({
         //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
         //   如不填则使用默认环境（第一个创建的环境）
         // env: 'my-env-id',
-        env: 'test-9gpoe53259bad485',
+        env: 'bsc-db-6g55uugs8cdb24fc',
         traceUser: true,
       });
     }
+
+    wx.login({
+      success: (res) => {
+        var code = res.code;
+        if (code) {
+          console.log('user token: ' + code);
+        }
+        else {
+          console.log('fetch user token failed');
+        }
+      },
+    })
 
     this.globalData = {};
   }

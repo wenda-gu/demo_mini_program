@@ -1,4 +1,6 @@
 // pages/invoice-add/invoice-add.js
+const db = wx.cloud.database();
+
 Page({
 
   /**
@@ -16,22 +18,24 @@ Page({
     this.selectComponent("#bankAccount").toggleRequired();
   },
 
-  addData() {
+  addInvoiceTitle() {
     wx.showLoading({
       title: '提交中',
       mask: true,
     });
-    db.collection("invoice").add({
+    db.collection("invoice-title").add({
       data: {
-        id: "",
-        name: "",
-        taxId: "",
-        address: "",
-        phoneCompany: "",
-        bankName: "",
-        bankAccount: "",
-        phonePersonal: "",
-        email: ""
+        personKey: "18916718618",
+        isVAT: true,
+        name: "布鲁锡",
+        taxId: "123",
+        isDefault: true,
+        address: "上海",
+        phoneCompany: "123456",
+        bankName: "浦发",
+        bankAccount: "123456789",
+        phoneReceive: "18916718618",
+        emailReceive: "18916718618@163.com"
       }
     }).then(res => {
       console.log(res);
@@ -40,12 +44,13 @@ Page({
   },
 
   btnSubmit(res) {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-    });
-    // var content = res.detail.value;
-    // db.collection("testdb").add({
+    // wx.showLoading({
+    //   title: '提交中',
+    //   mask: true,
+    // });
+    console.log(res.detail.value)
+    var content = res.detail.value;
+    // db.collection("invoice-title").add({
     //   data: content
     // }).then(res => {
     //   console.log(res);

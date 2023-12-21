@@ -2,6 +2,10 @@
 <form bindsubmit="btnSubmit">
   <view class="input-container">
     <view class="info">
+
+      <!-- <TextAsterisk label="公司名称" isRequired="{{true}}"></TextAsterisk>
+      <input name="name" placeholder="请输入公司名称" required></input> -->
+
       <InvoiceInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="isVAT"></InvoiceInputSwitch>
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称"></InvoiceInputItem>
@@ -24,9 +28,9 @@
     </view>
     
     <view class="info">
-      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phonePersonal" placeholder="请输入个人手机号"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号"></InvoiceInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailPersonal" placeholder="请输入个人邮箱"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱"></InvoiceInputItem>
     </view>
   </view>
   
@@ -34,4 +38,10 @@
   <button class="save" type="default" form-type="submit">保存</button>
 </form>
 
+
+<!-- <Spacer h="5"></Spacer>
+<button bind:tap="addInvoiceTitle"></button> -->
+
+
 <!-- make sure isRequired toggle is working properly -->
+<!-- make sure input is sent by the form -->
