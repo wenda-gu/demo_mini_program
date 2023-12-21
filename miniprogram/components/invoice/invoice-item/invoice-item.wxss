@@ -8,8 +8,9 @@
 }
 .invoice-item {
   height: 70%;
+  width: 90%;
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 4fr 1fr;
   align-items: center; /* Center vertically */
   /* background-color: thistle; */
 }
@@ -20,28 +21,42 @@
 }
 .invoice-1st-line {
   height: 50%;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 8fr 1fr;
   /* background-color: tomato; */
 }
 .invoice-company-name {
   font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .invoice-default-container {
   height: 100%;
   display: inline-block;
   align-items: center; /* Center vertically */
-  background-color: tan;
+  margin-left: 0.2vh;
+  margin-right: 1vh;
+  /* background-color: tan; */
 }
 .invoice-default-border {
-  height: 80%;
+  height: 60%;
   border: thin #00adef solid;
   border-radius: 1vh;
   text-align: center;
-  background-color: teal;
+  /* background-color: teal; */
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .invoice-default {
-  font-size: small;
+  overflow: hidden;
+  font-size: xx-small;
   color: #00adef;
-  padding: 1vh;
+  padding: 0.5vh;
 }
 
 .invoice-2nd-line {
@@ -51,17 +66,23 @@
 }
 
 .right {
-
+  height: 100%;
+  width: 100%;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  /* background-color: red; */
 }
 
 .image-cropper {
-  width:5%;
-  padding-top: 5%; /* same as width for a square */
+  width:30%;
+  padding-top: 30%; /* same as width for a square */
   position: relative;
   display: inline-flex;
   overflow: hidden;
   margin-right: 1vh;
-  background-color: darkblue;
+  /* background-color: darkblue; */
 }
 
 .icon {

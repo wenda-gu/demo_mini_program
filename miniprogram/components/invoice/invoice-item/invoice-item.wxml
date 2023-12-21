@@ -9,21 +9,20 @@
             <text class="invoice-default">默认</text>
           </view>
         </view>
-        
-        
       </view>
       <view class="invoice-2nd-line">
         <text class="invoice-company-number" nbsp>税号：{{taxId}}</text>
       </view>
     </view>
     <view class="right">
-    <text>this is right</text>
-      <!-- <view class="image-cropper">
-        <image class="fillin" src="/static/images/icons/fillin.png"></image>
+      <!-- <view class="image-cropper" bind:tap="editInvoice">
+        <image class="icon" src="/static/images/icons/fillin.png"></image>
       </view>
-      <view class="image-cropper">
-        <image class="trash" src="/static/images/icons/fillin.png"></image>
+      <view class="image-cropper" bind:tap="deleteInvoice">
+        <image class="icon" src="/static/images/icons/fillin.png"></image>
       </view> -->
+      <IconItem img="/static/images/icons/fillin.png" w="70" h="70" scaler="1"></IconItem>
+      <IconItem img="/static/images/icons/fillin.png" w="70" h="70" scaler="1"></IconItem>
     </view>
   </view>
 </view>

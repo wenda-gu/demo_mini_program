@@ -95,13 +95,14 @@ Page({
       console.log(res);
       wx.hideLoading();
     });
+    wx.navigateTo( {url: '/pages/invoice/invoice',} );
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    wx.setNavigationBarTitle({ title: '添加抬头' })
   },
 
   /**
