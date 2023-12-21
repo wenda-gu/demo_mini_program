@@ -1,30 +1,19 @@
-// pages/invoice/invoice.js
-const db = wx.cloud.database();
-
+// pages/invoice-add/invoice-add.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    dataObj: "",
-    show: false
+
   },
 
-  navToInvoiceAdd() {
-    wx.navigateTo( {url: '/pages/invoice-add/invoice-add',} );
-  },
-
-  getData(){
-    db.collection("invoice").where({
-      phone: 18916718618
-    }).get().then(res => {
-      console.log(res)
-      this.setData({
-        dataObj: res.data,
-        show: true
-      })
-    });
+  
+  isVAT() {
+    this.selectComponent("#address").toggleRequired();
+    this.selectComponent("#phoneCompany").toggleRequired();
+    this.selectComponent("#bankName").toggleRequired();
+    this.selectComponent("#bankAccount").toggleRequired();
   },
 
   addData() {
@@ -32,11 +21,17 @@ Page({
       title: '提交中',
       mask: true,
     });
-    db.collection("testdb").add({
+    db.collection("invoice").add({
       data: {
-        name: "王五",
-        gender: "男",
-        birthday: new Date()
+        id: "",
+        name: "",
+        taxId: "",
+        address: "",
+        phoneCompany: "",
+        bankName: "",
+        bankAccount: "",
+        phonePersonal: "",
+        email: ""
       }
     }).then(res => {
       console.log(res);
@@ -44,11 +39,25 @@ Page({
     });
   },
 
+  btnSubmit(res) {
+    wx.showLoading({
+      title: '提交中',
+      mask: true,
+    });
+    // var content = res.detail.value;
+    // db.collection("testdb").add({
+    //   data: content
+    // }).then(res => {
+    //   console.log(res);
+    //   wx.hideLoading();
+    // });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '开票信息' })
+
   },
 
   /**

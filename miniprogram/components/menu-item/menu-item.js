@@ -30,7 +30,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onTapNavTo: function() {
+    navTo: function() {
       const r = this.properties.route;
       if (r) {
         wx.navigateTo( {url: r,} );

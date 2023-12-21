@@ -1,8 +1,4 @@
 /* components/separator/separator.wxss */
-:root {
-  --thickness--: 1px solid rgba(0, 0, 0, 0.2);
-}
-
 .container {
   /* centering start */
   display: flex;

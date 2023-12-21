@@ -1,0 +1,37 @@
+<!--pages/invoice-add/invoice-add.wxml-->
+<form bindsubmit="btnSubmit">
+  <view class="input-container">
+    <view class="info">
+      <InvoiceInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="isVAT"></InvoiceInputSwitch>
+      <Separator></Separator>
+      <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称"></InvoiceInputItem>
+      <Separator></Separator>
+      <InvoiceInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号"></InvoiceInputItem>
+      <Separator></Separator>
+      <InvoiceInputSwitch label="默认抬头"></InvoiceInputSwitch>
+      <Separator></Separator>
+      <InvoiceInputItem id="address" label="公司地址" name="address" placeholder="请输入公司地址"></InvoiceInputItem>
+      <Separator></Separator>
+      <InvoiceInputItem id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码"></InvoiceInputItem>
+      <Separator></Separator>
+      <InvoiceInputItem id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行"></InvoiceInputItem>
+      <Separator></Separator>
+      <InvoiceInputItem id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号"></InvoiceInputItem>
+    </view>
+
+    <view class="spacer-mid">
+      <Spacer text="填写联系方式，向你同步电子发票信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
+    </view>
+    
+    <view class="info">
+      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phonePersonal" placeholder="请输入个人手机号"></InvoiceInputItem>
+      <Separator></Separator>
+      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailPersonal" placeholder="请输入个人邮箱"></InvoiceInputItem>
+    </view>
+  </view>
+  
+  <Spacer bgcolor="transparent"></Spacer>
+  <button class="save" type="default" form-type="submit">保存</button>
+</form>
+
+<!-- make sure isRequired toggle is working properly -->

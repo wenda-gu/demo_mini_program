@@ -1,0 +1,21 @@
+/* pages/invoice-add/invoice-add.wxss */
+page {
+  background-color: #eeeeee;
+}
+
+.info {
+  background-color: white;
+  padding-left: 2vh;
+  padding-right: 2vh;
+}
+
+.spacer-mid {
+  padding-left: 2vh;
+  padding-right: 2vh;
+}
+
+button.save {
+  color: white;
+  width: 90%;
+  background-color: #00adef;
+}

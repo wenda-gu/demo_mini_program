@@ -1,0 +1,6 @@
+<!--components/invoice/invoice-input-switch/invoice-input-switch.wxml-->
+<view class="invoice-input-format">
+  <TextAsterisk label="{{label}}" isNecessary="{{isNecessary}}"></TextAsterisk>
+  
+  <switch class="switch" bindchange="{{switchMethod}}"/>
+</view>

@@ -1,2 +1,4 @@
 <!--components/spacer/spacer.wxml-->
-<view class="spacer" style="height: {{h}}vh"></view>
+<view class="spacer" style="height: {{h}}vh; background-color: {{bgcolor}}; color: {{color}}; font-size: {{fontSize}};" >{{text}}</view>
+
+<!-- <view class="spacer" style="height: {{h}}vh;" ></view> -->

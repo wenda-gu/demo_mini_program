@@ -6,7 +6,8 @@
     "pages/registration/registration",
     "pages/contact/contact",
     "pages/history/history",
-    "pages/personalInfo/personalInfo"
+    "pages/personalInfo/personalInfo",
+    "pages/invoice-add/invoice-add"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -41,6 +42,9 @@
     "Spacer": "components/spacer/spacer",
     "Separator": "components/separator/separator",
     "Footer": "components/footer/footer",
-    "ConferenceItem": "components/conference-item/conference-item"
+    "ConferenceItem": "components/conference-item/conference-item",
+    "InvoiceInputSwitch": "components/invoice/invoice-input-switch/invoice-input-switch",
+    "InvoiceInputItem": "components/invoice/invoice-input-item/invoice-input-item",
+    "TextAsterisk": "components/text-asterisk/text-asterisk"
   }
 }

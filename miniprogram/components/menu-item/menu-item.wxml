@@ -1,5 +1,5 @@
 <!--components/menu-item/menu-item.wxml-->
-<view class="border" bindtap="onTapNavTo">
+<view class="border" bindtap="navTo">
   <view class="content">
     <view class="image-cropper">
       <image class="icon" src="{{img}}"></image>

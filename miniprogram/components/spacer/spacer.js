@@ -8,6 +8,21 @@ Component({
     h: {
       type: Number,
       value: '1.5'
+    },
+    bgcolor: {
+      type: String,
+      value: 'white'
+    },
+    color: {
+      type: String,
+      value: 'grey'
+    },
+    text: {
+      type: String
+    },
+    fontSize: {
+      type: String,
+      value: 'small'
     }
   },
 

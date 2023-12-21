@@ -1,0 +1,2 @@
+/* components/invoice/invoice-input-item/invoice-input-item.wxss */
+@import "/components/invoice/invoice.wxss";

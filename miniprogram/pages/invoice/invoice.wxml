@@ -9,4 +9,5 @@
     <text class="invoice-company-number" nbsp>税号：{{item.number}}</text>
   </view>
 </view>
+<button bindtap="navToInvoiceAdd">添加抬头</button>
 

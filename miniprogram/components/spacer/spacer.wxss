@@ -1,1 +1,6 @@
 /* components/spacer/spacer.wxss */
+.spacer {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}

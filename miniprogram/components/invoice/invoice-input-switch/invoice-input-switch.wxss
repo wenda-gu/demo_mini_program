@@ -1,0 +1,42 @@
+/* components/invoice/invoice-input-switch/invoice-input-switch.wxss */
+@import "/components/invoice/invoice.wxss";
+.invoice-input-format {
+  display: flex;
+}
+
+.switch {
+  margin-left: auto;
+}
+
+/* .wx-switch-input {
+  width: 80rpx!important; 
+  height: 40rpx!important;
+}
+.wx-switch-input {
+  width: 79rpx!important; 
+  height: 37rpx!important;
+}
+.wx-switch-input {
+  width: 37rpx!important; 
+  height: 37rpx!important;
+} */
+
+/* 开关checked为true时，开关的框框的样式 */
+.wx-switch-input{
+  width: 86rpx!important;
+  height: 36rpx!important;
+  background: rgb(112, 174, 248)!important;
+}
+
+/* 开关checked为false时，开关的框框的样式 */
+.wx-switch-input::before{
+  width: 84rpx!important;
+  height: 36rpx!important;
+  background: lightgray!important;
+}
+
+/* 白圈的样式 */
+.wx-switch-input::after{
+  width: 50rpx!important;
+  height: 38rpx!important;
+}

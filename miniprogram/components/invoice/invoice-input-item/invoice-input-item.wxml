@@ -1,0 +1,6 @@
+<!--components/invoice/invoice-input-item/invoice-input-item.wxml-->
+<view class="invoice-input-format">
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}"></TextAsterisk>
+  
+  <input id="aaa" name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}"></input>
+</view>
