@@ -23,7 +23,7 @@
     </view>
     
     <view class="info">
-      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number" maxlength="11"></InvoiceInputItem>
       <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive"></InvoiceInputItem>
     </view>
   </view>

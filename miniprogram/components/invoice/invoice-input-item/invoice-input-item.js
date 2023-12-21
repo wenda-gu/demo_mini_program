@@ -11,6 +11,7 @@ Component({
     name: String,
     value: String,
     type: "text",
+    maxlength: 140,
   },
 
   /**
