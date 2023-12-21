@@ -1,0 +1,30 @@
+<!--components/invoice/invoice-item/invoice-item.wxml-->
+<view class="invoice-item-border">
+  <view class="invoice-item">
+    <view class="left">
+      <view class="invoice-1st-line">
+        <text class="invoice-company-name" >{{name}} </text>
+        <view class="invoice-default-container" wx:if="{{isDefault}}">
+          <view class="invoice-default-border">
+            <text class="invoice-default">默认</text>
+          </view>
+        </view>
+        
+        
+      </view>
+      <view class="invoice-2nd-line">
+        <text class="invoice-company-number" nbsp>税号：{{taxId}}</text>
+      </view>
+    </view>
+    <view class="right">
+    <text>this is right</text>
+      <!-- <view class="image-cropper">
+        <image class="fillin" src="/static/images/icons/fillin.png"></image>
+      </view>
+      <view class="image-cropper">
+        <image class="trash" src="/static/images/icons/fillin.png"></image>
+      </view> -->
+    </view>
+  </view>
+</view>
+<Separator></Separator>

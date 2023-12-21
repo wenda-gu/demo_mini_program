@@ -31,7 +31,9 @@
   <Spacer bgcolor="transparent"></Spacer>
   <button class="save" type="default" form-type="submit">保存</button>
 </form>
+<Spacer bgcolor="transparent" h="10"></Spacer>
 
 
 <!-- make sure `isRequired` toggle is working properly -->
-<!-- if a title is made default, other invoice titles' `isDefault` should be made `false` -->
+<!-- if a title is made default, other invoice titles' `isDefault` should be made `false`. How to efficiently get the current default from the page `invoice` -->
+<!-- `personalKey` is missing now due to no login functionality -->

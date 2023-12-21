@@ -1,20 +1,8 @@
 <!--pages/invoice/invoice.wxml-->
-<form bindsubmit="btnSubmit">
-  <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称" value="{{name}}" bindinput="handleName"></InvoiceInputItem>
-  <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phone}}" bindinput="handlePhone"></InvoiceInputItem>
-  <button class="save" type="default" form-type="submit">保存</button>
-</form>
-
-
-<button bindtap="getData">click me</button>
-<view class="invoice-item" wx:if="{{show}}" wx:for="{{dataObj}}">
-  <view class="invoice-1st-line">
-    <text class="invoice-company-name" nbsp>{{item.name}} </text>
-    <text class="invoice-default" nbsp wx:if="{{item.default}}">默认</text>
-  </view>
-  <view class="invoice-2nd-line">
-    <text class="invoice-company-number" nbsp>税号：{{item.number}}</text>
-  </view>
+<view wx:if="{{show}}" wx:for="{{dataObj}}" wx:key="taxId">
+  <InvoiceItem name="{{item.name}}" taxId="{{item.taxId}}" isDefault="{{item.isDefault}}"></InvoiceItem>
 </view>
-<button bindtap="navToInvoiceAdd">添加抬头</button>
+<Spacer bgcolor="transparent"></Spacer>
 
+<button class="add" bindtap="navToInvoiceAdd">添加抬头</button>
+<Spacer bgcolor="transparent" h="10"></Spacer>

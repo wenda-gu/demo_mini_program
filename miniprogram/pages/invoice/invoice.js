@@ -9,53 +9,19 @@ Page({
   data: {
     dataObj: "",
     show: false,
-    name: '',
-    phone: "",
   },
 
-  btnSubmit(res) {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-    });
-    // var content = res.detail.value;
-    // db.collection("testdb").add({
-    // wx.showLoading({
-    //   title: '提交中',
-    //   mask: true,
-    // });
-    const formData = {
-      name: this.data.name,
-      phone: this.data.phone
-    }
-    console.log('Form Data: ',formData);
-    var content = res.detail.value;
-    // db.collection("invoice-title").add({
-    //   data: content
-    // }).then(res => {
-    //   console.log(res);
-  },
-
-  handleName(e) {
-    this.setData({
-      name: e.detail
-    })
-  },
-  handlePhone(e) {
-    this.setData({
-      phone: e.detail
-    })
-  },
+  
 
   navToInvoiceAdd() {
     wx.navigateTo( {url: '/pages/invoice-add/invoice-add',} );
   },
 
   getData(){
-    db.collection("invoice").where({
-      phone: 18916718618
+    db.collection("invoice-title").where({
+      personalKey: 18916718618
     }).get().then(res => {
-      console.log(res)
+      console.log(res.data)
       this.setData({
         dataObj: res.data,
         show: true
@@ -85,6 +51,7 @@ Page({
    */
   onLoad(options) {
     wx.setNavigationBarTitle({ title: '开票信息' })
+    this.getData()
   },
 
   /**

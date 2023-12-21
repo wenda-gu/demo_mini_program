@@ -1,0 +1,77 @@
+/* components/invoice/invoice-item/invoice-item.wxss */
+.invoice-item-border {
+  height: 10vh;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center;
+  /* background-color: turquoise; */
+}
+.invoice-item {
+  height: 70%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center; /* Center vertically */
+  /* background-color: thistle; */
+}
+
+.left {
+  height: 100%;
+  /* background-color: wheat; */
+}
+.invoice-1st-line {
+  height: 50%;
+  /* background-color: tomato; */
+}
+.invoice-company-name {
+  font-weight: bold;
+}
+.invoice-default-container {
+  height: 100%;
+  display: inline-block;
+  align-items: center; /* Center vertically */
+  background-color: tan;
+}
+.invoice-default-border {
+  height: 80%;
+  border: thin #00adef solid;
+  border-radius: 1vh;
+  text-align: center;
+  background-color: teal;
+}
+.invoice-default {
+  font-size: small;
+  color: #00adef;
+  padding: 1vh;
+}
+
+.invoice-2nd-line {
+  height: 50%;
+  font-size: small;
+  /* background-color: tomato; */
+}
+
+.right {
+
+}
+
+.image-cropper {
+  width:5%;
+  padding-top: 5%; /* same as width for a square */
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
+  margin-right: 1vh;
+  background-color: darkblue;
+}
+
+.icon {
+  /* align to image-cropper start */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /* align to image-cropper end */
+  height: 100%;
+  width: 100%;
+}

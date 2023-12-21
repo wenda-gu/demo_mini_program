@@ -1,1 +1,10 @@
 /* pages/invoice/invoice.wxss */
+
+
+
+
+button.add {
+  color: white;
+  width: 90%;
+  background-color: #00adef;
+}

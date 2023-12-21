@@ -45,6 +45,7 @@
     "ConferenceItem": "components/conference-item/conference-item",
     "InvoiceInputSwitch": "components/invoice/invoice-input-switch/invoice-input-switch",
     "InvoiceInputItem": "components/invoice/invoice-input-item/invoice-input-item",
-    "TextAsterisk": "components/text-asterisk/text-asterisk"
+    "TextAsterisk": "components/text-asterisk/text-asterisk",
+    "InvoiceItem": "components/invoice/invoice-item/invoice-item"
   }
 }
