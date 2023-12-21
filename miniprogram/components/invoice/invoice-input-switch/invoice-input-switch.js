@@ -31,5 +31,8 @@ Component({
     isVAT() {
       this.triggerEvent('VAT')
     },
+    isDefault() {
+      this.triggerEvent('Default')
+    },
   }
 })

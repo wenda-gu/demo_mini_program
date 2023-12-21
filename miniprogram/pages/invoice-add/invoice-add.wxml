@@ -2,61 +2,29 @@
 <form bindsubmit="btnSubmit">
   <view class="input-container">
     <view class="info">
-      <view class="invoice-input-format switch">
-        <TextAsterisk label="增值税专用发票"></TextAsterisk>
-        <switch class="switch" name="isVAT" bindchange="toggleVAT"/>
-      </view>
+      <InvoiceInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT"></InvoiceInputSwitch>
       <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="公司名称" isRequired="{{true}}"></TextAsterisk>
-        <input name="name" placeholder="请输入公司名称" required></input>
-      </view>
+      <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称" value="{{name}}" bindinput="handleName"></InvoiceInputItem>
       <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="税号" isRequired="{{true}}"></TextAsterisk>
-        <input name="taxId" placeholder="请输入纳税人识别号" required></input>
-      </view>
+      <InvoiceInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId"></InvoiceInputItem>
       <Separator></Separator>
-      <view class="invoice-input-format switch">
-        <TextAsterisk label="默认抬头"></TextAsterisk>
-        <switch class="switch" name="isDefault" bindchange="toggleDefault"/>
-      </view>
+      <InvoiceInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault"></InvoiceInputSwitch>
       <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="公司地址" isRequired="{{isVAT}}"></TextAsterisk>
-        <input name="address" placeholder="请输入公司地址" required="{{isVAT}}"></input>
-      </view>
+      <InvoiceInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></InvoiceInputItem>
       <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="公司电话" isRequired="{{isVAT}}"></TextAsterisk>
-        <input name="phoneCompany" placeholder="请输入公司电话号码" required="{{isVAT}}"></input>
-      </view>
+      <InvoiceInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany"></InvoiceInputItem>
       <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="开户银行" isRequired="{{isVAT}}"></TextAsterisk>
-        <input name="bankName" placeholder="请输入公司开户银行" required="{{isVAT}}"></input>
-      </view>
+      <InvoiceInputItem isRequired="{{isVAT}}" id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行" value="{{bankName}}" bindinput="handleBankName"></InvoiceInputItem>
       <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="银行账号" isRequired="{{isVAT}}"></TextAsterisk>
-        <input name="bankAccount" placeholder="请输入公司银行账号" required="{{isVAT}}"></input>
-      </view>
+      <InvoiceInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount"></InvoiceInputItem>
     </view>
-
     <view class="spacer-mid">
       <Spacer text="填写个人联系方式，以接受电子发票信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
     </view>
     
     <view class="info">
-      <view class="invoice-input-format">
-        <TextAsterisk label="个人手机号" isRequired="{{true}}"></TextAsterisk>
-        <input name="phoneReceive" placeholder="请输入个人手机号" required></input>
-      </view>
-      <Separator></Separator>
-      <view class="invoice-input-format">
-        <TextAsterisk label="个人邮箱" isRequired="{{true}}"></TextAsterisk>
-        <input name="emailReceive" placeholder="请输入个人邮箱" required></input>
-      </view>
+      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{phoneReceive}}" bindinput="handleEmailReceive"></InvoiceInputItem>
     </view>
   </view>
   

@@ -8,9 +8,59 @@ Page({
    */
   data: {
     isVAT: false,
+    name: String,
+    taxId: String,
     isDefault: false,
+    address: String,
+    phoneCompany: Number,
+    bankName: String,
+    bankAccount: Number,
+    phoneReceive: Number,
+    emailReceive: String,
   },
 
+  handleName(e) {
+    this.setData({
+      name: e.detail
+    })
+  },
+  handleTaxId(e) {
+    this.setData({
+      taxId: e.detail
+    })
+  },
+  handleAddress(e) {
+    this.setData({
+      address: e.detail
+    })
+  },
+  handlePhoneCompany(e) {
+    this.setData({
+      phoneCompany: e.detail
+    })
+  },
+  handleBankName(e) {
+    this.setData({
+      bankName: e.detail
+    })
+  },
+  handleBankAccount(e) {
+    this.setData({
+      bankAccount: e.detail
+    })
+  },
+  handlePhoneReceive(e) {
+    this.setData({
+      phoneReceive: e.detail
+    })
+  },
+  handleEmailReceive(e) {
+    this.setData({
+      emailReceive: e.detail
+    })
+  },
+
+  
   
   toggleVAT() {
     var b = this.data.isVAT;
@@ -52,18 +102,23 @@ Page({
   },
 
   btnSubmit(res) {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-    });
-    
-    var content = res.detail.value;
-    db.collection("invoice-title").add({
-      data: content
-    }).then(res => {
-      console.log(res);
-      wx.hideLoading();
-    });
+    // wx.showLoading({
+    //   title: '提交中',
+    //   mask: true,
+    // });
+
+    // const formData = {
+    //   name: this.data.name,
+    //   phone: this.data.phone
+    // }
+    console.log(this.data)
+    // var content = res.detail.value;
+    // db.collection("invoice-title").add({
+    //   data: content
+    // }).then(res => {
+    //   console.log(res);
+    //   wx.hideLoading();
+    // });
   },
 
   /**

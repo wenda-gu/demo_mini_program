@@ -1,4 +1,11 @@
 <!--pages/invoice/invoice.wxml-->
+<form bindsubmit="btnSubmit">
+  <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称" value="{{name}}" bindinput="handleName"></InvoiceInputItem>
+  <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phone}}" bindinput="handlePhone"></InvoiceInputItem>
+  <button class="save" type="default" form-type="submit">保存</button>
+</form>
+
+
 <button bindtap="getData">click me</button>
 <view class="invoice-item" wx:if="{{show}}" wx:for="{{dataObj}}">
   <view class="invoice-1st-line">
