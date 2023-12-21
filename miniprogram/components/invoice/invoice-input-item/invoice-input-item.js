@@ -5,22 +5,12 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    label: {
-      type: String,
-    },
-    isRequired: {
-      type: Boolean,
-      value: false
-    },
-    placeholder: {
-      type: String,
-    },
-    name: {
-      type: String,
-    },
-    value: {
-      type: String,
-    },
+    label: String,
+    isRequired: false,
+    placeholder: String,
+    name: String,
+    value: String,
+    type: "text",
   },
 
   /**

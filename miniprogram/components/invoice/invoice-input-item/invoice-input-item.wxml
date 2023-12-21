@@ -2,5 +2,5 @@
 <view class="invoice-input-format">
   <TextAsterisk label="{{label}}" isRequired="{{isRequired}}"></TextAsterisk>
   
-  <input name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput"></input>
+  <input name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput" type="{{type}}"></input>
 </view>

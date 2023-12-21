@@ -12,18 +12,18 @@
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></InvoiceInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number"></InvoiceInputItem>
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{isVAT}}" id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行" value="{{bankName}}" bindinput="handleBankName"></InvoiceInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount" type="number"></InvoiceInputItem>
     </view>
     <view class="spacer-mid">
       <Spacer text="填写个人联系方式，以接受电子发票信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
     </view>
     
     <view class="info">
-      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number"></InvoiceInputItem>
       <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive"></InvoiceInputItem>
     </view>
   </view>
