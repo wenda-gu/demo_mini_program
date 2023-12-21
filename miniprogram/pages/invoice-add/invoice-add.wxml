@@ -24,7 +24,7 @@
     
     <view class="info">
       <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive"></InvoiceInputItem>
-      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{phoneReceive}}" bindinput="handleEmailReceive"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive"></InvoiceInputItem>
     </view>
   </view>
   
@@ -33,9 +33,5 @@
 </form>
 
 
-<!-- <Spacer h="5"></Spacer>
-<button bind:tap="addInvoiceTitle"></button> -->
-
-
-<!-- make sure isRequired toggle is working properly -->
-<!-- make sure input is sent by the form -->
+<!-- make sure `isRequired` toggle is working properly -->
+<!-- if a title is made default, other invoice titles' `isDefault` should be made `false` -->
