@@ -37,5 +37,5 @@ Component({
         isRequired: !v,
       });
     },
-  }
+  },
 })

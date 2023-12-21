@@ -7,15 +7,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    isVAT: false,
+    isDefault: false,
   },
 
   
-  isVAT() {
-    this.selectComponent("#address").toggleRequired();
-    this.selectComponent("#phoneCompany").toggleRequired();
-    this.selectComponent("#bankName").toggleRequired();
-    this.selectComponent("#bankAccount").toggleRequired();
+  toggleVAT() {
+    var b = this.data.isVAT;
+    this.setData({
+      isVAT: !b
+    });
+  },
+
+  toggleDefault() {
+    var b = this.data.isDefault;
+    this.setData({
+      isDefault: !b
+    });
   },
 
   addInvoiceTitle() {
@@ -44,18 +52,18 @@ Page({
   },
 
   btnSubmit(res) {
-    // wx.showLoading({
-    //   title: '提交中',
-    //   mask: true,
-    // });
-    console.log(res.detail.value)
+    wx.showLoading({
+      title: '提交中',
+      mask: true,
+    });
+    
     var content = res.detail.value;
-    // db.collection("invoice-title").add({
-    //   data: content
-    // }).then(res => {
-    //   console.log(res);
-    //   wx.hideLoading();
-    // });
+    db.collection("invoice-title").add({
+      data: content
+    }).then(res => {
+      console.log(res);
+      wx.hideLoading();
+    });
   },
 
   /**

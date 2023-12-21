@@ -8,7 +8,7 @@ Component({
     label: {
       type: String,
     },
-    isNecessary: {
+    isRequired: {
       type: Boolean,
       value: false
     },

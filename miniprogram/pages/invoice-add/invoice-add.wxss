@@ -7,7 +7,21 @@ page {
   background-color: white;
   padding-left: 2vh;
   padding-right: 2vh;
+  
 }
+
+.invoice-input-format {
+  height: 5.5vh;
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  align-items: center; /* Center vertically */
+}
+
+.switch {
+  display: flex;
+  margin-left: auto;
+}
+
 
 .spacer-mid {
   padding-left: 2vh;
