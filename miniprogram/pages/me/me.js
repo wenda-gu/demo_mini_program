@@ -10,20 +10,6 @@ Page({
     dataObj: ""
   },
 
-  getData(){
-    db.collection("invoice").where({
-      phone: 18916718618
-    }).get().then(res => {
-      console.log(res)
-      let userStr = JSON.stringify(this.data)
-      wx.navigateTo({
-        url: '/pages/invoice/invoice?data='+userStr,
-      })
-      
-    });
-    
-  },
-
   /**
    * 生命周期函数--监听页面加载
    */

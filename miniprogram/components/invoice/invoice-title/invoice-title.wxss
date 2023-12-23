@@ -1,16 +1,17 @@
-/* components/invoice/invoice-item/invoice-item.wxss */
-.invoice-item-border {
+/* components/invoice/invoice-title/invoice-title.wxss */
+.invoice-title-border {
   height: 10vh;
   display: flex;
   align-items: center; /* Center vertically */
   justify-content: center;
   /* background-color: turquoise; */
 }
-.invoice-item {
+.invoice-title {
   height: 70%;
   width: 90%;
   display: grid;
   grid-template-columns: 4fr 1fr;
+  gap: 1vh;
   align-items: center; /* Center vertically */
   /* background-color: thistle; */
 }
@@ -25,6 +26,7 @@
   overflow: hidden;
   display: grid;
   grid-template-columns: 8fr 1fr;
+  gap: 0.5vh;
   /* background-color: tomato; */
 }
 .invoice-company-name {
@@ -37,8 +39,8 @@
   height: 100%;
   display: inline-block;
   align-items: center; /* Center vertically */
-  margin-left: 0.2vh;
-  margin-right: 1vh;
+  /* margin-left: 0.2vh;
+  margin-right: 1vh; */
   /* background-color: tan; */
 }
 .invoice-default-border {
@@ -68,31 +70,9 @@
 .right {
   height: 100%;
   width: 100%;
-  /* display: flex; */
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   /* background-color: red; */
 }
 
-.image-cropper {
-  width:30%;
-  padding-top: 30%; /* same as width for a square */
-  position: relative;
-  display: inline-flex;
-  overflow: hidden;
-  margin-right: 1vh;
-  /* background-color: darkblue; */
-}
-
-.icon {
-  /* align to image-cropper start */
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  /* align to image-cropper end */
-  height: 100%;
-  width: 100%;
-}

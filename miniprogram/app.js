@@ -1,5 +1,10 @@
 // app.js
 App({
+  verboseLog: function(text, param) {
+    if (param==undefined) param=''
+    if (true) console.log(text, param);
+  },
+
   onLaunch: function () {
     // Cloud Env
     if (!wx.cloud) {
@@ -20,10 +25,10 @@ App({
       success: (res) => {
         var code = res.code;
         if (code) {
-          console.log('user token: ' + code);
+          this.verboseLog('user token: ' + code);
         }
         else {
-          console.log('fetch user token failed');
+          this.verboseLog('fetch user token failed');
         }
       },
     })

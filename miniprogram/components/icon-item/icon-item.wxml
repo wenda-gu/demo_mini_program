@@ -1,4 +1,4 @@
 <!--components/icon-item/icon-item.wxml-->
-<view class="image-cropper" bind:tap="{{tapMethod}}" style="width: {{h}}\%; padding-top: {{w}}\%; margin-right: {{scaler}}vh;">
+<view class="image-cropper" bind:tap="{{tapMethod}}" style="width: {{w}}\%; padding-top: {{h}}\%; margin-right: {{scaler}}vh;">
   <image class="icon" src="{{img}}"></image>
 </view>

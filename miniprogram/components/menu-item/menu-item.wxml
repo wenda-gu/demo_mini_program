@@ -1,13 +1,9 @@
 <!--components/menu-item/menu-item.wxml-->
 <view class="border" bindtap="navTo">
   <view class="content">
-    <view class="image-cropper">
-      <image class="icon" src="{{img}}"></image>
-    </view>
+    <IconItem img="{{img}}" w="70" h="70" scaler="1"></IconItem>
     <text class="title">{{itemName}}</text>
-    <view class="image-cropper-right">
-      <image class="arrow" src="/static/images/icons/arrow.png"></image>
-    </view>
+    <IconItem img="/static/images/icons/arrow.png" w="35" h="70" scaler="1"></IconItem>
   </view>
 </view>
 

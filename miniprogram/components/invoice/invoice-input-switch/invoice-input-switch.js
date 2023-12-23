@@ -5,16 +5,16 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    label: {
-      type: String,
-    },
+    label: String,
     isRequired: {
       type: Boolean,
       value: false
     },
-    switchMethod: {
-      type: String,
-    }
+    switchMethod: String,
+    checked: {
+      type: Boolean,
+      value: false
+    },
   },
 
   /**

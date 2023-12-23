@@ -13,3 +13,9 @@
 ## 参考文档
 
 - [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
+
+# Warning
+- delete `personalKey: 18916718618` in `btnSubmit()` in `invoice-add.js`
+- Dark mode
+- icon change on tap
+- default icon location

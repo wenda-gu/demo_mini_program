@@ -5,22 +5,13 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    itemName: {
-      type: String,
-      value: 'Default Title'
-    },
-    route: {
-      type: String,
-      value: ''
-    },
-    itemDate: {
-      type: Date,
-      value: ''
-    },
+    itemName: String,
+    route: String,
+    itemDate: Date,
     itemIsComplete: {
       type: Boolean,
       value: false
-    }
+    },
   },
 
   /**

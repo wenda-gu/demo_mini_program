@@ -6,12 +6,21 @@ Component({
    */
   properties: {
     label: String,
-    isRequired: false,
+    isRequired: {
+      type: Boolean,
+      value: false
+    },
     placeholder: String,
     name: String,
     value: String,
-    type: "text",
-    maxlength: 140,
+    type: {
+      type: String,
+      value: 'text'
+    },
+    maxlength: {
+      type: Number,
+      value: 140
+    },
   },
 
   /**

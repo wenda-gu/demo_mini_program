@@ -24,37 +24,18 @@
   /* centering end */
   /* grid start */
   display: grid;
-  grid-template-columns: 1fr 6fr 4fr 3fr 1fr;
+  grid-template-columns: 1fr 7fr 4fr 3fr 1fr;
   gap: 1vh;
   /* grid end */
   /* background-color: cyan; */
 }
 
-.image-cropper {
-  width:100%;
-  padding-top: 100%; /* same as width for a square */
-  position: relative;
-  display: inline-flex;
+.title {
   overflow: hidden;
-  /* background-color: darkblue; */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* background-color: teal; */
 }
-
-.icon {
-  /* align to image-cropper start */
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  /* align to image-cropper end */
-  height: 100%;
-  width: 100%;
-}
-
-/* .title {
-  width: 50%;
-  text-align: left;
-} */
 
 .isComplete {
   margin-left: auto;

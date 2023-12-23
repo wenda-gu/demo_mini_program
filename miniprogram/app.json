@@ -46,7 +46,7 @@
     "InvoiceInputSwitch": "components/invoice/invoice-input-switch/invoice-input-switch",
     "InvoiceInputItem": "components/invoice/invoice-input-item/invoice-input-item",
     "TextAsterisk": "components/text-asterisk/text-asterisk",
-    "InvoiceItem": "components/invoice/invoice-item/invoice-item",
+    "InvoiceTitle": "components/invoice/invoice-title/invoice-title",
     "IconItem": "components/icon-item/icon-item"
   }
 }

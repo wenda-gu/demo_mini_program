@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: '',
+    personalKey: Number,
     isVAT: false,
     name: String,
     taxId: String,
@@ -40,6 +42,7 @@ Page({
     })
   },
   handleBankName(e) {
+    getApp().verboseLog(e.detail)
     this.setData({
       bankName: e.detail
     })
@@ -82,27 +85,71 @@ Page({
       mask: true,
     });
 
-    // const formData = {
-    //   name: this.data.name,
-    //   phone: this.data.phone
-    // }
+    const formData = {
+      isVAT: this.data.isVAT,
+      name: this.data.name,
+      taxId: this.data.taxId,
+      isDefault: this.data.isDefault,
+      address: this.data.address,
+      phoneCompany: this.data.phoneCompany,
+      bankName: this.data.bankName,
+      bankAccount: this.data.bankAccount,
+      phoneReceive: this.data.phoneReceive,
+      emailReceive: this.data.emailReceive,
+      // make sure to delete after testing
+      personalKey: 18916718618,
+    }
     
-    const formData = this.data;
-    console.log(formData)
-    db.collection("invoice-title").add({
-      data: formData
-    }).then(res => {
-      console.log(res);
-      wx.hideLoading();
+    getApp().verboseLog(formData)
+    // if edit, update; else, add
+    const id = this.data.id;
+    getApp().verboseLog("this is id: " + id)
+    if (id != '') {
+      getApp().verboseLog("id is not null, edit");
+      db.collection("invoice-title").doc(id).update({
+        data: formData
+      }).then(res => {
+        getApp().verboseLog(res);
+        wx.hideLoading();
+      });
+    }
+    else {
+      getApp().verboseLog("id is null, add");
+      db.collection("invoice-title").add({
+        data: formData
+      }).then(res => {
+        getApp().verboseLog(res);
+        wx.hideLoading();
+      });
+    }
+    wx.navigateBack({
+      delta: 1,
     });
-    wx.navigateTo( {url: '/pages/invoice/invoice',} );
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '添加抬头' })
+    wx.setNavigationBarTitle({ title: '添加抬头' });
+    if (options.item == null) return;
+    let item = JSON.parse(options.item);
+    getApp().verboseLog("This is item passed successfully: " + item);
+    // personalKey?
+    this.setData({
+      id: item._id,
+      personalKey: item.personalKey,
+      isVAT: item.isVAT,
+      name: item.name,
+      taxId: item.taxId,
+      isDefault: item.isDefault,
+      address: item.address,
+      phoneCompany: item.phoneCompany,
+      bankName: item.bankName,
+      bankAccount: item.bankAccount,
+      phoneReceive: item.phoneReceive,
+      emailReceive: item.emailReceive,
+    }); 
   },
 
   /**

@@ -2,13 +2,18 @@
 <form bindsubmit="btnSubmit">
   <view class="input-container">
     <view class="info">
-      <InvoiceInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT"></InvoiceInputSwitch>
-      <Separator></Separator>
       <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称" value="{{name}}" bindinput="handleName"></InvoiceInputItem>
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId"></InvoiceInputItem>
       <Separator></Separator>
-      <InvoiceInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault"></InvoiceInputSwitch>
+      <InvoiceInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault" checked="{{isDefault}}"></InvoiceInputSwitch>
+      <!-- <Separator></Separator>
+      <InvoiceInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT" checked="{{isVAT}}"></InvoiceInputSwitch> -->
+    </view>
+    <view class="spacer-mid">
+      <Spacer text="如需开具增值税专用发票，请填写以下信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
+    </view>
+    <view class="info">
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></InvoiceInputItem>
       <Separator></Separator>
@@ -18,6 +23,7 @@
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount" type="number"></InvoiceInputItem>
     </view>
+
     <view class="spacer-mid">
       <Spacer text="填写个人联系方式，以接受电子发票信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
     </view>
@@ -34,6 +40,6 @@
 <Spacer bgcolor="transparent" h="10"></Spacer>
 
 
-<!-- make sure `isRequired` toggle is working properly -->
+<!-- make sure `isRequired` toggle is working properly, and needs check before submission -->
 <!-- if a title is made default, other invoice titles' `isDefault` should be made `false`. How to efficiently get the current default from the page `invoice` -->
 <!-- `personalKey` is missing now due to no login functionality -->

@@ -2,5 +2,5 @@
 <view class="invoice-input-format">
   <TextAsterisk label="{{label}}" isRequired="{{isRequired}}"></TextAsterisk>
   
-  <switch class="switch" bindchange="{{switchMethod}}"/>
+  <switch class="switch" bindchange="{{switchMethod}}" checked="{{checked}}"/>
 </view>

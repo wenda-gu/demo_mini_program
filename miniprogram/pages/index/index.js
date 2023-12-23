@@ -40,7 +40,7 @@ Page({
         birthday: new Date()
       }
     }).then(res => {
-      console.log(res);
+      getApp().verboseLog(res);
       wx.hideLoading();
     });
   },
@@ -54,7 +54,7 @@ Page({
     db.collection("testdb").add({
       data: content
     }).then(res => {
-      console.log(res);
+      getApp().verboseLog(res);
       wx.hideLoading();
     });
   },
