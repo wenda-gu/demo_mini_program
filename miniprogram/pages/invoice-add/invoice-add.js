@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    id: '',
+    id: String,
     personalKey: Number,
     isVAT: false,
     name: String,
@@ -171,19 +171,20 @@ Page({
 
   isValid() {
     return new Promise((resolve, reject) => {
-      if (this.data.name == undefined) {
+      App.verboseLog("invoice-add.isValid() phoneReceive:", this.data.phoneReceive);
+      if (this.data.name == String || this.data.name == '') {
         console.error("invoice-add.isValid() no company name.");
         reject("No company name.");
       }
-      else if (this.data.taxId == undefined) {
+      else if (this.data.taxId == String || this.data.taxId == '') {
         console.error("invoice-add.isValid() no taxId.");
         reject("No taxId.");
       }
-      else if (this.data.phoneReceive == undefined) {
+      else if (this.data.phoneReceive == Number || this.data.phoneReceive == '') {
         console.error("invoice-add.isValid() no phoneReceive.");
         reject("No phoneReceive.");
       }
-      else if (this.data.emailReceive == undefined) {
+      else if (this.data.emailReceive == String || this.data.emailReceive == '') {
         console.error("invoice-add.isValid() no emailReceive.");
         reject("No emailReceive.");
       }
@@ -196,11 +197,11 @@ Page({
           console.error("invoice-add.isValid() wrong format taxId.");
           reject("Wrong format taxId.");
         }
-        else if (!num.test(this.data.phoneCompany)) {
+        else if (!num.test(this.data.phoneCompany) && !(this.data.phoneCompany == Number)) {
           console.error("invoice-add.isValid() wrong format phoneCompany.");
           reject("Wrong format phoneCompany.");
         }
-        else if (!num.test(this.data.bankAccount)) {
+        else if (!num.test(this.data.bankAccount) && !(this.data.bankAccount == Number)) {
           console.error("invoice-add.isValid() wrong format bankAccount.");
           reject("Wrong format bankAccount.");
         }
@@ -236,7 +237,7 @@ Page({
           const id = this.data.id;
           App.verboseLog("invoice-add.btnSubmit() item id: " + id);
           // if edit, update; else, add
-          if (id != '') {
+          if (id != String) {
             App.verboseLog("invoice-add.btnSubmit() id is not null, as edit");
             App.verboseLog("invoice-add.btnSubmit() submitting:", formData);
             this.editInvoiceTitleById(id, formData).then((res) => {
