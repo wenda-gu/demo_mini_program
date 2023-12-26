@@ -1,5 +1,5 @@
-<!--components/invoice/invoice-input-switch/invoice-input-switch.wxml-->
-<view class="invoice-input-format">
+<!--components/form-input-switch/form-input-switch.wxml-->
+<view class="form-input-format">
   <TextAsterisk label="{{label}}" isRequired="{{isRequired}}"></TextAsterisk>
   
   <switch class="switch" bindchange="{{switchMethod}}" checked="{{checked}}"/>

@@ -1,0 +1,6 @@
+<!--components/form-input-item/form-input-item.wxml-->
+<view class="form-input-format">
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}"></TextAsterisk>
+  
+  <input name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput" type="{{type}}" maxlength="{{maxlength}}" disabled="{{isDisabled}}"></input>
+</view>

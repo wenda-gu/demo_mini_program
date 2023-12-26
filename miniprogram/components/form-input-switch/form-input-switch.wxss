@@ -1,6 +1,6 @@
-/* components/invoice/invoice-input-switch/invoice-input-switch.wxss */
+/* components/form-input-switch/form-input-switch.wxss */
 @import "/static/styles/style.wxss";
-.invoice-input-format {
+.form-input-format {
   display: flex;
 }
 

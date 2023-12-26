@@ -1,4 +1,4 @@
-// components/invoice/invoice-input-item/invoice-input-item.js
+// components/form-input-item/form-input-item.js
 Component({
 
   /**
@@ -8,19 +8,23 @@ Component({
     label: String,
     isRequired: {
       type: Boolean,
-      value: false
+      value: false,
     },
     placeholder: String,
     name: String,
     value: String,
     type: {
       type: String,
-      value: 'text'
+      value: 'text',
     },
     maxlength: {
       type: Number,
-      value: 140
+      value: 140,
     },
+    isDisabled: {
+      type: Boolean,
+      value: false,
+    }
   },
 
   /**

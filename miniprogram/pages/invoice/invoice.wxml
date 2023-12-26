@@ -4,5 +4,5 @@
 </view>
 <Spacer bgcolor="transparent"></Spacer>
 
-<button class="add" bindtap="navigateToInvoiceAdd" hover-class="btn-hover">添加抬头</button>
+<button class="blue-btn" bindtap="navigateToInvoiceAdd" hover-class="btn-hover">添加抬头</button>
 <Spacer bgcolor="transparent" h="10"></Spacer>

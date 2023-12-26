@@ -6,6 +6,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/personalInfo/personalInfo",
+          "pathName": "pages/personalInfo/personalInfo",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/invoice-add/invoice-add",
           "pathName": "pages/invoice-add/invoice-add",
           "query": "",

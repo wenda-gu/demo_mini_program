@@ -1,5 +1,8 @@
 // pages/invoice/invoice.js
-const db = wx.cloud.database(), App = getApp();
+
+import logging from "../../static/utils/logging.js";
+import dbAction from "../../static/utils/dbAction.js";
+const db = wx.cloud.database();
 
 Page({
 
@@ -17,7 +20,7 @@ Page({
     wx.navigateTo({
       url: destination,
     }).then(res => {
-      App.verboseLog("invoice.handleEditInvoiceTitle() nav to invoice-add as edit success:", destination);
+      logging.verboseLog("invoice.handleEditInvoiceTitle() nav to invoice-add as edit success:", destination);
     });
   },
 
@@ -29,14 +32,14 @@ Page({
         switch(res.tapIndex) {
           case 0:
             this.deleteInvoiceTitle(e).then((res) => {
-              App.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
+              logging.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
             }).catch((err) => {
-              App.verboseLog("invoice.handleDeleteInvoiceTitle() failed:", err);
+              logging.verboseLog("invoice.handleDeleteInvoiceTitle() failed:", err);
             });
         }
       },
       fail (res) {
-        App.verboseLog("invoice.handleDeleteInvoiceTitle() delete cancelled.");
+        logging.verboseLog("invoice.handleDeleteInvoiceTitle() delete cancelled.");
       }
     });
   },
@@ -45,16 +48,16 @@ Page({
     return new Promise((resolve, reject) => {
       const idToDelete = e.detail
       db.collection("invoice-title").doc(idToDelete).remove().then((res) => {
-        App.verboseLog("invoice.handleDeleteInvoiceTitle() removed:", idToDelete);
+        logging.verboseLog("invoice.handleDeleteInvoiceTitle() removed:", idToDelete);
         this.getData().then((res) => {
-          App.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
+          logging.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
           resolve("invoice.handleDeleteInvoiceTitle() success.");
         }).catch((err) => {
-          App.verboseError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
+          logging.verboseError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
           reject(err);
         });
       }).catch((err) => {
-        App.verboseError("invoice.deleteInvoiceTitle() failed:", err);
+        logging.verboseError("invoice.deleteInvoiceTitle() failed:", err);
         wx.showToast({
           title: '删除失败请重试',
           icon: 'error',
@@ -71,17 +74,17 @@ Page({
 
   getData(){
     return new Promise((resolve, reject) => {
-      App.verboseLog("invoice.getData()");
-      App.getAllInvoiceTitles().then((items) => {
-        App.verboseLog("invoice.getData() got invoice title(s):", items);
+      logging.verboseLog("invoice.getData()");
+      dbAction.getAllInvoiceTitles().then((items) => {
+        logging.verboseLog("invoice.getData() got invoice title(s):", items);
         this.setData({
           dataObj: items,
           show: true,
         });
-        App.verboseLog("invoice.getData() success.");
+        logging.verboseLog("invoice.getData() success.");
         resolve("invoice.getData() success.");
       }).catch((err) => {
-        App.verboseError("invoice.getData() failed:", err);
+        logging.verboseError("invoice.getData() failed:", err);
         reject(err);
       });
     });
@@ -100,17 +103,17 @@ Page({
         loadingTitle = "刷新中";
         toastTitle = "刷新失败请重试";
       }
-      App.verboseLog(funcName);
+      logging.verboseLog(funcName);
       wx.showLoading({
         title: loadingTitle,
         mask: true,
       });
       this.getData().then((res) => {
         wx.hideLoading();
-        App.verboseLog(`${funcName} getData() success.`);
+        logging.verboseLog(`${funcName} getData() success.`);
         resolve(`${funcName} getData() success.`);
       }).catch((err) => {
-        App.verboseError(`${funcName} getData() failed:`, err);
+        logging.verboseError(`${funcName} getData() failed:`, err);
         wx.hideLoading();
         wx.showToast({
           title: toastTitle,
@@ -127,7 +130,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    App.verboseLog("invoice.onLoad()");
+    logging.verboseLog("invoice.onLoad()");
     wx.setNavigationBarTitle({ title: '开票信息' });
   },
 
@@ -165,13 +168,13 @@ Page({
   onPullDownRefresh() {
     return new Promise((resolve, reject) => {
       wx.startPullDownRefresh();
-      App.verboseLog("invoice.onPullDownRefresh() refreshing...");
+      logging.verboseLog("invoice.onPullDownRefresh() refreshing...");
       this.getDataWrapper("refresh").then((res) => {
         wx.stopPullDownRefresh();
-        App.verboseLog("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
+        logging.verboseLog("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
         resolve("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
       }).catch((err) => {
-        App.verboseError("invoice.onPullDownRefresh() getDataWrapper() failed:", err);
+        logging.verboseError("invoice.onPullDownRefresh() getDataWrapper() failed:", err);
         reject(err);
       });
     });

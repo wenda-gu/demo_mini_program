@@ -1,4 +1,4 @@
-// components/invoice/invoice-input-switch/invoice-input-switch.js
+// components/form-input-switch/form-input-switch.js
 Component({
 
   /**

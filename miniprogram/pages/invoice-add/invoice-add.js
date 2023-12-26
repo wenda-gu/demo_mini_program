@@ -1,5 +1,9 @@
 // pages/invoice-add/invoice-add.js
-const db = wx.cloud.database(), App = getApp();
+
+import validation from "../../static/utils/validation.js";
+import logging from "../../static/utils/logging.js";
+import dbAction from "../../static/utils/dbAction.js";
+const db = wx.cloud.database();
 
 Page({
 
@@ -65,56 +69,56 @@ Page({
 
   
   toggleVAT() {
-    App.verboseLog("invoice-add.toggleVAT() isVAT before:", this.data.isVAT);
+    logging.verboseLog("invoice-add.toggleVAT() isVAT before:", this.data.isVAT);
     this.setData({
       isVAT: !this.data.isVAT
     });
-    App.verboseLog("invoice-add.toggleVAT() isVAT after:", this.data.isVAT);
+    logging.verboseLog("invoice-add.toggleVAT() isVAT after:", this.data.isVAT);
   },
 
   toggleDefault() {
-    App.verboseLog("invoice-add.toggleVAT() isDefault before:", this.data.isDefault);
+    logging.verboseLog("invoice-add.toggleVAT() isDefault before:", this.data.isDefault);
     this.setData({
       isDefault: !this.data.isDefault
     });
-    App.verboseLog("invoice-add.toggleVAT() isDefault after:", this.data.isDefault);
+    logging.verboseLog("invoice-add.toggleVAT() isDefault after:", this.data.isDefault);
   },
 
 
 
   resetDefault(isDefault, isDefaultOriginal) {
     return new Promise((resolve, reject) => {
-      App.verboseLog("invoice-add.resetDefault()");
+      logging.verboseLog("invoice-add.resetDefault()");
       if ( !isDefault ) {
-        App.verboseLog("invoice-add.resetDefault() isDefault is false, no change");
+        logging.verboseLog("invoice-add.resetDefault() isDefault is false, no change");
         resolve("invoice-add.resetDefault() isDefault is false, no change");
       }
       else if ( isDefaultOriginal ) {
-        App.verboseLog("invoice-add.resetDefault() isDefaultOriginal is true, no change");
+        logging.verboseLog("invoice-add.resetDefault() isDefaultOriginal is true, no change");
         resolve("invoice-add.resetDefault() isDefaultOriginal is true, no change");
       }
       else {
-        App.getAllInvoiceTitles("oUZen5VZ_i-ylfHrUr3RNfTqxypI").then((items) => {
-          App.verboseLog("invoice-add.resetDefault() got invoice title(s):", items);
+        dbAction.getAllInvoiceTitles("oUZen5VZ_i-ylfHrUr3RNfTqxypI").then((items) => {
+          logging.verboseLog("invoice-add.resetDefault() got invoice title(s):", items);
           const promises = [];
           items.forEach((item) => {
             const id = item._id;
-            App.verboseLog("invoice-add.resetDefault() added id:", id);
+            logging.verboseLog("invoice-add.resetDefault() added id:", id);
             item.isDefault = false
             delete item._id;
             delete item._openid;
-            App.verboseLog("invoice-add.resetDefault() this is item:", item);
+            logging.verboseLog("invoice-add.resetDefault() this is item:", item);
             promises.push(this.editInvoiceTitleById(id, item));
           });
           Promise.all(promises).then((res) => {
-            App.verboseLog("invoice-add.resetDefault() success.");
+            logging.verboseLog("invoice-add.resetDefault() success.");
             resolve("invoice-add.resetDefault() success.");
           }).catch((err) => {
-            App.verboseError("invoice-add.resetDefault() failed:");
+            logging.verboseError("invoice-add.resetDefault() failed:");
             reject(err);
           });
         }).catch((err) => {
-          App.verboseError("invoice-add.resetDefault() App.getAllInvoiceTitles() failed:", err);
+          logging.verboseError("invoice-add.resetDefault() dbAction.getAllInvoiceTitles() failed:", err);
           reject(err);
         });
       }
@@ -123,14 +127,14 @@ Page({
 
   editInvoiceTitleById(id, formData) {
     return new Promise((resolve, reject) => {
-      App.verboseLog("invoice-add.editInvoiceTitleById() this is formData", formData);
+      logging.verboseLog("invoice-add.editInvoiceTitleById() this is formData", formData);
       db.collection("invoice-title").doc(id).update({
         data: formData,
       }).then(res => {
-        App.verboseLog("invoice-add.editInvoiceTitleById() success for id:", id);
+        logging.verboseLog("invoice-add.editInvoiceTitleById() success for id:", id);
         resolve("invoice-add.editInvoiceTitleById() success.");
       }).catch((err) => {
-        App.verboseError("invoice-add.editInvoiceTitleById() failed:", id);
+        logging.verboseError("invoice-add.editInvoiceTitleById() failed:", id);
         reject(err);
       });
     });
@@ -138,14 +142,14 @@ Page({
 
   addInvoiceTitle(formData) {
     return new Promise((resolve, reject) => {
-      App.verboseLog("this is form:", formData);
+      logging.verboseLog("this is form:", formData);
       db.collection("invoice-title").add({
         data: formData,
       }).then(res => {
-        App.verboseLog("invoice-add.addInvoiceTitle() success:", formData);
+        logging.verboseLog("invoice-add.addInvoiceTitle() success:", formData);
         resolve("invoice-add.addInvoiceTitle() success.")
       }).catch((err) => {
-        App.verboseError("invoice-add.addInvoiceTitle() failed:", err);
+        logging.verboseError("invoice-add.addInvoiceTitle() failed:", err);
         reject(err);
       });
     });
@@ -169,48 +173,44 @@ Page({
   isValid() {
     return new Promise((resolve, reject) => {
       if (this.data.companyName == String || this.data.companyName == '') {
-        App.verboseError("invoice-add.isValid() no companyName.");
+        logging.verboseError("invoice-add.isValid() no companyName.");
         reject("No companyName.");
       }
       else if (this.data.taxId == String || this.data.taxId == '') {
-        App.verboseError("invoice-add.isValid() no taxId.");
+        logging.verboseError("invoice-add.isValid() no taxId.");
         reject("No taxId.");
       }
       else if (this.data.phoneReceive == Number || this.data.phoneReceive == '') {
-        App.verboseError("invoice-add.isValid() no phoneReceive.");
+        logging.verboseError("invoice-add.isValid() no phoneReceive.");
         reject("No phoneReceive.");
       }
       else if (this.data.emailReceive == String || this.data.emailReceive == '') {
-        App.verboseError("invoice-add.isValid() no emailReceive.");
+        logging.verboseError("invoice-add.isValid() no emailReceive.");
         reject("No emailReceive.");
       }
       else {
-        const taxId = /^[A-Za-z0-9]+$/;
-        const num =  /^[0-9]*$/;
-        const numNotEmpty = /^[0-9]+$/;
-        const email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!taxId.test(this.data.taxId)) {
-          App.verboseError("invoice-add.isValid() wrong format taxId.");
+        if (!validation.validateTaxId(this.data.taxId)) {
+          logging.verboseError("invoice-add.isValid() wrong format taxId.");
           reject("Wrong format taxId.");
         }
-        else if (!num.test(this.data.phoneCompany) && !(this.data.phoneCompany == Number)) {
-          App.verboseError("invoice-add.isValid() wrong format phoneCompany.");
+        else if (!validation.validatePhoneNumAndSymbols(this.data.phoneCompany) && !(this.data.phoneCompany == Number)) {
+          logging.verboseError("invoice-add.isValid() wrong format phoneCompany.");
           reject("Wrong format phoneCompany.");
         }
-        else if (!num.test(this.data.bankAccount) && !(this.data.bankAccount == Number)) {
-          App.verboseError("invoice-add.isValid() wrong format bankAccount.");
+        else if (!validation.validateNum(this.data.bankAccount) && !(this.data.bankAccount == Number)) {
+          logging.verboseError("invoice-add.isValid() wrong format bankAccount.");
           reject("Wrong format bankAccount.");
         }
-        else if (!numNotEmpty.test(this.data.phoneReceive)) {
-          App.verboseError("invoice-add.isValid() wrong format phoneReceive.");
+        else if (!validation.validateNumNotEmpty(this.data.phoneReceive)) {
+          logging.verboseError("invoice-add.isValid() wrong format phoneReceive.");
           reject("Wrong format phoneReceive.");
         }
-        else if (!email.test(this.data.emailReceive)) {
-          App.verboseError("invoice-add.isValid() wrong format emailReceive.");
+        else if (!validation.validateEmail(this.data.emailReceive)) {
+          logging.verboseError("invoice-add.isValid() wrong format emailReceive.");
           reject("Wrong format emailReceive.");
         }
         else {
-          App.verboseLog("invoice-add.isValid() success.");
+          logging.verboseLog("invoice-add.isValid() success.");
           resolve("invoice-add.isValid() success.");
         }
       }
@@ -226,18 +226,18 @@ Page({
       this.isValid().then((res) => {
         const formData = this.prepareForm();
         const isDefault = this.data.isDefault;
-        App.verboseLog("invoice-add.btnSubmit() submitting:", formData);
-        App.verboseLog("invoice-add.btnSubmit() item isDefault:", isDefault);
+        logging.verboseLog("invoice-add.btnSubmit() submitting:", formData);
+        logging.verboseLog("invoice-add.btnSubmit() item isDefault:", isDefault);
         // reset all titles' isDefault to false, if current isDefault if true
         this.resetDefault(isDefault, this.data.isDefaultOriginal).then((res) => {
           const id = this.data.id;
-          App.verboseLog("invoice-add.btnSubmit() item id: " + id);
+          logging.verboseLog("invoice-add.btnSubmit() item id: " + id);
           // if edit, update; else, add
           if (id != String) {
-            App.verboseLog("invoice-add.btnSubmit() id is not null, as edit");
-            App.verboseLog("invoice-add.btnSubmit() submitting:", formData);
+            logging.verboseLog("invoice-add.btnSubmit() id is not null, as edit");
+            logging.verboseLog("invoice-add.btnSubmit() submitting:", formData);
             this.editInvoiceTitleById(id, formData).then((res) => {
-              App.verboseLog("invoice-add.btnSubmit() edit success.");
+              logging.verboseLog("invoice-add.btnSubmit() edit success.");
               wx.hideLoading();
               wx.showToast({
                 title: '修改成功',
@@ -250,7 +250,7 @@ Page({
               }, 800);
               resolve("invoice-add.btnSubmit() success.");
             }).catch((err) => {
-              App.verboseError("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
+              logging.verboseError("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
               wx.hideLoading();
               wx.showToast({
                 title: '修改失败请重试',
@@ -261,9 +261,9 @@ Page({
             });
           }
           else {
-            App.verboseLog("invoice-add.btnSubmit() id is null, as add");
+            logging.verboseLog("invoice-add.btnSubmit() id is null, as add");
             this.addInvoiceTitle(formData).then((res) => {
-              App.verboseLog("invoice-add.btnSubmit() addInvoiceTitle() success.");
+              logging.verboseLog("invoice-add.btnSubmit() addInvoiceTitle() success.");
               wx.hideLoading();
               wx.showToast({
                 title: '添加成功',
@@ -276,7 +276,7 @@ Page({
               }, 800);
               resolve("invoice-add.btnSubmit() addInvoiceTitle() success.");
             }).catch((err) => {
-              App.verboseError("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
+              logging.verboseError("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
               wx.hideLoading();
               wx.showToast({
                 title: '添加失败请重试',
@@ -287,7 +287,7 @@ Page({
             });
           };
         }).catch((err) => {
-          App.verboseError("invoice-add.btnSubmit() resetDefault() failed:", err);
+          logging.verboseError("invoice-add.btnSubmit() resetDefault() failed:", err);
           wx.hideLoading();
           wx.showToast({
             title: '提交失败请重试',
@@ -297,7 +297,7 @@ Page({
           reject(err);
         });
       }).catch((err) => {
-        App.verboseError("invoice-add.btnSubmit() isValid() failed:", err);
+        logging.verboseError("invoice-add.btnSubmit() isValid() failed:", err);
         wx.hideLoading();
         var msg, iconStr = 'error';
         switch(err) {
@@ -351,7 +351,7 @@ Page({
     wx.setNavigationBarTitle({ title: '添加抬头' });
     if (options.item == null) return;
     const item = JSON.parse(options.item);
-    App.verboseLog("invoice-add.onLoad() got item:", item);
+    logging.verboseLog("invoice-add.onLoad() got item:", item);
     // check if field is undefined
     var address, phoneCompany, bankName, bankAccount;
     if (!item.isVAT) {

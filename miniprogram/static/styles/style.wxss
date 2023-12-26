@@ -5,11 +5,11 @@
   */
 
 /* button */
-button {
+.blue-btn {
   color: white;
   background-color: #00adef;
 }
-button.btn-hover {
+.btn-hover {
   background-color: #0085b9;
 }
 
@@ -24,7 +24,7 @@ button.btn-hover {
 /**
   * invoice
   */
-.invoice-input-format {
+.form-input-format {
   height: 5.5vh;
   display: grid;
   grid-template-columns: 2fr 5fr;

@@ -48,10 +48,10 @@
     "Separator": "components/separator/separator",
     "Footer": "components/footer/footer",
     "ConferenceItem": "components/conference-item/conference-item",
-    "InvoiceInputSwitch": "components/invoice/invoice-input-switch/invoice-input-switch",
-    "InvoiceInputItem": "components/invoice/invoice-input-item/invoice-input-item",
+    "FormInputSwitch": "components/form-input-switch/form-input-switch",
+    "FormInputItem": "components/form-input-item/form-input-item",
     "TextAsterisk": "components/text-asterisk/text-asterisk",
-    "InvoiceTitle": "components/invoice/invoice-title/invoice-title",
+    "InvoiceTitle": "components/invoice-title/invoice-title",
     "IconItem": "components/icon-item/icon-item"
   }
 }

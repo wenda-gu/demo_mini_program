@@ -2,25 +2,25 @@
 <form bindsubmit="btnSubmit">
   <view class="input-container">
     <view class="info">
-      <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="companyName" placeholder="请输入公司名称" value="{{companyName}}" bindinput="handleCompanyName"></InvoiceInputItem>
+      <FormInputItem isRequired="{{true}}" label="公司名称" name="companyName" placeholder="请输入公司名称" value="{{companyName}}" bindinput="handleCompanyName"></FormInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId"></InvoiceInputItem>
+      <FormInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId"></FormInputItem>
       <Separator></Separator>
-      <InvoiceInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault" checked="{{isDefault}}"></InvoiceInputSwitch>
+      <FormInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault" checked="{{isDefault}}"></FormInputSwitch>
       <!-- <Separator></Separator>
-      <InvoiceInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT" checked="{{isVAT}}"></InvoiceInputSwitch> -->
+      <FormInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT" checked="{{isVAT}}"></FormInputSwitch> -->
     </view>
     <view class="spacer-mid">
       <Spacer text="如需开具增值税专用发票，请填写以下信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
     </view>
     <view class="info">
-      <InvoiceInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></InvoiceInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></FormInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number"></InvoiceInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number"></FormInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{isVAT}}" id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行" value="{{bankName}}" bindinput="handleBankName"></InvoiceInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行" value="{{bankName}}" bindinput="handleBankName"></FormInputItem>
       <Separator></Separator>
-      <InvoiceInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount" type="number"></InvoiceInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount" type="number"></FormInputItem>
     </view>
 
     <view class="spacer-mid">
@@ -28,13 +28,14 @@
     </view>
     
     <view class="info">
-      <InvoiceInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number" maxlength="11"></InvoiceInputItem>
-      <InvoiceInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive"></InvoiceInputItem>
+      <FormInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number" maxlength="11"></FormInputItem>
+      <Separator></Separator>
+      <FormInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive"></FormInputItem>
     </view>
   </view>
   
   <Spacer bgcolor="transparent"></Spacer>
-  <button class="save" form-type="submit" hover-class="btn-hover">保存</button>
+  <button class="blue-btn" form-type="submit" hover-class="btn-hover">保存</button>
 </form>
 <Spacer bgcolor="transparent" h="10"></Spacer>
 

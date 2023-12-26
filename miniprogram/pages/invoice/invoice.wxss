@@ -2,7 +2,7 @@
 
 @import "/static/styles/style.wxss";
 
-button.add {
+button.blue-btn {
   width: 90%;
 }
 

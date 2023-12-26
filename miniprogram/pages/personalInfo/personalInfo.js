@@ -1,11 +1,33 @@
 // pages/personalInfo/personalInfo.js
+
+import validation from "../../static/utils/validation.js";
+import logging from "../../static/utils/logging.js";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    name: String,
+    personalId: String,
+    phonePersonal: Number,
+    emailPersonal: String,
+    companyName: String,
+    department: String,
+    address: String,
+    phoneCompany: Number,
+    isEditing: false,
+  },
 
+  toggleIsEditing() {
+    this.setData({
+      isEditing: true,
+    });
+  },
+  test() {
+    var b = validation.validateNumNotEmpty('');
+    logging.verboseLog("test:", b);
   },
 
   /**
@@ -13,6 +35,22 @@ Page({
    */
   onLoad(options) {
     wx.setNavigationBarTitle({ title: '我的信息' })
+    if (options.item == null) return;
+    const item = JSON.parse(options.item);
+    logging.verboseLog("personalInfo.onLoad() got item:", item);
+    // TODO: check if field is undefined
+    // TODO: set data properly
+    this.setData({
+      name: String,
+      personalId: String,
+      phonePersonal: Number,
+      emailPersonal: String,
+      companyName: String,
+      department: String,
+      address: String,
+      phoneCompany: Number,
+      isEditing: false,
+    });
   },
 
   /**

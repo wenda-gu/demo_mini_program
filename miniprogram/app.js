@@ -1,37 +1,8 @@
 // app.js
+
+import logging from "/static/utils/logging.js";
+
 App({
-
-  testData: {
-    verbose: true,
-    lookUpCriteria: {
-      _openid: "oUZen5VZ_i-ylfHrUr3RNfTqxypI",
-    },
-  },
-
-  verboseLog: function(text, param) {
-    if ( param == undefined ) param = '';
-    if ( this.testData.verbose ) console.log(text, param);
-  },
-
-  verboseError: function(text, param) {
-    if ( param == undefined ) param = '';
-    if ( this.testData.verbose ) console.error(text, param);
-  },
-
-  getAllInvoiceTitles(){
-    return new Promise((resolve, reject) => {
-      this.verboseLog("App.getAllInvoiceTitles()");
-      wx.cloud.database().collection("invoice-title").get().then(res => {
-        var ret = res.data;
-        this.verboseLog("App.getAllInvoiceTitles() gets invoice title(s):", ret);
-        resolve(ret);
-      }).catch((err) => {
-        this.verboseError("App.getAllInvoiceTitles() failed:", err);
-        reject(err);
-      });
-    });
-  },
-
   onLaunch: function () {
     // Cloud Env
     if (!wx.cloud) {
@@ -52,10 +23,10 @@ App({
       success: (res) => {
         var code = res.code;
         if (code) {
-          this.verboseLog('App.onLaunch() user token:', code);
+          logging.verboseLog('App.onLaunch() user token:', code);
         }
         else {
-          this.verboseLog('App.onLaunch() fetch user token failed');
+          logging.verboseLog('App.onLaunch() fetch user token failed');
         }
       },
     });

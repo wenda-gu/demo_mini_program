@@ -13,7 +13,7 @@ page {
   
 }
 
-.invoice-input-format {
+.form-input-format {
   height: 5.5vh;
   display: grid;
   grid-template-columns: 2fr 5fr;
@@ -31,6 +31,6 @@ page {
   padding-right: 2vh;
 }
 
-button.save {
+button.blue-btn {
   width: 90%;
 }
