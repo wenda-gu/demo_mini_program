@@ -170,25 +170,52 @@ Page({
   },
 
   isValid() {
-    // data = {
-    //   name: String,
-    //   taxId: String,
-    //   address: String,
-    //   phoneCompany: Number,
-    //   bankName: String,
-    //   bankAccount: Number,
-    //   phoneReceive: Number,
-    //   emailReceive: String,
-    // }
     return new Promise((resolve, reject) => {
-      var taxId = /[^\w\.\/]/ig;
-      var email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-      if ( taxId.test(this.data.taxId) && email.test(this.data.emailReceive) ) {
-        App.verboseLog("invoice-add.isValid() success.");
-        resolve();
+      if (this.data.name == undefined) {
+        console.error("invoice-add.isValid() no company name.");
+        reject("No company name.");
+      }
+      else if (this.data.taxId == undefined) {
+        console.error("invoice-add.isValid() no taxId.");
+        reject("No taxId.");
+      }
+      else if (this.data.phoneReceive == undefined) {
+        console.error("invoice-add.isValid() no phoneReceive.");
+        reject("No phoneReceive.");
+      }
+      else if (this.data.emailReceive == undefined) {
+        console.error("invoice-add.isValid() no emailReceive.");
+        reject("No emailReceive.");
       }
       else {
-        reject("aaa");
+        const taxId = /^[A-Za-z0-9]+$/;
+        const num =  /^[0-9]*$/;
+        const numNotEmpty = /^[0-9]+$/;
+        const email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!taxId.test(this.data.taxId)) {
+          console.error("invoice-add.isValid() wrong format taxId.");
+          reject("Wrong format taxId.");
+        }
+        else if (!num.test(this.data.phoneCompany)) {
+          console.error("invoice-add.isValid() wrong format phoneCompany.");
+          reject("Wrong format phoneCompany.");
+        }
+        else if (!num.test(this.data.bankAccount)) {
+          console.error("invoice-add.isValid() wrong format bankAccount.");
+          reject("Wrong format bankAccount.");
+        }
+        else if (!numNotEmpty.test(this.data.phoneReceive)) {
+          console.error("invoice-add.isValid() wrong format phoneReceive.");
+          reject("Wrong format phoneReceive.");
+        }
+        else if (!email.test(this.data.emailReceive)) {
+          console.error("invoice-add.isValid() wrong format emailReceive.");
+          reject("Wrong format emailReceive.");
+        }
+        else {
+          App.verboseLog("invoice-add.isValid() success.");
+          resolve("invoice-add.isValid() success.");
+        }
       }
     });
   },
@@ -230,6 +257,7 @@ Page({
               wx.hideLoading();
               wx.showToast({
                 title: '修改失败请重试',
+                icon: 'error',
                 duration: 2000,
               });
               reject(err);
@@ -255,6 +283,7 @@ Page({
               wx.hideLoading();
               wx.showToast({
                 title: '添加失败请重试',
+                icon: 'error',
                 duration: 2000,
               });
               reject(err);
@@ -264,16 +293,53 @@ Page({
           console.error("invoice-add.btnSubmit() resetDefault() failed:", err);
           wx.hideLoading();
           wx.showToast({
-            title: '提交失败，请重试',
+            title: '提交失败请重试',
+            icon: 'error',
             duration: 2000,
           });
           reject(err);
         });
       }).catch((err) => {
-        console.error("invoice-add.btnSubmit() isValid() failed.");
+        console.error("invoice-add.btnSubmit() isValid() failed:", err);
         wx.hideLoading();
+        var msg, iconStr = 'error';
+        switch(err) {
+          case "No company name.":
+            msg = "请填写公司名称";
+            break;
+          case "No taxId.":
+            msg = "请填写税号";
+            break;
+          case "No phoneReceive.":
+            msg = "请填写个人手机";
+            break;
+          case "No emailReceive.":
+            msg = "请填写个人邮箱";
+            break;
+          case "Wrong format taxId.":
+            msg = "税号格式错误";
+            iconStr = "none";
+            break;
+          case "Wrong format phoneCompany.":
+            msg = "公司电话格式错误";
+            iconStr = "none";
+            break;
+          case "Wrong format bankAccount.":
+            msg = "银行账号格式错误";
+            iconStr = "none";
+            break;
+          case "Wrong format phoneReceive.":
+            msg = "个人手机号格式错误";
+            iconStr = "none";
+            break;
+          case "Wrong format emailReceive.":
+            msg = "个人邮箱格式错误";
+            iconStr = "none";
+            break;
+        }
         wx.showToast({
-          title: '信息不正确或未填写必填项',
+          title: msg,
+          icon: iconStr,
           duration: 2000,
         });
         reject(err);
