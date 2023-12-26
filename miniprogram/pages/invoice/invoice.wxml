@@ -1,8 +1,8 @@
 <!--pages/invoice/invoice.wxml-->
 <view wx:if="{{show}}" wx:for="{{dataObj}}" wx:key="taxId">
-  <InvoiceTitle item="{{item}}" name="{{item.name}}" taxId="{{item.taxId}}" isDefault="{{item.isDefault}}" bind:edit="handleEditInvoiceTitle" bind:delete="handleDeleteInvoiceTitle"></InvoiceTitle>
+  <InvoiceTitle item="{{item}}" bind:edit="handleEditInvoiceTitle" bind:delete="handleDeleteInvoiceTitle"></InvoiceTitle>
 </view>
 <Spacer bgcolor="transparent"></Spacer>
 
-<button class="add" bindtap="navigateToInvoiceAdd">添加抬头</button>
+<button class="add" bindtap="navigateToInvoiceAdd" hover-class="btn-hover">添加抬头</button>
 <Spacer bgcolor="transparent" h="10"></Spacer>

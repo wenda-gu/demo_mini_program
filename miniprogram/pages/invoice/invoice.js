@@ -50,11 +50,16 @@ Page({
           App.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
           resolve("invoice.handleDeleteInvoiceTitle() success.");
         }).catch((err) => {
-          App.verboseLogError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
+          App.verboseError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
           reject(err);
         });
       }).catch((err) => {
-        App.verboseLogError("invoice.deleteInvoiceTitle() failed:", err);
+        App.verboseError("invoice.deleteInvoiceTitle() failed:", err);
+        wx.showToast({
+          title: '删除失败请重试',
+          icon: 'error',
+          duration: 2000,
+        });
         reject(err);
       });
     });
@@ -67,7 +72,7 @@ Page({
   getData(){
     return new Promise((resolve, reject) => {
       App.verboseLog("invoice.getData()");
-      App.getAllInvoiceTitles("oUZen5VZ_i-ylfHrUr3RNfTqxypI").then((items) => {
+      App.getAllInvoiceTitles().then((items) => {
         App.verboseLog("invoice.getData() got invoice title(s):", items);
         this.setData({
           dataObj: items,
@@ -76,11 +81,47 @@ Page({
         App.verboseLog("invoice.getData() success.");
         resolve("invoice.getData() success.");
       }).catch((err) => {
-        App.verboseLogError("invoice.getData() failed:", err);
+        App.verboseError("invoice.getData() failed:", err);
         reject(err);
       });
     });
   },
+
+  getDataWrapper(mode) {
+    return new Promise((resolve, reject) => {
+      var funcName, loadingTitle, toastTitle;
+      if (mode == "show") {
+        funcName = "invoice.onShow()";
+        loadingTitle = "加载中";
+        toastTitle = "加载失败请刷新";
+      }
+      else {
+        funcName = "invoice.onPullDownRefresh()";
+        loadingTitle = "刷新中";
+        toastTitle = "刷新失败请重试";
+      }
+      App.verboseLog(funcName);
+      wx.showLoading({
+        title: loadingTitle,
+        mask: true,
+      });
+      this.getData().then((res) => {
+        wx.hideLoading();
+        App.verboseLog(`${funcName} getData() success.`);
+        resolve(`${funcName} getData() success.`);
+      }).catch((err) => {
+        App.verboseError(`${funcName} getData() failed:`, err);
+        wx.hideLoading();
+        wx.showToast({
+          title: toastTitle,
+          icon: 'error',
+          duration: 2000,
+        });
+        reject(err);
+      });
+    });
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -101,22 +142,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    return new Promise((resolve, reject) => {
-      App.verboseLog("invoice.onShow()");
-      wx.showLoading({
-        title: '加载中',
-        mask: true,
-      });
-      this.getData().then((res) => {
-        wx.hideLoading();
-        App.verboseLog("invoice.onShow() success.");
-        resolve("invoice.onShow() success.");
-      }).catch((err) => {
-        wx.hideLoading();
-        App.verboseLogError("invoice.onShow() failed:", err);
-        reject(err);
-      });
-    });
+    this.getDataWrapper("show");
   },
 
   /**
@@ -130,19 +156,25 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    // wx.reLaunch({
-    //   url: '/pages/me/me',
-    // })
+    
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    wx.startPullDownRefresh();
-    App.verboseLog("invoice.onPullDownRefresh() page refreshing");
-    this.getData();
-    wx.stopPullDownRefresh();
+    return new Promise((resolve, reject) => {
+      wx.startPullDownRefresh();
+      App.verboseLog("invoice.onPullDownRefresh() refreshing...");
+      this.getDataWrapper("refresh").then((res) => {
+        wx.stopPullDownRefresh();
+        App.verboseLog("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
+        resolve("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
+      }).catch((err) => {
+        App.verboseError("invoice.onPullDownRefresh() getDataWrapper() failed:", err);
+        reject(err);
+      });
+    });
   },
 
   /**

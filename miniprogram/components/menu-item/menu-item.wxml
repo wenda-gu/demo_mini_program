@@ -1,5 +1,5 @@
 <!--components/menu-item/menu-item.wxml-->
-<view class="border" bindtap="navTo">
+<view class="border" bindtap="navTo" hover-class="item-hover">
   <view class="content">
     <IconItem img="{{img}}" w="70" h="70" scaler="1"></IconItem>
     <text class="title">{{itemName}}</text>

@@ -1,5 +1,5 @@
 /* components/invoice/invoice-input-switch/invoice-input-switch.wxss */
-@import "/components/invoice/invoice.wxss";
+@import "/static/styles/style.wxss";
 .invoice-input-format {
   display: flex;
 }

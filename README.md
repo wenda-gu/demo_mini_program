@@ -2,6 +2,7 @@
 - add env id in `app.js` to set up cloud dev env
 - [微信小程序自定义组件的坑之 hidden、boolean 属性和花括号](https://www.cnblogs.com/flipped/p/15640229.html)
 - [微信小程序修改switch组件大小](https://juejin.cn/post/6844903609411305486)
+
 # 云开发 quickstart
 
 这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：
@@ -15,7 +16,7 @@
 - [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
 # Warning
-- delete `personalKey: 18916718618` in `btnSubmit()` in `invoice-add.js`
 - Dark mode
 - icon change on tap
 - default icon location
+- login functionality and openid

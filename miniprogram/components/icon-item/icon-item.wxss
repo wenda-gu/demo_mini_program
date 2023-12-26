@@ -1,4 +1,7 @@
 /* components/icon-item/icon-item.wxss */
+
+@import "/static/styles/style.wxss";
+
 .image-cropper {
   position: relative;
   overflow: hidden;

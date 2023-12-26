@@ -1,4 +1,7 @@
 /* components/menu-item/menu-item.wxss */
+
+@import "/static/styles/style.wxss";
+
 .border {
   box-sizing: border-box; /* Include padding and borders in the element's width and height */
   height: 7vh;

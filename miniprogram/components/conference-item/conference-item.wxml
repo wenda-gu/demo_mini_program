@@ -1,5 +1,5 @@
 <!--components/conference-item/conference-item.wxml-->
-<view class="border" bindtap="onTapNavTo">
+<view class="border" bindtap="onTapNavTo" hover-class="item-hover">
   <view class="content">
     <IconItem img="/static/images/icons/content.png" w="70" h="70" scaler="1"></IconItem>
     <text class="title">{{itemName}}</text>

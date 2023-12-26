@@ -3,7 +3,7 @@
   <view class="invoice-title">
     <view class="left">
       <view class="invoice-1st-line">
-        <text class="invoice-company-name" >{{item.name}} </text>
+        <text class="invoice-company-name" >{{item.companyName}} </text>
         <view class="invoice-default-container" wx:if="{{item.isDefault}}">
           <view class="invoice-default-border">
             <text class="invoice-default">默认</text>

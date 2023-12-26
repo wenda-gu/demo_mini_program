@@ -1,27 +1,32 @@
 // app.js
 App({
+
+  testData: {
+    verbose: true,
+    lookUpCriteria: {
+      _openid: "oUZen5VZ_i-ylfHrUr3RNfTqxypI",
+    },
+  },
+
   verboseLog: function(text, param) {
     if ( param == undefined ) param = '';
-    if ( true ) console.log(text, param);
+    if ( this.testData.verbose ) console.log(text, param);
   },
 
-  verboseLogErr: function(text, param) {
+  verboseError: function(text, param) {
     if ( param == undefined ) param = '';
-    if ( true ) console.error(text, param);
+    if ( this.testData.verbose ) console.error(text, param);
   },
 
-  getAllInvoiceTitles(openid){
+  getAllInvoiceTitles(){
     return new Promise((resolve, reject) => {
       this.verboseLog("App.getAllInvoiceTitles()");
-      wx.cloud.database().collection("invoice-title").where({
-        personalKey: 18916718618,
-        _openid: openid,
-      }).get().then(res => {
+      wx.cloud.database().collection("invoice-title").get().then(res => {
         var ret = res.data;
         this.verboseLog("App.getAllInvoiceTitles() gets invoice title(s):", ret);
         resolve(ret);
       }).catch((err) => {
-        this.verboseLogError("App.getAllInvoiceTitles() failed", err);
+        this.verboseError("App.getAllInvoiceTitles() failed:", err);
         reject(err);
       });
     });
@@ -53,8 +58,6 @@ App({
           this.verboseLog('App.onLaunch() fetch user token failed');
         }
       },
-    })
-
-    this.globalData = {};
+    });
   }
 });

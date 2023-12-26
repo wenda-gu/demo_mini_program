@@ -8,9 +8,8 @@ Page({
    */
   data: {
     id: String,
-    personalKey: Number,
     isVAT: false,
-    name: String,
+    companyName: String,
     taxId: String,
     isDefault: false,
     isDefaultOriginal: false,
@@ -22,9 +21,9 @@ Page({
     emailReceive: String,
   },
 
-  handleName(e) {
+  handleCompanyName(e) {
     this.setData({
-      name: e.detail
+      companyName: e.detail
     })
   },
   handleTaxId(e) {
@@ -111,11 +110,11 @@ Page({
             App.verboseLog("invoice-add.resetDefault() success.");
             resolve("invoice-add.resetDefault() success.");
           }).catch((err) => {
-            console.error("invoice-add.resetDefault() failed:");
+            App.verboseError("invoice-add.resetDefault() failed:");
             reject(err);
           });
         }).catch((err) => {
-          console.error("invoice-add.resetDefault() App.getAllInvoiceTitles() failed:", err);
+          App.verboseError("invoice-add.resetDefault() App.getAllInvoiceTitles() failed:", err);
           reject(err);
         });
       }
@@ -131,7 +130,7 @@ Page({
         App.verboseLog("invoice-add.editInvoiceTitleById() success for id:", id);
         resolve("invoice-add.editInvoiceTitleById() success.");
       }).catch((err) => {
-        console.error("invoice-add.editInvoiceTitleById() failed:", id);
+        App.verboseError("invoice-add.editInvoiceTitleById() failed:", id);
         reject(err);
       });
     });
@@ -146,7 +145,7 @@ Page({
         App.verboseLog("invoice-add.addInvoiceTitle() success:", formData);
         resolve("invoice-add.addInvoiceTitle() success.")
       }).catch((err) => {
-        console.error("invoice-add.addInvoiceTitle() failed:", err);
+        App.verboseError("invoice-add.addInvoiceTitle() failed:", err);
         reject(err);
       });
     });
@@ -155,7 +154,7 @@ Page({
   prepareForm() {
     return {
       isVAT: this.data.isVAT,
-      name: this.data.name,
+      companyName: this.data.companyName,
       taxId: this.data.taxId,
       isDefault: this.data.isDefault,
       address: this.data.address,
@@ -164,28 +163,25 @@ Page({
       bankAccount: this.data.bankAccount,
       phoneReceive: this.data.phoneReceive,
       emailReceive: this.data.emailReceive,
-      // make sure to delete after testing
-      personalKey: 18916718618,
     };
   },
 
   isValid() {
     return new Promise((resolve, reject) => {
-      App.verboseLog("invoice-add.isValid() phoneReceive:", this.data.phoneReceive);
-      if (this.data.name == String || this.data.name == '') {
-        console.error("invoice-add.isValid() no company name.");
-        reject("No company name.");
+      if (this.data.companyName == String || this.data.companyName == '') {
+        App.verboseError("invoice-add.isValid() no companyName.");
+        reject("No companyName.");
       }
       else if (this.data.taxId == String || this.data.taxId == '') {
-        console.error("invoice-add.isValid() no taxId.");
+        App.verboseError("invoice-add.isValid() no taxId.");
         reject("No taxId.");
       }
       else if (this.data.phoneReceive == Number || this.data.phoneReceive == '') {
-        console.error("invoice-add.isValid() no phoneReceive.");
+        App.verboseError("invoice-add.isValid() no phoneReceive.");
         reject("No phoneReceive.");
       }
       else if (this.data.emailReceive == String || this.data.emailReceive == '') {
-        console.error("invoice-add.isValid() no emailReceive.");
+        App.verboseError("invoice-add.isValid() no emailReceive.");
         reject("No emailReceive.");
       }
       else {
@@ -194,23 +190,23 @@ Page({
         const numNotEmpty = /^[0-9]+$/;
         const email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
         if (!taxId.test(this.data.taxId)) {
-          console.error("invoice-add.isValid() wrong format taxId.");
+          App.verboseError("invoice-add.isValid() wrong format taxId.");
           reject("Wrong format taxId.");
         }
         else if (!num.test(this.data.phoneCompany) && !(this.data.phoneCompany == Number)) {
-          console.error("invoice-add.isValid() wrong format phoneCompany.");
+          App.verboseError("invoice-add.isValid() wrong format phoneCompany.");
           reject("Wrong format phoneCompany.");
         }
         else if (!num.test(this.data.bankAccount) && !(this.data.bankAccount == Number)) {
-          console.error("invoice-add.isValid() wrong format bankAccount.");
+          App.verboseError("invoice-add.isValid() wrong format bankAccount.");
           reject("Wrong format bankAccount.");
         }
         else if (!numNotEmpty.test(this.data.phoneReceive)) {
-          console.error("invoice-add.isValid() wrong format phoneReceive.");
+          App.verboseError("invoice-add.isValid() wrong format phoneReceive.");
           reject("Wrong format phoneReceive.");
         }
         else if (!email.test(this.data.emailReceive)) {
-          console.error("invoice-add.isValid() wrong format emailReceive.");
+          App.verboseError("invoice-add.isValid() wrong format emailReceive.");
           reject("Wrong format emailReceive.");
         }
         else {
@@ -254,7 +250,7 @@ Page({
               }, 800);
               resolve("invoice-add.btnSubmit() success.");
             }).catch((err) => {
-              console.error("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
+              App.verboseError("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
               wx.hideLoading();
               wx.showToast({
                 title: '修改失败请重试',
@@ -280,7 +276,7 @@ Page({
               }, 800);
               resolve("invoice-add.btnSubmit() addInvoiceTitle() success.");
             }).catch((err) => {
-              console.error("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
+              App.verboseError("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
               wx.hideLoading();
               wx.showToast({
                 title: '添加失败请重试',
@@ -291,7 +287,7 @@ Page({
             });
           };
         }).catch((err) => {
-          console.error("invoice-add.btnSubmit() resetDefault() failed:", err);
+          App.verboseError("invoice-add.btnSubmit() resetDefault() failed:", err);
           wx.hideLoading();
           wx.showToast({
             title: '提交失败请重试',
@@ -301,11 +297,11 @@ Page({
           reject(err);
         });
       }).catch((err) => {
-        console.error("invoice-add.btnSubmit() isValid() failed:", err);
+        App.verboseError("invoice-add.btnSubmit() isValid() failed:", err);
         wx.hideLoading();
         var msg, iconStr = 'error';
         switch(err) {
-          case "No company name.":
+          case "No companyName.":
             msg = "请填写公司名称";
             break;
           case "No taxId.":
@@ -368,12 +364,10 @@ Page({
       if ( item.bankAccount == undefined) bankAccount = '';
       else bankAccount = item.bankAccount;
     }
-    // delete personalKey after testing
     this.setData({
       id: item._id,
-      personalKey: item.personalKey,
       isVAT: item.isVAT,
-      name: item.name,
+      companyName: item.companyName,
       taxId: item.taxId,
       isDefault: item.isDefault,
       isDefaultOriginal: item.isDefault,

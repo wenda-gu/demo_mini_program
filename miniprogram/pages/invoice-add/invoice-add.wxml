@@ -2,7 +2,7 @@
 <form bindsubmit="btnSubmit">
   <view class="input-container">
     <view class="info">
-      <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="name" placeholder="请输入公司名称" value="{{name}}" bindinput="handleName"></InvoiceInputItem>
+      <InvoiceInputItem isRequired="{{true}}" label="公司名称" name="companyName" placeholder="请输入公司名称" value="{{companyName}}" bindinput="handleCompanyName"></InvoiceInputItem>
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId"></InvoiceInputItem>
       <Separator></Separator>
@@ -14,7 +14,6 @@
       <Spacer text="如需开具增值税专用发票，请填写以下信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
     </view>
     <view class="info">
-      <Separator></Separator>
       <InvoiceInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></InvoiceInputItem>
       <Separator></Separator>
       <InvoiceInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number"></InvoiceInputItem>
@@ -35,11 +34,11 @@
   </view>
   
   <Spacer bgcolor="transparent"></Spacer>
-  <button class="save" type="default" form-type="submit">保存</button>
+  <button class="save" form-type="submit" hover-class="btn-hover">保存</button>
 </form>
 <Spacer bgcolor="transparent" h="10"></Spacer>
 
 
 <!-- make sure `isRequired` toggle is working properly, and needs check before submission -->
 <!-- if a title is made default, other invoice titles' `isDefault` should be made `false`. How to efficiently get the current default from the page `invoice` -->
-<!-- `personalKey` is missing now due to no login functionality -->
+<!-- login functionality and openid -->

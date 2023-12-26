@@ -34,13 +34,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // toggleRequired() {
-    //   var v = this.properties.isRequired
-    //   this.setData({
-    //     isRequired: !v,
-    //   });
-    // },
-
     onInput(e) {
       this.triggerEvent('input', e.detail.value);
     }
