@@ -1,8 +1,30 @@
 // app.js
 App({
   verboseLog: function(text, param) {
-    if (param==undefined) param=''
-    if (true) console.log(text, param);
+    if ( param == undefined ) param = '';
+    if ( true ) console.log(text, param);
+  },
+
+  verboseLogErr: function(text, param) {
+    if ( param == undefined ) param = '';
+    if ( true ) console.error(text, param);
+  },
+
+  getAllInvoiceTitles(openid){
+    return new Promise((resolve, reject) => {
+      this.verboseLog("App.getAllInvoiceTitles()");
+      wx.cloud.database().collection("invoice-title").where({
+        personalKey: 18916718618,
+        _openid: openid,
+      }).get().then(res => {
+        var ret = res.data;
+        this.verboseLog("App.getAllInvoiceTitles() gets invoice title(s):", ret);
+        resolve(ret);
+      }).catch((err) => {
+        this.verboseLogError("App.getAllInvoiceTitles() failed", err);
+        reject(err);
+      });
+    });
   },
 
   onLaunch: function () {
@@ -25,10 +47,10 @@ App({
       success: (res) => {
         var code = res.code;
         if (code) {
-          this.verboseLog('user token: ' + code);
+          this.verboseLog('App.onLaunch() user token:', code);
         }
         else {
-          this.verboseLog('fetch user token failed');
+          this.verboseLog('App.onLaunch() fetch user token failed');
         }
       },
     })

@@ -7,56 +7,7 @@ Page({
    * 页面的初始数据 JSON
    */
   data: {
-    dataObj: ""
-  },
 
-
-  getData(){
-    db.collection("testdb").get().then(res => {
-      this.setData({
-        dataObj: res.data,
-        show: true
-      })
-    });
-  },
-
-  hideData(){
-    setTimeout(function () {
-      this.setData({
-        show: false
-      })
-    }.bind(this))
-  },
-
-  addData() {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-    });
-    db.collection("testdb").add({
-      data: {
-        name: "王五",
-        gender: "男",
-        birthday: new Date()
-      }
-    }).then(res => {
-      getApp().verboseLog(res);
-      wx.hideLoading();
-    });
-  },
-  
-  btnSubmit(res) {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-    });
-    var content = res.detail.value;
-    db.collection("testdb").add({
-      data: content
-    }).then(res => {
-      getApp().verboseLog(res);
-      wx.hideLoading();
-    });
   },
 
   /**

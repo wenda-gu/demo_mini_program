@@ -1,5 +1,5 @@
 // pages/invoice/invoice.js
-const db = wx.cloud.database();
+const db = wx.cloud.database(), App = getApp();
 
 Page({
 
@@ -12,13 +12,12 @@ Page({
   },
 
   handleEditInvoiceTitle(e) {
-    getApp().verboseLog(e);
     const item = e.detail;
     var destination = '/pages/invoice-add/invoice-add?item=' + JSON.stringify(item);
     wx.navigateTo({
       url: destination,
     }).then(res => {
-      getApp().verboseLog("nav edit success: " + destination)
+      App.verboseLog("invoice.handleEditInvoiceTitle() nav to invoice-add as edit success:", destination);
     });
   },
 
@@ -29,16 +28,35 @@ Page({
       success: (res) => {
         switch(res.tapIndex) {
           case 0:
-            const idToDelete = e.detail
-            db.collection("invoice-title").doc(idToDelete).remove().then(res => {
-              getApp().verboseLog("delete handler removed passed id successfully: " + idToDelete)
-              this.getData()
-            })
+            this.deleteInvoiceTitle(e).then((res) => {
+              App.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
+            }).catch((err) => {
+              App.verboseLog("invoice.handleDeleteInvoiceTitle() failed:", err);
+            });
         }
       },
       fail (res) {
-        getApp().verboseLog("delete cancelled.")
+        App.verboseLog("invoice.handleDeleteInvoiceTitle() delete cancelled.");
       }
+    });
+  },
+
+  deleteInvoiceTitle(e) {
+    return new Promise((resolve, reject) => {
+      const idToDelete = e.detail
+      db.collection("invoice-title").doc(idToDelete).remove().then((res) => {
+        App.verboseLog("invoice.handleDeleteInvoiceTitle() removed:", idToDelete);
+        this.getData().then((res) => {
+          App.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
+          resolve("invoice.handleDeleteInvoiceTitle() success.");
+        }).catch((err) => {
+          App.verboseLogError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
+          reject(err);
+        });
+      }).catch((err) => {
+        App.verboseLogError("invoice.deleteInvoiceTitle() failed:", err);
+        reject(err);
+      });
     });
   },
 
@@ -47,20 +65,20 @@ Page({
   },
 
   getData(){
-    getApp().verboseLog("in getData")
-    wx.showLoading({
-      title: '加载中',
-      mask: true,
-    });
-    db.collection("invoice-title").where({
-      personalKey: 18916718618,
-    }).get().then(res => {
-      getApp().verboseLog("invoice page gets invoice title(s): ", res.data)
-      this.setData({
-        dataObj: res.data,
-        show: true
-      })
-      wx.hideLoading();
+    return new Promise((resolve, reject) => {
+      App.verboseLog("invoice.getData()");
+      App.getAllInvoiceTitles("oUZen5VZ_i-ylfHrUr3RNfTqxypI").then((items) => {
+        App.verboseLog("invoice.getData() got invoice title(s):", items);
+        this.setData({
+          dataObj: items,
+          show: true,
+        });
+        App.verboseLog("invoice.getData() success.");
+        resolve("invoice.getData() success.");
+      }).catch((err) => {
+        App.verboseLogError("invoice.getData() failed:", err);
+        reject(err);
+      });
     });
   },
 
@@ -68,8 +86,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    getApp().verboseLog("This is invoice onLoad")
-    wx.setNavigationBarTitle({ title: '开票信息' })
+    App.verboseLog("invoice.onLoad()");
+    wx.setNavigationBarTitle({ title: '开票信息' });
   },
 
   /**
@@ -83,8 +101,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    getApp().verboseLog("This is invoice onShow")
-    this.getData()
+    return new Promise((resolve, reject) => {
+      App.verboseLog("invoice.onShow()");
+      wx.showLoading({
+        title: '加载中',
+        mask: true,
+      });
+      this.getData().then((res) => {
+        wx.hideLoading();
+        App.verboseLog("invoice.onShow() success.");
+        resolve("invoice.onShow() success.");
+      }).catch((err) => {
+        wx.hideLoading();
+        App.verboseLogError("invoice.onShow() failed:", err);
+        reject(err);
+      });
+    });
   },
 
   /**
@@ -107,10 +139,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    wx.startPullDownRefresh()
-    getApp().verboseLog("Refreshing")
-    this.getData()
-    wx.stopPullDownRefresh()
+    wx.startPullDownRefresh();
+    App.verboseLog("invoice.onPullDownRefresh() page refreshing");
+    this.getData();
+    wx.stopPullDownRefresh();
   },
 
   /**

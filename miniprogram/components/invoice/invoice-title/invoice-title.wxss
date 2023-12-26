@@ -12,20 +12,24 @@
   display: grid;
   grid-template-columns: 4fr 1fr;
   gap: 1vh;
+  overflow: hidden;
   align-items: center; /* Center vertically */
   /* background-color: thistle; */
 }
 
 .left {
   height: 100%;
+  width: 100%;
+  overflow: hidden;
   /* background-color: wheat; */
 }
 .invoice-1st-line {
   height: 50%;
   width: 100%;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 8fr 1fr;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: flex;
   gap: 0.5vh;
   /* background-color: tomato; */
 }
@@ -34,13 +38,13 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  /* background-color: rgb(84, 209, 68); */
 }
 .invoice-default-container {
   height: 100%;
   display: inline-block;
   align-items: center; /* Center vertically */
-  /* margin-left: 0.2vh;
-  margin-right: 1vh; */
+  margin-right: 1vh;
   /* background-color: tan; */
 }
 .invoice-default-border {
