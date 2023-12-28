@@ -6,6 +6,27 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/testPage/testPage",
+          "pathName": "pages/testPage/testPage",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/auth/auth",
+          "pathName": "pages/auth/auth",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/me/me",
+          "pathName": "pages/me/me",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/personalInfo/personalInfo",
           "pathName": "pages/personalInfo/personalInfo",
           "query": "",

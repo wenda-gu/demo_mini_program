@@ -2,6 +2,8 @@
 - add env id in `app.js` to set up cloud dev env
 - [微信小程序自定义组件的坑之 hidden、boolean 属性和花括号](https://www.cnblogs.com/flipped/p/15640229.html)
 - [微信小程序修改switch组件大小](https://juejin.cn/post/6844903609411305486)
+- [小程序登录案例](https://www.jianshu.com/p/7414a543c622)
+- [支付宝支付在微信小程序中也能实现？SpringBoot+沙箱教你一键搞定 —— 支付宝沙箱](https://www.bilibili.com/read/cv26705328/)
 
 # 云开发 quickstart
 
@@ -20,3 +22,6 @@
 - icon change on tap
 - default icon location
 - login functionality and openid
+- 参会历史隐藏，之后上线
+- 头像隐藏，之后上线.默认头像为微信头像，可以更改 
+- encode api request on developer platform

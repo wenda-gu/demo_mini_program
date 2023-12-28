@@ -1,8 +1,8 @@
 // pages/invoice/invoice.js
 
-import logging from "../../static/utils/logging.js";
+import {verboseLog, verboseError} from "../../static/utils/logging.js";
 import dbAction from "../../static/utils/dbAction.js";
-const db = wx.cloud.database();
+import {wxapi} from "../../static/utils/wxapi.js";
 
 Page({
 
@@ -20,50 +20,53 @@ Page({
     wx.navigateTo({
       url: destination,
     }).then(res => {
-      logging.verboseLog("invoice.handleEditInvoiceTitle() nav to invoice-add as edit success:", destination);
+      verboseLog("invoice.handleEditInvoiceTitle() nav to invoice-add as edit success:", destination);
     });
   },
 
   handleDeleteInvoiceTitle(e) {
-    wx.showActionSheet({
+    wxapi("showActionSheet", {
       itemList: ['删除'],
       itemColor: "#FF0000",
-      success: (res) => {
-        switch(res.tapIndex) {
-          case 0:
-            this.deleteInvoiceTitle(e).then((res) => {
-              logging.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
-            }).catch((err) => {
-              logging.verboseLog("invoice.handleDeleteInvoiceTitle() failed:", err);
+    }).then((res) => {
+      switch(res.tapIndex) {
+        case 0:
+          this.deleteInvoiceTitle(e).then((res) => {
+            verboseLog("invoice.handleDeleteInvoiceTitle() deleteInvoiceTitle() success:", res);
+            wx.showToast({
+              title: '删除成功',
+              duration: 800,
             });
-        }
-      },
-      fail (res) {
-        logging.verboseLog("invoice.handleDeleteInvoiceTitle() delete cancelled.");
+          }).catch((err) => {
+            verboseLog("invoice.handleDeleteInvoiceTitle() deleteInvoiceTitle() failed:", err);
+            wx.showToast({
+              title: '删除失败请重试',
+              icon: 'error',
+              duration: 2000,
+            });
+          });
       }
+    }).catch((err) => {
+      verboseLog("invoice.handleDeleteInvoiceTitle() delete cancelled.");
     });
   },
 
   deleteInvoiceTitle(e) {
     return new Promise((resolve, reject) => {
       const idToDelete = e.detail
-      db.collection("invoice-title").doc(idToDelete).remove().then((res) => {
-        logging.verboseLog("invoice.handleDeleteInvoiceTitle() removed:", idToDelete);
+      dbAction.deleteInvoiceTitleById(idToDelete).then((res) => {
         this.getData().then((res) => {
-          logging.verboseLog("invoice.handleDeleteInvoiceTitle() success.");
-          resolve("invoice.handleDeleteInvoiceTitle() success.");
+          resolve(res);
         }).catch((err) => {
-          logging.verboseError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
+          verboseError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
           reject(err);
         });
       }).catch((err) => {
-        logging.verboseError("invoice.deleteInvoiceTitle() failed:", err);
-        wx.showToast({
-          title: '删除失败请重试',
-          icon: 'error',
-          duration: 2000,
+        this.getData().then((res) => {
+          reject(err);
+        }).catch((err) => {
+          reject(err);
         });
-        reject(err);
       });
     });
   },
@@ -74,17 +77,17 @@ Page({
 
   getData(){
     return new Promise((resolve, reject) => {
-      logging.verboseLog("invoice.getData()");
+      verboseLog("invoice.getData()");
       dbAction.getAllInvoiceTitles().then((items) => {
-        logging.verboseLog("invoice.getData() got invoice title(s):", items);
+        verboseLog("invoice.getData() got invoice title(s):", items);
         this.setData({
           dataObj: items,
           show: true,
         });
-        logging.verboseLog("invoice.getData() success.");
+        verboseLog("invoice.getData() success.");
         resolve("invoice.getData() success.");
       }).catch((err) => {
-        logging.verboseError("invoice.getData() failed:", err);
+        verboseError("invoice.getData() failed:", err);
         reject(err);
       });
     });
@@ -103,17 +106,17 @@ Page({
         loadingTitle = "刷新中";
         toastTitle = "刷新失败请重试";
       }
-      logging.verboseLog(funcName);
+      verboseLog(funcName);
       wx.showLoading({
         title: loadingTitle,
         mask: true,
       });
       this.getData().then((res) => {
         wx.hideLoading();
-        logging.verboseLog(`${funcName} getData() success.`);
+        verboseLog(`${funcName} getData() success.`);
         resolve(`${funcName} getData() success.`);
       }).catch((err) => {
-        logging.verboseError(`${funcName} getData() failed:`, err);
+        verboseError(`${funcName} getData() failed:`, err);
         wx.hideLoading();
         wx.showToast({
           title: toastTitle,
@@ -130,7 +133,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    logging.verboseLog("invoice.onLoad()");
+    verboseLog("invoice.onLoad()");
     wx.setNavigationBarTitle({ title: '开票信息' });
   },
 
@@ -168,13 +171,13 @@ Page({
   onPullDownRefresh() {
     return new Promise((resolve, reject) => {
       wx.startPullDownRefresh();
-      logging.verboseLog("invoice.onPullDownRefresh() refreshing...");
+      verboseLog("invoice.onPullDownRefresh() refreshing...");
       this.getDataWrapper("refresh").then((res) => {
         wx.stopPullDownRefresh();
-        logging.verboseLog("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
+        verboseLog("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
         resolve("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
       }).catch((err) => {
-        logging.verboseError("invoice.onPullDownRefresh() getDataWrapper() failed:", err);
+        verboseError("invoice.onPullDownRefresh() getDataWrapper() failed:", err);
         reject(err);
       });
     });

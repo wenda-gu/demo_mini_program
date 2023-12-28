@@ -11,8 +11,10 @@
     "pages/registration/registration",
     "pages/contact/contact",
     "pages/history/history",
-    "pages/personalInfo/personalInfo",
-    "pages/invoice-add/invoice-add"
+    "pages/personal-info/personal-info",
+    "pages/invoice-add/invoice-add",
+    "pages/auth/auth",
+    "pages/testPage/testPage"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

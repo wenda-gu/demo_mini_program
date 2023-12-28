@@ -1,0 +1,3 @@
+<!--pages/testPage/testPage.wxml-->
+<button bind:tap="showMoreUserInfo">click</button>
+<text>{{userInfo}}</text>

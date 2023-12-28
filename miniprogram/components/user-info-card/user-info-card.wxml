@@ -4,11 +4,11 @@
 
 <view class="card-border">
   <view class="card">
-    <!-- <view class="image-container">
+    <view class="image-container">
       <view class="image-cropper">
-        <image src="/static/images/icons/flower.jpeg" alt="Profile Image" class="profile-pic" ></image>
+        <image src="{{avatarUrl}}" alt="Profile Image" class="profile-pic" ></image>
       </view>
-    </view> -->
+    </view>
     <view class="text-container">
       <view class="name">{{userName}}</view>
       <view class="title">{{userTitle}}</view>

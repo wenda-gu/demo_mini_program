@@ -5,14 +5,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    userName: {
-      type: String,
-      value: '姓名'
-    },
-    userTitle: {
-      type: String,
-      value: '职位'
-    }
+    userName: String,
+    userTitle: String,
+    avatarUrl: String,
   },
 
   /**
