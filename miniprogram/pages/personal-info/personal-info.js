@@ -10,26 +10,97 @@ Page({
    */
   data: {
     name: String,
-    personalId: String,
-    isMale: Boolean,
+    // 0 is F, 1 is M, 2 is not set
+    isMale: Number,
     phonePersonal: Number,
     emailPersonal: String,
+    personalId: String,
     companyName: String,
-    department: String,
-    title: String,
     address: String,
     phoneCompany: Number,
+    isApplicable: true,
+    department: String,
+    title: String,
+    position: String,
     isEditing: false,
   },
 
   toggleIsEditing() {
     this.setData({
-      isEditing: true,
+      isEditing: !this.data.isEditing,
     });
   },
-  test() {
-    var b = validation.validateNumNotEmpty('');
-    verboseLog("test:", b);
+  toggleApplicablity() {
+    this.setData({
+      isApplicable: !this.data.isApplicable,
+    });
+  },
+
+
+  handleName(e) {
+    this.setData({
+      name: e.detail
+    });
+  },
+  handleGender(e) {
+    this.setData({
+      isMale: e.detail
+    });
+  },
+  handlePhonePersonal(e) {
+    this.setData({
+      phonePersonal: e.detail
+    });
+  },
+  handleEmailPersonal(e) {
+    this.setData({
+      emailPersonal: e.detail
+    });
+  },
+  handlePersonalId(e) {
+    this.setData({
+      personalId: e.detail
+    });
+  },
+  handleCompanyName(e) {
+    this.setData({
+      companyName: e.detail
+    });
+  },
+  handleAddress(e) {
+    this.setData({
+      address: e.detail
+    });
+  },
+  handlePhoneCompany(e) {
+    this.setData({
+      phoneCompany: e.detail
+    });
+  },
+  handleDepartment(e) {
+    this.setData({
+      department: e.detail
+    });
+  },
+  handleTitle(e) {
+    this.setData({
+      title: e.detail
+    });
+  },
+  handlePosition(e) {
+    this.setData({
+      position: e.detail
+    });
+  },
+  
+  
+
+  
+
+
+  btnSubmit() {
+    verboseLog("personal-info.btnSubmit()");
+    this.toggleIsEditing();
   },
 
   /**

@@ -22,7 +22,6 @@ App({
         env: 'bsc-db-6g55uugs8cdb24fc',
         traceUser: true,
       });
-      console.log("here")
     }
     if (!this.globalData.loggedin) this.userLogin();
   },

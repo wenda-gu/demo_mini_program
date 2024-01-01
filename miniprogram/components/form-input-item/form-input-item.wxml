@@ -1,6 +1,6 @@
 <!--components/form-input-item/form-input-item.wxml-->
 <view class="form-input-format">
-  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}"></TextAsterisk>
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
   
-  <input name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput" type="{{type}}" maxlength="{{maxlength}}" disabled="{{isDisabled}}"></input>
+  <input name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput" type="{{type}}" maxlength="{{maxlength}}" disabled="{{disabled}}"></input>
 </view>

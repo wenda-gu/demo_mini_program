@@ -10,8 +10,29 @@ Page({
   data: {
     openid: String,
     userInfo: Object,
+    items: [
+      {
+        value: true,
+        name: "男",
+      },
+      {
+        value: false,
+        name: "女",
+      },
+    ],
   },
+  radioChange(e) {
+    console.log('radio发生change事件，携带value值为：', e.detail.value)
 
+    const items = this.data.items
+    for (let i = 0, len = items.length; i < len; ++i) {
+      items[i].checked = items[i].value === e.detail.value
+    }
+
+    this.setData({
+      items
+    })
+  },
   showOpenId() {
     cloudAction.wxgetOpenId().then((res) => {
       verboseLog("testPage.showOpenId() got openid:", res);

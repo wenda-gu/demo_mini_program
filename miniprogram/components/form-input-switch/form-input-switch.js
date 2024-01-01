@@ -15,6 +15,10 @@ Component({
       type: Boolean,
       value: false
     },
+    disabled: {
+      type: Boolean,
+      value: false,
+    }
   },
 
   /**
@@ -29,10 +33,13 @@ Component({
    */
   methods: {
     isVAT() {
-      this.triggerEvent('VAT')
+      this.triggerEvent('VAT');
     },
     isDefault() {
-      this.triggerEvent('Default')
+      this.triggerEvent('Default');
     },
+    isApplicable() {
+      this.triggerEvent('applicable');
+    }
   }
 })

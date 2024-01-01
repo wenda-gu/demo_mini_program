@@ -1,3 +1,4 @@
 <!--pages/testPage/testPage.wxml-->
-<button bind:tap="showMoreUserInfo">click</button>
+<button bind:tap="showMoreUserInfo" disabled="true">click</button>
 <text>{{userInfo}}</text>
+<FormInputItem isRequired="{{true}}" label="姓名" name="name" placeholder="请输入姓名" value="{{name}}" bindinput="handleName" disabled="true"></FormInputItem>

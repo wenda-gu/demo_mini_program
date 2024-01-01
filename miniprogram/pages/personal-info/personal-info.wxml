@@ -4,31 +4,34 @@
     <view class="info">
       <FormInputItem isRequired="{{true}}" label="姓名" name="name" placeholder="请输入姓名" value="{{name}}" bindinput="handleName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{true}}" label="身份证号" name="personalId" placeholder="请输入身份证号" value="{{personalId}}" bindinput="handlePersonalId" type="idcard" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputGender isRequired="{{true}}" label="性别" bind:changeGender="handleGender" disabled="{{!isEditing}}" value="{{isMale}}"></FormInputGender>
+      <!-- <FormInputGender isRequired="{{true}}" label="性别" name="gender" placeholder="请选择性别" value="{{isMale}}" bindinput="handleGender" disabled="{{!isEditing}}"></FormInputGender> -->
       <Separator></Separator>
-      <!-- needs a new component for selecting gender -->
-      <FormInputItem isRequired="{{true}}" label="性别" name="gender" placeholder="请选择性别" value="{{isMale}}" bindinput="handleGender" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{true}}" label="个人手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="邮箱" name="emailPersonal" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailPersonal" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{false}}" label="个人邮箱" name="emailPersonal" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailPersonal" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{false}}" label="身份证号码" name="personalId" placeholder="请输入身份证号码" value="{{personalId}}" bindinput="handlePersonalId" type="idcard" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="单位名称" name="companyName" placeholder="请输入单位名称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
-      <Separator></Separator>
-      <!-- needs a new component for selecting if applicable, and a choice as other and specify -->
-      <FormInputItem isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}"></FormInputItem>
-      <Separator></Separator>
-      <!-- needs a new component for selecting if applicable -->
-      <FormInputItem isRequired="{{true}}" label="职称" name="title" placeholder="请选择职称" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="单位地址" name="address" placeholder="请输入单位地址" value="{{address}}" bindinput="handleAddress" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputItem isRequired="{{false}}" label="单位电话" name="phoneCompany" placeholder="请输入单位电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number" disabled="{{!isEditing}}"></FormInputItem>
+      <Separator></Separator>
+      <FormInputSwitch label="以下栏目适用" switchMethod="isApplicable" bind:applicable="toggleApplicablity" checked="{{isApplicable}}" disabled="{{!isEditing}}"></FormInputSwitch>
+      <Separator></Separator>
+      <!-- needs a new component for selecting if applicable, and a choice as other and specify -->
+      <FormInputItem isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing || !isApplicable}}"></FormInputItem>
+      <Separator></Separator>
+      <FormInputItem isRequired="{{true}}" label="职称" name="title" placeholder="请输入职称" value="{{title}}" bindinput="handleTitle" disabled="{{!isEditing || !isApplicable}}"></FormInputItem>
+      <Separator></Separator>
+      <FormInputItem isRequired="{{false}}" label="职务" name="position" placeholder="请输入职务" value="{{position}}" bindinput="handlePosition" disabled="{{!isEditing || !isApplicable}}"></FormInputItem>
     </view>
   </view>
   
   <Spacer bgcolor="transparent"></Spacer>
   <button class="blue-btn" form-type="submit" hover-class="btn-hover" wx:if="{{isEditing}}">保存</button>
-  <button class="blue-btn" hover-class="btn-hover" bind:tap="test" wx:else>编辑</button>
+  <button class="blue-btn" hover-class="btn-hover" bind:tap="toggleIsEditing" wx:else>编辑</button>
 </form>
 <Spacer bgcolor="transparent" h="10"></Spacer>

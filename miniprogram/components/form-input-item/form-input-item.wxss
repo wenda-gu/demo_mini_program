@@ -1,2 +1,6 @@
 /* components/form-input-item/form-input-item.wxss */
 @import "/static/styles/style.wxss";
+
+input[disabled] {
+  color: rgb(230, 230, 230);
+}

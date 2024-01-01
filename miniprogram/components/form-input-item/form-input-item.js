@@ -21,7 +21,7 @@ Component({
       type: Number,
       value: 140,
     },
-    isDisabled: {
+    disabled: {
       type: Boolean,
       value: false,
     }

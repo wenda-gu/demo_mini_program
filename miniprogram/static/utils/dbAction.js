@@ -8,7 +8,7 @@ function addInvoiceTitle(formData) {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("invoice-title").add({
       data: formData,
-    }).then(res => {
+    }).then((res) => {
       resolve("dbAction.addInvoiceTitle() success.")
     }).catch((err) => {
       reject({

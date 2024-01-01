@@ -37,7 +37,7 @@ Page({
       verboseLog("me.onLoad() already logged in, success.");
     }
     else {
-      verboseLog("me.onLoad() here.");
+      verboseLog("me.onLoad()");
       userLogin().then((res) => {
         this.setupPage();
         verboseLog("me.onLoad() logged in success.");

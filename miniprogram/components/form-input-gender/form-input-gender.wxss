@@ -1,0 +1,23 @@
+/* components/form-input-gender/form-input-gender.wxss */
+@import "/static/styles/style.wxss";
+
+.container {
+  height: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* background-color: aqua; */
+  overflow: hidden;
+}
+
+.choice {
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 70%!important;
+  display: inline-flex;
+  /* background-color: rgb(243, 243, 243); */
+}

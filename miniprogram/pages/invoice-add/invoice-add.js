@@ -22,6 +22,7 @@ Page({
     bankAccount: Number,
     phoneReceive: Number,
     emailReceive: String,
+    isEditing: true,
   },
 
   handleCompanyName(e) {
@@ -82,7 +83,11 @@ Page({
     });
     verboseLog("invoice-add.toggleVAT() isDefault after:", this.data.isDefault);
   },
-
+  toggleIsEditing() {
+    this.setData({
+      isEditing: !this.data.isEditing,
+    });
+  },
 
 
   resetDefault(isDefault, isDefaultOriginal) {
@@ -170,7 +175,7 @@ Page({
           verboseError("invoice-add.isValid() wrong format bankAccount.");
           reject("Wrong format bankAccount.");
         }
-        else if (!validation.validateNumNotEmpty(this.data.phoneReceive)) {
+        else if (!validation.validateCellphone(this.data.phoneReceive)) {
           verboseError("invoice-add.isValid() wrong format phoneReceive.");
           reject("Wrong format phoneReceive.");
         }
@@ -192,6 +197,7 @@ Page({
         title: '提交中',
         mask: true,
       });
+      this.toggleIsEditing();
       this.isValid().then((res) => {
         const formData = this.prepareForm();
         const isDefault = this.data.isDefault;
@@ -318,7 +324,7 @@ Page({
    */
   onLoad(options) {
     wx.setNavigationBarTitle({ title: '添加抬头' });
-    
+
     if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("invoice-add.onLoad() got item:", item);

@@ -1,5 +1,5 @@
 <!--components/text-asterisk/text-asterisk.wxml-->
 <view class="text-asterisk">
-  <text class="item-name">{{label}}</text>
+  <text class="item-name" style="{{disabled ? 'color: #808080' : ''}}">{{label}}</text>
   <text wx:if="{{isRequired}}" style="color: red;">*</text>
 </view>

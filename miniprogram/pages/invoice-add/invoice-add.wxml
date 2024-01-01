@@ -2,25 +2,25 @@
 <form bindsubmit="btnSubmit">
   <view class="input-container">
     <view class="info">
-      <FormInputItem isRequired="{{true}}" label="公司名称" name="companyName" placeholder="请输入公司名称" value="{{companyName}}" bindinput="handleCompanyName"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="公司名称" name="companyName" placeholder="请输入公司名称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="税号" name="taxId" placeholder="请输入纳税人识别号" value="{{taxId}}" bindinput="handleTaxId" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault" checked="{{isDefault}}"></FormInputSwitch>
+      <FormInputSwitch label="默认抬头" switchMethod="isDefault" bind:Default="toggleDefault" checked="{{isDefault}}" disabled="{{!isEditing}}"></FormInputSwitch>
       <!-- <Separator></Separator>
-      <FormInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT" checked="{{isVAT}}"></FormInputSwitch> -->
+      <FormInputSwitch label="增值税专用发票" switchMethod="isVAT" bind:VAT="toggleVAT" checked="{{isVAT}}" disabled="{{!isEditing}}"></FormInputSwitch> -->
     </view>
     <view class="spacer-mid">
       <Spacer text="如需开具增值税专用发票，请填写以下信息" bgcolor="#eeeeee" h="5" fontSize="1.7vh"></Spacer>
     </view>
     <view class="info">
-      <FormInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress"></FormInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="address" label="公司地址" name="address" placeholder="请输入公司地址" value="{{address}}" bindinput="handleAddress" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number"></FormInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="phoneCompany" label="公司电话" name="phoneCompany" placeholder="请输入公司电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" type="number" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{isVAT}}" id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行" value="{{bankName}}" bindinput="handleBankName"></FormInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="bankName" label="开户银行" name="bankName" placeholder="请输入公司开户银行" value="{{bankName}}" bindinput="handleBankName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount" type="number"></FormInputItem>
+      <FormInputItem isRequired="{{isVAT}}" id="bankAccount" label="银行账号" name="bankAccount" placeholder="请输入公司银行账号" value="{{bankAccount}}" bindinput="handleBankAccount" type="number" disabled="{{!isEditing}}"></FormInputItem>
     </view>
 
     <view class="spacer-mid">
@@ -28,9 +28,9 @@
     </view>
     
     <view class="info">
-      <FormInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number" maxlength="11"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="个人手机号" name="phoneReceive" placeholder="请输入个人手机号" value="{{phoneReceive}}" bindinput="handlePhoneReceive" type="number" maxlength="11" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="个人邮箱" name="emailReceive" placeholder="请输入个人邮箱" value="{{emailReceive}}" bindinput="handleEmailReceive" disabled="{{!isEditing}}"></FormInputItem>
     </view>
   </view>
   

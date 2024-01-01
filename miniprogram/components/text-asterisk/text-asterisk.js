@@ -10,7 +10,11 @@ Component({
     },
     isRequired: {
       type: Boolean,
-      value: false
+      value: false,
+    },
+    disabled: {
+      type: Boolean,
+      value: false,
     },
   },
 

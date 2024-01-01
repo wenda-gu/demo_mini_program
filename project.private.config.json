@@ -6,6 +6,13 @@
     "miniprogram": {
       "list": [
         {
+          "name": "pages/personal-info/personal-info",
+          "pathName": "pages/personal-info/personal-info",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
           "name": "pages/testPage/testPage",
           "pathName": "pages/testPage/testPage",
           "query": "",
@@ -22,13 +29,6 @@
         {
           "name": "pages/me/me",
           "pathName": "pages/me/me",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/personalInfo/personalInfo",
-          "pathName": "pages/personalInfo/personalInfo",
           "query": "",
           "launchMode": "default",
           "scene": null

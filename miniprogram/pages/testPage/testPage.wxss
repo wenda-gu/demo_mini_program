@@ -1,1 +1,9 @@
 /* pages/testPage/testPage.wxss */
+.radio-group-gender {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.label-gender {
+  display: flex;
+}
