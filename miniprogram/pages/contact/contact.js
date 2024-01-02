@@ -8,7 +8,26 @@ Page({
    * 页面的初始数据
    */
   data: {
+    email: 'services@blueseachina.net',
     phoneNumber: '13817510016',
+  },
+
+  setClipboard(data) {
+    wx.setClipboardData({
+      data: data,
+    }).then((res) => {
+      verboseLog("copy success.");
+    }).catch((err) => {
+      verboseError("copy failed:", err);
+    });
+  },
+
+  onTapCopyEmail() {
+    this.setClipboard(this.data.email);
+  },
+
+  onTapCopyNumber() {
+    this.setClipboard(this.data.phoneNumber);
   },
 
   onTapCall() {

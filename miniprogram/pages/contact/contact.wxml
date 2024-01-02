@@ -1,16 +1,19 @@
 <!--pages/contact/contact.wxml-->
 <view class="box">
   <view class="content">
-    <view class="email">E-mail：services@blueseachina.net</view>
+    <view class="email">E-mail：<text user-select="true">{{email}}</text></view>
+    <Spacer></Spacer>
+    <button class="choice blue-btn" bind:tap="onTapCopyEmail">点击复制邮箱</button>
     <Spacer></Spacer>
     <Separator></Separator>
     <Spacer></Spacer>
-    <view class="phone">联系电话：{{phoneNumber}}</view>
+    <view class="phone">联系电话：<text user-select="true">{{phoneNumber}}</text></view>
     <Spacer></Spacer>
     <button class="choice blue-btn" bind:tap="onTapCall">点击拨打电话</button>
     <Spacer></Spacer>
     <button class="choice blue-btn" bind:tap="onTapSms">点击发送短信</button>
     <Spacer></Spacer>
+    <button class="choice blue-btn" bind:tap="onTapCopyNumber">点击复制电话</button>
   </view>
 </view>
 
