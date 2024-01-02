@@ -5,17 +5,21 @@ Component({
    */
   
   properties: {
+    routeDisabled: {
+      type: Boolean,
+      value: false,
+    },
     itemName: {
       type: String,
-      value: 'Default Title'
+      value: 'Default Title',
     },
     route: {
       type: String,
-      value: ''
+      value: '',
     },
     img: {
       type: String,
-      value: ''
+      value: '',
     }
   },
 

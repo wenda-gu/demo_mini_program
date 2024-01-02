@@ -1,16 +1,15 @@
 // app.js
 
 import {verboseLog, verboseError} from "/static/utils/logging.js";
-import {wxapi, wxsetData} from "/static/utils/wxapi.js";
 import cloudAction from "/static/utils/cloudAction.js";
+import dbAction from "/static/utils/dbAction.js";
 
 App({
   globalData: {
     loggedin: false,
+    personalInfoDocId: String,
     _openid: String,
-    personalInfo: {
-      
-    },
+    personalInfo: Object,
   },
 
   onLaunch: function () {
@@ -47,11 +46,7 @@ App({
         }
         else {
           verboseLog("App.onLaunch() user exists:", res.data);
-          var personalInfo = res.data;
-          this.globalData._openid = personalInfo._openid;
-          delete personalInfo._id;
-          delete personalInfo._openid;
-          this.globalData.personalInfo = personalInfo;
+          this.setPersonalInfo(res.data)
           verboseLog("App.onLaunch() openid is set:", this.globalData._openid);
           verboseLog("App.onLaunch() personal info is set:", this.globalData.personalInfo);
           // set login status to true
@@ -64,6 +59,29 @@ App({
       });
 
     });
-  }
+  },
+
+  updatePersonalInfo() {
+    return new Promise((resolve, reject) => {
+      dbAction.getPersonalInfo().then((res) => {
+        var data = res.data[0];
+        verboseLog("App.updatePersonalInfo() res.data:", data);
+        this.setPersonalInfo(data);
+        resolve("App.updatePersonalInfo() success.")
+      }).catch((err) => {
+        verboseError("App.updatePersonalInfo() failed:", err);
+        reject(err);
+      });
+    });
+  },
+  
+  setPersonalInfo(data) {
+    var personalInfo = data;
+    this.globalData.personalInfoDocId = personalInfo._id;
+    this.globalData._openid = personalInfo._openid;
+    delete personalInfo._id;
+    delete personalInfo._openid;
+    this.globalData.personalInfo = personalInfo;
+  },
   
 });

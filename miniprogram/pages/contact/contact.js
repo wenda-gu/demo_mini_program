@@ -1,12 +1,36 @@
 // pages/contact/contact.js
+import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {wxapi} from "../../static/utils/wxapi.js";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    phoneNumber: '13817510016',
   },
+
+  onTapCall() {
+    wx.makePhoneCall({
+      phoneNumber: this.data.phoneNumber,
+    }).then((res) => {
+      verboseLog("call success.");
+    }).catch((err) => {
+      verboseError("call failed:", err);
+    });
+  },
+
+  onTapSms() {
+    wxapi("sendSms", {
+      phoneNumber: this.data.phoneNumber,
+    }).then((res) => {
+      verboseLog("sms success.");
+    }).catch((err) => {
+      verboseError("sms failed:", err);
+    });
+  },
+
 
   /**
    * 生命周期函数--监听页面加载

@@ -30,7 +30,3 @@ page {
   padding-left: 2vh;
   padding-right: 2vh;
 }
-
-button.blue-btn {
-  width: 90%;
-}

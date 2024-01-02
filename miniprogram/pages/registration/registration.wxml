@@ -9,7 +9,7 @@
 
 
 <Separator></Separator>
-<ConferenceItem itemName="会议1但是分公司电饭锅水电费刚" itemDate="2024-02-08" itemIsComplete="{{true}}"></ConferenceItem>
+<ConferenceItem itemName="会议1但是分单位电饭锅水电费刚" itemDate="2024-02-08" itemIsComplete="{{true}}"></ConferenceItem>
 <Separator></Separator>
 <ConferenceItem itemName="会议2" itemDate="2024-03-08" itemIsComplete="{{false}}"></ConferenceItem>
 <Separator></Separator> 

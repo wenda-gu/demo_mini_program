@@ -82,6 +82,22 @@ function getPersonalInfo() {
   });
 }
 
+function editPersonalInfo(id, formData) {
+  return new Promise((resolve, reject) => {
+    wx.cloud.database().collection("personal-info").doc(id).update({
+      data: formData,
+    }).then((res) => {
+      verboseLog("dbAction.editPersonalInfo() success:", res);
+      resolve(res);
+    }).catch((err) => {
+      reject({
+        errMsg: "dbAction.editPersonalInfo() failed.",
+        err,
+      });
+    });
+  });
+}
+
 // Exporting methods
 export default {
   addInvoiceTitle: addInvoiceTitle,
@@ -89,4 +105,5 @@ export default {
   editInvoiceTitleById: editInvoiceTitleById,
   getAllInvoiceTitles: getAllInvoiceTitles,
   getPersonalInfo: getPersonalInfo,
+  editPersonalInfo: editPersonalInfo,
 }

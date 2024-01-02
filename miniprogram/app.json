@@ -4,6 +4,7 @@
     "connectSocket": 20000,
     "downloadFile": 10000
   },
+  "lazyCodeLoading": "requiredComponents",
   "pages": [
     "pages/index/index",
     "pages/me/me",

@@ -8,7 +8,7 @@
   <Separator></Separator> -->
   <Spacer></Spacer>
   <Separator></Separator>
-  <MenuItem itemName="我的信息" route="/pages/personal-info/personal-info" img="/static/images/icons/edit.png"></MenuItem>
+  <MenuItem itemName="我的信息" img="/static/images/icons/edit.png" routeDisabled="{{true}}" bind:tap="navToPersonalInfo"></MenuItem>
   <Separator></Separator>
   <MenuItem itemName="开票信息" route="/pages/invoice/invoice" img="/static/images/icons/text.png"></MenuItem>
   <Separator></Separator>

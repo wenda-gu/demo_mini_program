@@ -1,8 +1,16 @@
 <!--pages/contact/contact.wxml-->
 <view class="box">
   <view class="content">
-    <view class="phone">联系电话：13817510016</view>
     <view class="email">E-mail：services@blueseachina.net</view>
+    <Spacer></Spacer>
+    <Separator></Separator>
+    <Spacer></Spacer>
+    <view class="phone">联系电话：{{phoneNumber}}</view>
+    <Spacer></Spacer>
+    <button class="choice blue-btn" bind:tap="onTapCall">点击拨打电话</button>
+    <Spacer></Spacer>
+    <button class="choice blue-btn" bind:tap="onTapSms">点击发送短信</button>
+    <Spacer></Spacer>
   </view>
 </view>
 

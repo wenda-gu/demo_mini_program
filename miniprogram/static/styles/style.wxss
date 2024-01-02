@@ -8,6 +8,7 @@
 .blue-btn {
   color: white;
   background-color: #00adef;
+  width: 90%!important;
 }
 .btn-hover {
   background-color: #0085b9;

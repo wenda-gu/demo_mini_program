@@ -2,5 +2,5 @@
 <view class="form-input-format">
   <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
   
-  <input name="{{name}}" placeholder="{{placeholder}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput" type="{{type}}" maxlength="{{maxlength}}" disabled="{{disabled}}"></input>
+  <input name="{{name}}" placeholder="{{isApplicable ? placeholder : '不适用'}}" placeholder-style="{{disabled ? 'color: rgb(175, 175, 175)' : ''}}" required="{{isRequired}}" value="{{value}}" bindinput="onInput" type="{{type}}" maxlength="{{maxlength}}" disabled="{{disabled}}"></input>
 </view>

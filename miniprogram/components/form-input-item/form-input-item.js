@@ -21,6 +21,10 @@ Component({
       type: Number,
       value: 140,
     },
+    isApplicable: {
+      type: Boolean,
+      value: true,
+    },
     disabled: {
       type: Boolean,
       value: false,

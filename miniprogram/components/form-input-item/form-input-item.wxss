@@ -2,5 +2,5 @@
 @import "/static/styles/style.wxss";
 
 input[disabled] {
-  color: rgb(230, 230, 230);
+  color: rgb(124, 124, 124);
 }

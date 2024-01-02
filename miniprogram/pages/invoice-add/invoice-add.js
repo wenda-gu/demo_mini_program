@@ -277,7 +277,7 @@ Page({
         var msg, iconStr = 'error';
         switch(err) {
           case "No companyName.":
-            msg = "请填写公司名称";
+            msg = "请填写单位名称";
             break;
           case "No taxId.":
             msg = "请填写税号";
@@ -293,7 +293,7 @@ Page({
             iconStr = "none";
             break;
           case "Wrong format phoneCompany.":
-            msg = "公司电话格式错误";
+            msg = "单位电话格式错误";
             iconStr = "none";
             break;
           case "Wrong format bankAccount.":

@@ -1,9 +1,2 @@
 /* pages/invoice/invoice.wxss */
-
 @import "/static/styles/style.wxss";
-
-button.blue-btn {
-  width: 90%;
-}
-
-
