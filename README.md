@@ -19,9 +19,7 @@
 
 # Warning
 - Dark mode
-- icon change on tap
-- default icon location
 - login functionality and openid
 - 参会历史隐藏，之后上线
-- 头像隐藏，之后上线.默认头像为微信头像，可以更改 
 - encode api request on developer platform
+- get gender be mindful of number to boolean conversion 

@@ -1,9 +1,0 @@
-<!--components/form-input-gender/form-input-gender.wxml-->
-<view class="form-input-format">
-  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
-  
-  <view class="container">
-    <button class="choice {{isMale == 1 ? 'blue-btn' : ''}}" disabled="{{disabled && isMale != 1}}" bind:tap="onTapMale">男</button>
-    <button class="choice {{isMale == 0 ? 'blue-btn' : ''}}" disabled="{{disabled && isMale != 0}}" bind:tap="onTapFemale">女</button>
-  </view>
-</view>

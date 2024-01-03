@@ -7,7 +7,8 @@ Component({
   properties: {
     userName: String,
     userTitle: String,
-    avatarUrl: String,
+    avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+    
   },
 
   /**
@@ -21,6 +22,9 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    onChooseAvatar(e) {
+      this.setData(e.detail);
+      this.triggerEvent("chooseAvatar", e.detail);
+    },
   }
 })

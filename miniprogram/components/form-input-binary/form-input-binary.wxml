@@ -1,0 +1,9 @@
+<!--components/form-input-binary/form-input-binary.wxml-->
+<view class="form-input-format">
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
+  
+  <view class="container">
+    <button class="choice {{firstFlag ? 'blue-btn' : ''}}" disabled="{{disabled && !firstFlag}}" bind:tap="onTapFirst">{{first}}</button>
+    <button class="choice {{firstFlag ? '' : 'blue-btn'}}" disabled="{{disabled && firstFlag}}" bind:tap="onTapSecond">{{second}}</button>
+  </view>
+</view>

@@ -1,12 +1,11 @@
 <!--components/user-info-card/user-info-card.wxml-->
-
-
-
 <view class="card-border">
   <view class="card">
     <view class="image-container">
       <view class="image-cropper">
-        <image src="{{avatarUrl}}" alt="Profile Image" class="profile-pic" ></image>
+        <button class="avatar-action" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+          <image src="{{avatarUrl}}" alt="Profile Image" class="profile-pic" ></image>
+        </button>
       </view>
     </view>
     <view class="text-container">
@@ -15,8 +14,3 @@
     </view>
   </view>
 </view>
-
-<!-- 
-  头像隐藏，之后上线
-  默认头像为微信头像，可以更改 
--->

@@ -46,6 +46,23 @@
   /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); Optional: adds a subtle shadow */
 }
 
+.avatar-action {
+  /* align to image-cropper start */
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /* align to image-cropper end */
+  display: inline;
+  margin: 0 auto;
+  height: 100%!important; /* Make the image fill the container */
+  width: auto!important;
+
+  align-items: center;
+  justify-content: center;
+}
+
 .profile-pic {
   /* align to image-cropper start */
   top: 0;

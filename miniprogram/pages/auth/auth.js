@@ -1,5 +1,6 @@
 // pages/auth/auth.js
-
+import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {cloudAction} from "../../static/utils/cloudAction.js";
 const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
 
 
@@ -9,15 +10,39 @@ Page({
    * 页面的初始数据
    */
   data: {
-    avatarUrl: defaultAvatarUrl,
+    phoneNumber: Number,
+    verificationCode: Number,
   },
 
 
-  onChooseAvatar(e) {
-    const { avatarUrl } = e.detail 
+
+  sendVerificationCode() {
+    cloudAction.wxCloudApi('sendVerificationCode', {
+      phone: this.data.phoneNumber
+    }).then(res => {
+      verboseLog(res);
+    }).catch(err => {
+      verboseError(err);
+    });
+  },
+
+  inputVerificationCode(e) {
     this.setData({
-      avatarUrl,
-    })
+      verificationCode: e.detail.value
+    });
+  },
+
+  // TODO: verification success or fail handler
+  // TODO: verification cloud functions need to be finished
+  signup() {
+    cloudAction.wxCloudApi('checkVerificationCode', {
+      phone: this.data.phoneNumber,
+      code: this.data.verificationCode,
+    }).then(res => {
+      verboseLog(res);
+    }).catch(err => {
+      verboseError(err);
+    });
   },
 
   /**

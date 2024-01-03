@@ -43,7 +43,6 @@ function validatePersonalIdAndGender(id, gender) {
   if (lastDigit == 'X' || lastDigit == 'x') {
     lastDigit = 10;
   }
-  console.log(lastDigit % 2, gender)
   return lastDigit % 2 == gender;
 }
 

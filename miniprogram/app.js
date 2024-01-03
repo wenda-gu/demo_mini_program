@@ -9,6 +9,7 @@ App({
     loggedin: false,
     personalInfoDocId: String,
     _openid: String,
+    avatarUrl: String,
     personalInfo: Object,
   },
 
@@ -79,8 +80,10 @@ App({
     var personalInfo = data;
     this.globalData.personalInfoDocId = personalInfo._id;
     this.globalData._openid = personalInfo._openid;
+    this.globalData.avatarUrl = personalInfo.avatarUrl;
     delete personalInfo._id;
     delete personalInfo._openid;
+    delete personalInfo.avatarUrl;
     this.globalData.personalInfo = personalInfo;
   },
   

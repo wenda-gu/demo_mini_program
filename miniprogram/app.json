@@ -53,7 +53,7 @@
     "ConferenceItem": "components/conference-item/conference-item",
     "FormInputSwitch": "components/form-input-switch/form-input-switch",
     "FormInputItem": "components/form-input-item/form-input-item",
-    "FormInputGender": "components/form-input-gender/form-input-gender",
+    "FormInputBinary": "components/form-input-binary/form-input-binary",
     "TextAsterisk": "components/text-asterisk/text-asterisk",
     "InvoiceTitle": "components/invoice-title/invoice-title",
     "IconItem": "components/icon-item/icon-item"

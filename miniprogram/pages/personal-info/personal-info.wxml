@@ -4,7 +4,7 @@
     <view class="info">
       <FormInputItem isRequired="{{true}}" label="姓名" name="name" placeholder="请输入姓名" value="{{name}}" bindinput="handleName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputGender isRequired="{{true}}" label="性别" bind:changeGender="handleGender" disabled="{{!isEditing}}" isMale="{{isMale}}"></FormInputGender>
+      <FormInputBinary isRequired="{{true}}" label="性别" switchMethod="changeGender" bind:changeGender="handleGender" first="男" second="女" firstFlag="{{isMale}}" disabled="{{!isEditing}}"></FormInputBinary>
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
@@ -18,14 +18,24 @@
       <Separator></Separator>
       <FormInputItem isRequired="{{false}}" label="单位电话" name="phoneCompany" placeholder="请输入单位电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputSwitch label="以下栏目适用" switchMethod="isApplicable" bind:applicable="toggleApplicablity" checked="{{isApplicable}}" disabled="{{!isEditing}}"></FormInputSwitch>
+
+      <FormInputBinary isRequired="{{true}}" label="医务工作者" switchMethod="applicable" bind:applicable="toggleApplicablity" firstFlag="{{isHealthcareWorker}}" disabled="{{!isEditing}}"></FormInputBinary>
       <Separator></Separator>
-      <!-- needs a new component for selecting if applicable, and a choice as other and specify -->
-      <FormInputItem isRequired="{{isApplicable}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" isApplicable="{{isApplicable}}" disabled="{{!isEditing || !isApplicable}}"></FormInputItem>
-      <Separator></Separator>
-      <FormInputItem isRequired="{{isApplicable}}" label="职称" name="title" placeholder="请输入职称" value="{{title}}" bindinput="handleTitle"isApplicable="{{isApplicable}}"  disabled="{{!isEditing || !isApplicable}}"></FormInputItem>
-      <Separator></Separator>
-      <FormInputItem isRequired="{{false}}" label="职务" name="position" placeholder="请输入职务" value="{{position}}" bindinput="handlePosition" isApplicable="{{isApplicable}}" disabled="{{!isEditing || !isApplicable}}"></FormInputItem>
+
+      <view wx:if="{{isHealthcareWorker}}">
+        <!-- TODO: needs a new component for choice as other and specify -->
+        <FormInputItem isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}"></FormInputItem>
+        <Separator></Separator>
+        <FormInputItem isRequired="{{true}}" label="职称" name="title" placeholder="请输入职称" value="{{title}}" bindinput="handleTitle" disabled="{{!isEditing}}"></FormInputItem>
+        <Separator></Separator>
+        <FormInputItem isRequired="{{false}}" label="职务" name="position" placeholder="请输入职务" value="{{position}}" bindinput="handlePosition" disabled="{{!isEditing}}"></FormInputItem>
+      </view>
+
+      <view wx:else>
+        <FormInputItem isRequired="{{true}}" label="部门" name="department" placeholder="请输入部门" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}"></FormInputItem>
+        <Separator></Separator>
+        <FormInputItem isRequired="{{true}}" label="职务" name="position" placeholder="请输入职务" value="{{position}}" bindinput="handlePosition" disabled="{{!isEditing}}"></FormInputItem>
+      </view>
     </view>
   </view>
   

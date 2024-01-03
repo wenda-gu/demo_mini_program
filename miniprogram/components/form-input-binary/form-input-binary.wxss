@@ -1,4 +1,4 @@
-/* components/form-input-gender/form-input-gender.wxss */
+/* components/form-input-binary/form-input-binary.wxss */
 @import "/static/styles/style.wxss";
 
 .container {

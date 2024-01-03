@@ -14,15 +14,14 @@ Page({
    */
   data: {
     name: String,
-    // 0 is F, 1 is M, 2 is not set
-    isMale: Number,
+    isMale: Boolean,
     phonePersonal: Number,
     emailPersonal: String,
     personalId: String,
     companyName: String,
     address: String,
     phoneCompany: Number,
-    isApplicable: true,
+    isHealthcareWorker: true,
     department: String,
     title: String,
     position: String,
@@ -34,12 +33,10 @@ Page({
       isEditing: !this.data.isEditing,
     });
   },
-  toggleApplicablity() {
-    this.setData({
-      isApplicable: !this.data.isApplicable,
-    });
-    if (!this.data.isApplicable) {
+  toggleApplicablity(e) {
+    if (this.data.isHealthcareWorker != e.detail) {
       this.setData({
+        isHealthcareWorker: !this.data.isHealthcareWorker,
         department: '',
         title: '',
         position: '',
@@ -105,12 +102,6 @@ Page({
   },
   
   prepareForm() {
-    var department = '', title = '', position = '';
-    if (this.data.isApplicable) {
-      department = this.data.department;
-      title = this.data.title;
-      position = this.data.position;
-    }
     return {
       name: this.data.name,
       isMale: this.data.isMale,
@@ -120,10 +111,10 @@ Page({
       companyName: this.data.companyName,
       address: this.data.address,
       phoneCompany: this.data.phoneCompanyNumber,
-      isApplicable: this.data.isApplicable,
-      department: department,
-      title: title,
-      position: position,
+      isHealthcareWorker: this.data.isHealthcareWorker,
+      department: this.data.department,
+      title: this.data.title,
+      position: this.data.position,
     };
   },
 
@@ -154,14 +145,28 @@ Page({
         verboseError("personal-info.isValid() no address.");
         reject("No address.");
       }
-      else if (this.data.isApplicable) {
-        if (this.data.department == String || this.data.department == '') {
-          verboseError("personal-info.isValid() no department.");
-          reject("No department.");
+      else {
+        // 是医务工作者
+        if (this.data.isHealthcareWorker) {
+          if (this.data.department == String || this.data.department == '') {
+            verboseError("personal-info.isValid() no medical department.");
+            reject("No medical department.");
+          }
+          else if (this.data.title == String || this.data.title == '') {
+            verboseError("personal-info.isValid() no title.");
+            reject("No title.");
+          }
         }
-        else if (this.data.title == String || this.data.title == '') {
-          verboseError("personal-info.isValid() no title.");
-          reject("No title.");
+        // 非医务工作者
+        else {
+          if (this.data.department == String || this.data.department == '') {
+            verboseError("personal-info.isValid() no department.");
+            reject("No department.");
+          }
+          else if (this.data.position == String || this.data.position == '') {
+            verboseError("personal-info.isValid() no position.");
+            reject("No position.");
+          }
         }
       }
       // check format
@@ -247,11 +252,17 @@ Page({
           case "No address.":
             msg = "请填写单位地址";
             break;
-          case "No department.":
-            msg = "请填写科室";
+          case "No medical department.":
+            msg = "请选择科室";
             break;
           case "No title.":
             msg = "请填写职称";
+            break;
+          case "No position.":
+            msg = "请填写职务";
+            break;
+          case "No department.":
+            msg = "请填写部门";
             break;
           case "Wrong format phonePersonal.":
             msg = "个人手机号格式错误";
@@ -294,22 +305,16 @@ Page({
     if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("personal-info.onLoad() got item:", item);
-    var isApplicable = true, department = '', title = '', position = '';
-    // if item.isApplicable is undefined, first time filling out personal info form
-    if (item.isApplicable == undefined) {
-      // do nothing
-    }
-    else if (item.isApplicable) {
+    var isHealthcareWorker = true, department = '', title = '', position = '';
+    // if item.isHealthcareWorker is undefined, first time filling out personal info form
+    if (item.isHealthcareWorker != undefined) {
+      isHealthcareWorker = item.isHealthcareWorker;
       department = item.department;
-      title = item.title;
+      title = item.title ? item.title : '';
       position = item.position ? item.position : '';
-    }
-    else {
-      isApplicable = false;
     }
     this.setData({
       name: item.name,
-      // 0 is F, 1 is M, 2 is not set
       isMale: item.isMale,
       phonePersonal: item.phonePersonal,
       emailPersonal: item.emailPersonal,
@@ -317,7 +322,7 @@ Page({
       companyName: item.companyName,
       address: item.address,
       phoneCompany: item.phoneCompany,
-      isApplicable: isApplicable,
+      isHealthcareWorker: isHealthcareWorker,
       department: department,
       title: title,
       position: position,

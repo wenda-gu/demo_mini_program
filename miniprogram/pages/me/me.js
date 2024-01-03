@@ -1,5 +1,6 @@
 // pages/me/me.js
 import { verboseLog, verboseError } from "../../static/utils/logging";
+import dbAction from "../../static/utils/dbAction.js";
 
 const userLogin = getApp().userLogin
 const global = getApp().globalData;
@@ -13,20 +14,31 @@ Page({
   data: {
     title: String,
     userInfo: Object,
+    avatarUrl: String,
     loggedin: false,
   },
 
+  handleChooseAvatar(e) {
+    this.setData(e);
+    dbAction.editAvatarUrl(global.personalInfoDocId, e).then((res) => {
+      verboseLog("me.handleChooseAvatar() editAvatarUrl() update avatarUrl success.");
+    }).catch((err) => {
+      verboseError("me.handleChooseAvatar() editAvatarUrl() update avatarUrl failed:", err);
+    });
+  },
+
   setupPage() {
-    var title = global.personalInfo.companyName;
-    if (global.personalInfo.department != '') {
-      title += global.personalInfo.department;
-    }
-    if (global.personalInfo.title != '') {
+    var title = global.personalInfo.companyName + global.personalInfo.department;
+    if (global.personalInfo.isHealthcareWorker) {
       title += global.personalInfo.title;
+    }
+    else {
+      title += global.personalInfo.position;
     }
     this.setData({
       title: title,
       userInfo: global.personalInfo,
+      avatarUrl: global.avatarUrl,
       loggedin: true,
     });
   },
