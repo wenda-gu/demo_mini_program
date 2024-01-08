@@ -1,4 +1,17 @@
 <!--pages/testPage/testPage.wxml-->
-<button bind:tap="showMoreUserInfo" disabled="true">click</button>
-<text>{{userInfo}}</text>
-<FormInputItem isRequired="{{true}}" label="姓名" name="name" placeholder="请输入姓名" value="{{name}}" bindinput="handleName" disabled="true"></FormInputItem>
+<view class="section">
+  <picker bindchange="bindPickerChange" range="{{items}}">
+    <view class="picker">
+      当前选择：{{department}}
+    </view>
+  </picker>
+</view>
+
+<view class="section">
+  <view class="section__title">省市区选择器</view>
+  <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+    <view class="picker">
+      当前选择：{{region[0]}}，{{region[1]}}，{{region[2]}}
+    </view>
+  </picker>
+</view>

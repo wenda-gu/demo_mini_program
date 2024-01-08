@@ -3,6 +3,7 @@
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {medicalDepartmentList} from "../../static/utils/staticData.js";
 
 const personalInfoDocId = getApp().globalData.personalInfoDocId;
 const updatePersonalInfo = getApp().updatePersonalInfo;

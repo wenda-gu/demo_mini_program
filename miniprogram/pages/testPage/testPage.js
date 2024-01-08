@@ -1,6 +1,7 @@
 // pages/testPage/testPage.js
 import cloudAction from "../../static/utils/cloudAction.js";
 import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {medicalDepartmentList} from "../../static/utils/staticData.js";
 
 Page({
 
@@ -10,29 +11,26 @@ Page({
   data: {
     openid: String,
     userInfo: Object,
-    items: [
-      {
-        value: true,
-        name: "男",
-      },
-      {
-        value: false,
-        name: "女",
-      },
-    ],
+    items: medicalDepartmentList,
+    department: String,
+    region: Object,
+    customItem: '全部'
   },
-  radioChange(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
-
-    const items = this.data.items
-    for (let i = 0, len = items.length; i < len; ++i) {
-      items[i].checked = items[i].value === e.detail.value
-    }
-
+  bindPickerChange: function(e) {
     this.setData({
-      items
+      department: medicalDepartmentList[e.detail.value],
+    });
+    console.log('picker发送选择改变，携带值为', this.data.department);
+  },
+  bindRegionChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      region: e.detail.value
     })
   },
+
+
+  
   showOpenId() {
     cloudAction.wxgetOpenId().then((res) => {
       verboseLog("testPage.showOpenId() got openid:", res);
