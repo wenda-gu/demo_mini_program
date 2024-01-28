@@ -31,7 +31,6 @@ Component({
       type: String,
       value: "否",
     },
-    // 0 is Second, 1 is First, 2 is not set
     firstFlag: {
       type: Boolean,
     },

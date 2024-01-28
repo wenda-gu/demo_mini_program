@@ -1,0 +1,15 @@
+<!--components/form-input-picker/form-input-picker.wxml-->
+<view class="form-input-format">
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
+
+  <view wx:if="{{mode == 'selector'}}">
+    <picker bindchange="bindPickerChange" range="{{range}}" disabled="{{disabled}}">
+        {{value ? value : placeholder}}
+    </picker>
+  </view>
+  <view wx:else>
+    <picker mode="region" bindchange="bindRegionChange" custom-item="{{customItem}}" disabled="{{disabled}}">
+      {{region ? region[0] + '，' + region[1] + '，' + region[2] : placeholder}}
+    </picker>
+  </view>
+</view>

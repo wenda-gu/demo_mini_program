@@ -51,6 +51,7 @@
     "Separator": "components/separator/separator",
     "Footer": "components/footer/footer",
     "ConferenceItem": "components/conference-item/conference-item",
+    "FormInputPicker": "components/form-input-picker/form-input-picker",
     "FormInputSwitch": "components/form-input-switch/form-input-switch",
     "FormInputItem": "components/form-input-item/form-input-item",
     "FormInputBinary": "components/form-input-binary/form-input-binary",

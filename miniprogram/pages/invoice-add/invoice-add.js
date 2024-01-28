@@ -146,19 +146,19 @@ Page({
 
   isValid() {
     return new Promise((resolve, reject) => {
-      if (this.data.companyName == String || this.data.companyName == '') {
+      if (validation.isEmpty(this.data.companyName, String)) {
         verboseError("invoice-add.isValid() no companyName.");
         reject("No companyName.");
       }
-      else if (this.data.taxId == String || this.data.taxId == '') {
+      else if (validation.isEmpty(this.data.taxId, String)) {
         verboseError("invoice-add.isValid() no taxId.");
         reject("No taxId.");
       }
-      else if (this.data.phoneReceive == Number || this.data.phoneReceive == '') {
+      else if (validation.isEmpty(this.data.phoneReceive, Number)) {
         verboseError("invoice-add.isValid() no phoneReceive.");
         reject("No phoneReceive.");
       }
-      else if (this.data.emailReceive == String || this.data.emailReceive == '') {
+      else if (validation.isEmpty(this.data.emailReceive, String)) {
         verboseError("invoice-add.isValid() no emailReceive.");
         reject("No emailReceive.");
       }
@@ -213,6 +213,7 @@ Page({
             verboseLog("invoice-add.btnSubmit() submitting:", formData);
             dbAction.editInvoiceTitleById(id, formData).then((res) => {
               verboseLog("invoice-add.btnSubmit() edit success.");
+              wx.disableAlertBeforeUnload();
               wx.hideLoading();
               wx.showToast({
                 title: '修改成功',
@@ -239,6 +240,7 @@ Page({
             verboseLog("invoice-add.btnSubmit() id is null, as add");
             dbAction.addInvoiceTitle(formData).then((res) => {
               verboseLog("invoice-add.btnSubmit() addInvoiceTitle() success.");
+              wx.disableAlertBeforeUnload();
               wx.hideLoading();
               wx.showToast({
                 title: '添加成功',
@@ -278,35 +280,44 @@ Page({
         switch(err) {
           case "No companyName.":
             msg = "请填写单位名称";
+            this.toggleIsEditing();
             break;
           case "No taxId.":
             msg = "请填写税号";
+            this.toggleIsEditing();
             break;
           case "No phoneReceive.":
             msg = "请填写个人手机";
+            this.toggleIsEditing();
             break;
           case "No emailReceive.":
             msg = "请填写个人邮箱";
+            this.toggleIsEditing();
             break;
           case "Wrong format taxId.":
             msg = "税号格式错误";
             iconStr = "none";
+            this.toggleIsEditing();
             break;
           case "Wrong format phoneCompany.":
             msg = "单位电话格式错误";
             iconStr = "none";
+            this.toggleIsEditing();
             break;
           case "Wrong format bankAccount.":
             msg = "银行账号格式错误";
             iconStr = "none";
+            this.toggleIsEditing();
             break;
           case "Wrong format phoneReceive.":
             msg = "个人手机号格式错误";
             iconStr = "none";
+            this.toggleIsEditing();
             break;
           case "Wrong format emailReceive.":
             msg = "个人邮箱格式错误";
             iconStr = "none";
+            this.toggleIsEditing();
             break;
         }
         wx.showToast({
@@ -324,7 +335,9 @@ Page({
    */
   onLoad(options) {
     wx.setNavigationBarTitle({ title: '添加抬头' });
-
+    wx.enableAlertBeforeUnload({
+      message: '尚未保存，是否返回',
+    });
     if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("invoice-add.onLoad() got item:", item);

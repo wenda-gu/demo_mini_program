@@ -28,7 +28,7 @@ Component({
     disabled: {
       type: Boolean,
       value: false,
-    }
+    },
   },
 
   /**

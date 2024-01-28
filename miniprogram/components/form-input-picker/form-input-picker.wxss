@@ -1,0 +1,6 @@
+/* components/form-input-picker/form-input-picker.wxss */
+@import "/static/styles/style.wxss";
+
+picker[disabled] {
+  color: rgb(124, 124, 124);
+}

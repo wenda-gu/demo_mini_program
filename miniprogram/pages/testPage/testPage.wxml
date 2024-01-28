@@ -2,7 +2,7 @@
 <view class="section">
   <picker bindchange="bindPickerChange" range="{{items}}">
     <view class="picker">
-      当前选择：{{department}}
+      {{department ? department : '请选择'}}
     </view>
   </picker>
 </view>
@@ -15,3 +15,5 @@
     </view>
   </picker>
 </view>
+
+<FormInputPicker isRequired="{{false}}" label="单位电话" name="phoneCompany" placeholder="请输入单位电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" disabled="{{!isEditing}}"></FormInputPicker>

@@ -20,21 +20,33 @@ Page({
     emailPersonal: String,
     personalId: String,
     companyName: String,
+    region: Object,
     address: String,
     phoneCompany: Number,
     isHealthcareWorker: true,
     department: String,
+    otherDepartment: String,
     title: String,
     position: String,
     isEditing: false,
+    medicalDepartmentList: medicalDepartmentList,
   },
 
   toggleIsEditing() {
     this.setData({
       isEditing: !this.data.isEditing,
     });
+    if (this.data.isEditing) {
+      wx.enableAlertBeforeUnload({
+        message: '尚未保存，是否返回',
+      });
+    }
+    else {
+      wx.disableAlertBeforeUnload();
+    }
   },
-  toggleApplicablity(e) {
+
+  toggleIsHealthcareWorker(e) {
     if (this.data.isHealthcareWorker != e.detail) {
       this.setData({
         isHealthcareWorker: !this.data.isHealthcareWorker,
@@ -76,6 +88,11 @@ Page({
       companyName: e.detail
     });
   },
+  handleRegion(e) {
+    this.setData({
+      region: e.detail
+    });
+  },
   handleAddress(e) {
     this.setData({
       address: e.detail
@@ -91,6 +108,11 @@ Page({
       department: e.detail
     });
   },
+  handleOtherDepartment(e) {
+    this.setData({
+      otherDepartment: e.detail
+    });
+  },
   handleTitle(e) {
     this.setData({
       title: e.detail
@@ -103,6 +125,10 @@ Page({
   },
   
   prepareForm() {
+    var department = this.data.department;
+    if (this.data.department == "其他") {
+      department = this.data.otherDepartment;
+    }
     return {
       name: this.data.name,
       isMale: this.data.isMale,
@@ -110,61 +136,72 @@ Page({
       emailPersonal: this.data.emailPersonal,
       personalId: this.data.personalId,
       companyName: this.data.companyName,
+      region: this.data.region,
       address: this.data.address,
       phoneCompany: this.data.phoneCompanyNumber,
       isHealthcareWorker: this.data.isHealthcareWorker,
-      department: this.data.department,
+      department: department,
       title: this.data.title,
       position: this.data.position,
     };
   },
 
+  
+
   isValid() {
     return new Promise((resolve, reject) => {
       // check if empty
-      if (this.data.name == String || this.data.name == '') {
+      if (validation.isEmpty(this.data.name, String)) {
         verboseError("personal-info.isValid() no name.");
         reject("No name.");
       }
-      else if (this.data.isMale == 2) {
+      else if (validation.isEmpty(this.data.isMale, Boolean)) {
         verboseError("personal-info.isValid() no gender.");
         reject("No gender.");
       }
-      else if (this.data.phonePersonal == Number || this.data.phonePersonal == '') {
+      else if (validation.isEmpty(this.data.phonePersonal, Number)) {
         verboseError("personal-info.isValid() no phonePersonal.");
         reject("No phonePersonal.");
       }
-      else if (this.data.emailPersonal == String || this.data.emailPersonal == '') {
+      else if (validation.isEmpty(this.data.emailPersonal, String)) {
         verboseError("personal-info.isValid() no emailPersonal.");
         reject("No emailPersonal.");
       }
-      else if (this.data.companyName == String || this.data.companyName == '') {
+      else if (validation.isEmpty(this.data.companyName, String)) {
         verboseError("personal-info.isValid() no companyName.");
         reject("No companyName.");
       }
-      else if (this.data.address == String || this.data.address == '') {
+      else if (validation.isEmpty(this.data.region, Object)) {
+        verboseError("personal-info.isValid() no region.");
+        reject("No region.");
+      }
+      else if (validation.isEmpty(this.data.address, String)) {
         verboseError("personal-info.isValid() no address.");
         reject("No address.");
       }
       else {
         // 是医务工作者
         if (this.data.isHealthcareWorker) {
-          if (this.data.department == String || this.data.department == '') {
+          if (validation.isEmpty(this.data.department, String)) {
             verboseError("personal-info.isValid() no medical department.");
             reject("No medical department.");
           }
-          else if (this.data.title == String || this.data.title == '') {
+          else if (this.data.department == "其他" && (validation.isEmpty(this.data.otherDepartment, String))) {
+            verboseError("personal-info.isValid() no medical other department.");
+            reject("No medical other department.");
+          }
+          else if (validation.isEmpty(this.data.title, String)) {
             verboseError("personal-info.isValid() no title.");
             reject("No title.");
           }
         }
         // 非医务工作者
         else {
-          if (this.data.department == String || this.data.department == '') {
+          if (validation.isEmpty(this.data.department, String)) {
             verboseError("personal-info.isValid() no department.");
             reject("No department.");
           }
-          else if (this.data.position == String || this.data.position == '') {
+          else if (validation.isEmpty(this.data.position, String)) {
             verboseError("personal-info.isValid() no position.");
             reject("No position.");
           }
@@ -250,11 +287,17 @@ Page({
           case "No companyName.":
             msg = "请填写单位名称";
             break;
+          case "No region.":
+            msg = "请选择单位地区";
+            break;
           case "No address.":
             msg = "请填写单位地址";
             break;
           case "No medical department.":
             msg = "请选择科室";
+            break;
+          case "No medical other department.":
+            msg = "请填写科室";
             break;
           case "No title.":
             msg = "请填写职称";
@@ -302,15 +345,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '我的信息' })
+    wx.setNavigationBarTitle({ title: '我的信息' });
+    
     if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("personal-info.onLoad() got item:", item);
-    var isHealthcareWorker = true, department = '', title = '', position = '';
+    var isHealthcareWorker = true, department = '', title = '', position = '', otherDepartment = '';
+    // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
+    if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
+      department = '其他';
+      otherDepartment = item.department;
+    }
+    else {
+      department = item.department;
+    }
     // if item.isHealthcareWorker is undefined, first time filling out personal info form
     if (item.isHealthcareWorker != undefined) {
       isHealthcareWorker = item.isHealthcareWorker;
-      department = item.department;
       title = item.title ? item.title : '';
       position = item.position ? item.position : '';
     }
@@ -321,10 +372,12 @@ Page({
       emailPersonal: item.emailPersonal,
       personalId: item.personalId,
       companyName: item.companyName,
+      region: item.region,
       address: item.address,
       phoneCompany: item.phoneCompany,
       isHealthcareWorker: isHealthcareWorker,
       department: department,
+      otherDepartment: otherDepartment,
       title: title,
       position: position,
     });

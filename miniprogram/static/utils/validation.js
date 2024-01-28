@@ -10,6 +10,10 @@ const email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 const personalId = /^[1-9]\d{5}(19|20)\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}(\d|X|x)$/; 
 
 // Methods for validation
+function isEmpty(item, type) {
+  return (item == undefined || item == type || item == '');
+}
+
 function validateTaxId(e) {
   return taxId.test(e);
 }
@@ -70,6 +74,7 @@ function parsePersonalId(id){
 
 // Exporting methods
 export default {
+  isEmpty: isEmpty,
   validateTaxId: validateTaxId,
   validateNum: validateNum,
   validateNumNotEmpty: validateNumNotEmpty,

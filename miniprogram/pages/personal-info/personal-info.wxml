@@ -14,17 +14,21 @@
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="单位名称" name="companyName" placeholder="请输入单位名称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
+      <FormInputPicker isRequired="{{true}}" label="单位地区" name="region" placeholder="请选择单位地区" region="{{region}}" bindinput="handleRegion" disabled="{{!isEditing}}" mode="region"></FormInputPicker>
+      <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="单位地址" name="address" placeholder="请输入单位地址" value="{{address}}" bindinput="handleAddress" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputItem isRequired="{{false}}" label="单位电话" name="phoneCompany" placeholder="请输入单位电话号码" value="{{phoneCompany}}" bindinput="handlePhoneCompany" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
 
-      <FormInputBinary isRequired="{{true}}" label="医务工作者" switchMethod="applicable" bind:applicable="toggleApplicablity" firstFlag="{{isHealthcareWorker}}" disabled="{{!isEditing}}"></FormInputBinary>
+      <FormInputBinary isRequired="{{true}}" label="医务工作者" switchMethod="applicable" bind:applicable="toggleIsHealthcareWorker" firstFlag="{{isHealthcareWorker}}" disabled="{{!isEditing}}"></FormInputBinary>
       <Separator></Separator>
 
       <view wx:if="{{isHealthcareWorker}}">
         <!-- TODO: needs a new component for choice as other and specify -->
-        <FormInputItem isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}"></FormInputItem>
+        <FormInputPicker isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}" range="{{medicalDepartmentList}}"></FormInputPicker>
+        <Separator></Separator>
+        <FormInputItem wx:if="{{department == '其他'}}" isRequired="{{true}}" label="其他科室" name="otherDepartment" placeholder="请填写科室" value="{{otherDepartment}}" bindinput="handleOtherDepartment" disabled="{{!isEditing}}"></FormInputItem>
         <Separator></Separator>
         <FormInputItem isRequired="{{true}}" label="职称" name="title" placeholder="请输入职称" value="{{title}}" bindinput="handleTitle" disabled="{{!isEditing}}"></FormInputItem>
         <Separator></Separator>
