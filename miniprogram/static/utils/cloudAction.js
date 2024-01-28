@@ -96,6 +96,8 @@ function cloudSendVerificationCode(phone) {
   });
 }
 
+
+
 export default {
   wxCloudApi: wxCloudApi,
   wxcallCloudFunction: wxcallCloudFunction,

@@ -1,4 +1,5 @@
 // static/utils/validation.js
+import {defaultAvatarUrl} from "./staticData";
 
 // Regex Strings
 const taxId = /^[A-Za-z0-9]+$/;
@@ -10,6 +11,13 @@ const email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 const personalId = /^[1-9]\d{5}(19|20)\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}(\d|X|x)$/; 
 
 // Methods for validation
+
+// check if avatar is default
+function isDefaultAvatar(url) {
+  return (defaultAvatarUrl == url);
+}
+
+// check if field is empty
 function isEmpty(item, type) {
   return (item == undefined || item == type || item == '');
 }
@@ -74,6 +82,7 @@ function parsePersonalId(id){
 
 // Exporting methods
 export default {
+  isDefaultAvatar: isDefaultAvatar,
   isEmpty: isEmpty,
   validateTaxId: validateTaxId,
   validateNum: validateNum,

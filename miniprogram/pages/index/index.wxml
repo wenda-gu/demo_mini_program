@@ -1,6 +1,5 @@
 <!--pages/index/index.wxml-->
-<!-- <root-portal class="mask"></root-portal> -->
-<scroll-view class="ribbon" scroll-x>
+<!-- <scroll-view class="ribbon" scroll-x>
   <view class="poster">1</view>
   <view class="poster">2</view>
   <view class="poster">3</view>
@@ -9,4 +8,5 @@
   <view class="poster">6</view>
   <view class="poster">7</view>
   <view class="poster">8</view>
-</scroll-view>
+</scroll-view> -->
+<image src="/static/images/images/main-bg.png"></image>

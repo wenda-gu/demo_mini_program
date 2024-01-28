@@ -1,6 +1,9 @@
 // pages/me/me.js
 import { verboseLog, verboseError } from "../../static/utils/logging";
 import dbAction from "../../static/utils/dbAction.js";
+import storageAction from "../../static/utils/storageAction.js";
+import validation from "../../static/utils/validation.js";
+
 
 const userLogin = getApp().userLogin
 const global = getApp().globalData;
@@ -19,12 +22,35 @@ Page({
   },
 
   handleChooseAvatar(e) {
-    this.setData(e);
-    dbAction.editAvatarUrl(global.personalInfoDocId, e).then((res) => {
-      verboseLog("me.handleChooseAvatar() editAvatarUrl() update avatarUrl success.");
-    }).catch((err) => {
-      verboseError("me.handleChooseAvatar() editAvatarUrl() update avatarUrl failed:", err);
-    });
+    var tempAvatar = e.detail.avatarUrl, newAvatar, oldAvatar;
+    if (tempAvatar) {
+      storageAction.uploadFile({
+        // cloudPath: `avatar/aaa`,
+        cloudPath: `avatar/${global.personalInfoDocId}_${Number(new Date())}`,
+        filePath: tempAvatar,
+      }).then((res) => {
+        newAvatar = res.fileID;
+        oldAvatar = this.data.avatarUrl;
+        this.setData({
+          avatarUrl: newAvatar,
+        });
+        global.avatarUrl = newAvatar;
+        dbAction.editAvatarUrl(global.personalInfoDocId, newAvatar).then((res) => {
+          verboseLog("me.handleChooseAvatar() editAvatarUrl() update avatarUrl success.");
+        }).catch((err) => {
+          verboseError("me.handleChooseAvatar() editAvatarUrl() update avatarUrl failed:", err);
+        });
+        if (!validation.isDefaultAvatar(oldAvatar)) {
+          storageAction.deleteFile(oldAvatar).catch(err => {
+            verboseError("me.handleChooseAvatar() deleteFile() delete old avatarUrl failed:", err);
+          });
+        }
+        verboseLog("me.handleChooseAvatar() uploadFile() upload avatar success.");
+      }).catch((err) => {
+        verboseError("me.handleChooseAvatar() uploadFile() upload avatar failed:", err);
+      });
+      
+    }
   },
 
   setupPage() {

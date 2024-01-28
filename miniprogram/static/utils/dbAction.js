@@ -98,10 +98,12 @@ function editPersonalInfo(id, formData) {
   });
 }
 
-function editAvatarUrl(id, avatarObject) {
+function editAvatarUrl(id, url) {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("personal-info").doc(id).update({
-      data: avatarObject,
+      data: {
+        avatarUrl: url,
+      },
     }).then((res) => {
       verboseLog("dbAction.editAvatarUrl() success:", res);
       resolve(res);

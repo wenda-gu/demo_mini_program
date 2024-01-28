@@ -23,8 +23,7 @@ const staticData = {
     "其他",
   ],
 
-  defaultAvatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
-
+  defaultAvatarUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/avatar/0.png',
 }
 
 // Exporting methods
