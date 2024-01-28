@@ -346,7 +346,7 @@ Page({
    */
   onLoad(options) {
     wx.setNavigationBarTitle({ title: '我的信息' });
-    
+    wx.disableAlertBeforeUnload();
     if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("personal-info.onLoad() got item:", item);
@@ -408,7 +408,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+    
   },
 
   /**
