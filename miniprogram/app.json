@@ -45,6 +45,7 @@
     ]
   },
   "usingComponents": {
+    "Agreement": "components/agreement/agreement",
     "MenuItem": "components/menu-item/menu-item",
     "UserInfoCard": "components/user-info-card/user-info-card",
     "Spacer": "components/spacer/spacer",

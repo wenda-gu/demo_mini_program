@@ -1,9 +1,12 @@
 <!--pages/auth/auth.wxml-->
-<input type="number" class="phoneNumber" placeholder="请输入手机号码注册登录"/>
-<Separator></Separator>
-<view>
-  <input type="number" class="verificationCode" placeholder="请输入手机验证码" bindinput="inputVerificationCode"/>
-  <button bindtap="sendVerificationCode">获取验证码</button>
+<view class="container">
+  <input type="number" class="phoneNumber" placeholder="请输入手机号码注册登录"/>
+  <Separator></Separator>
+  <view>
+    <input type="number" class="verificationCode" placeholder="请输入手机验证码" bindinput="inputVerificationCode"/>
+    <button bindtap="sendVerificationCode">获取验证码</button>
+  </view>
+  <Separator></Separator>
+  <button bindtap="signup">注册</button>
 </view>
-<Separator></Separator>
-<button bindtap="login">注册</button>
+<Agreement innerShow="{{true}}"></Agreement>

@@ -1,1 +1,9 @@
 /* pages/auth/auth.wxss */
+page {
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 60%;
+}

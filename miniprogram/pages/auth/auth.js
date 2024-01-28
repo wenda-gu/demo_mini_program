@@ -40,6 +40,7 @@ Page({
       code: this.data.verificationCode,
     }).then(res => {
       verboseLog(res);
+      
     }).catch(err => {
       verboseError(err);
     });
