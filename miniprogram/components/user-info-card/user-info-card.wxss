@@ -80,7 +80,10 @@
   width: 50%;
   flex: 1; /* Allows text container to grow to fill space */
 }
-
+.signup {
+  font-weight: bold;
+  font-size: x-large;
+}
 .name {
   font-weight: bold;
   font-size: xx-large;

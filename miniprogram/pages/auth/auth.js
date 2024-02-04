@@ -10,41 +10,39 @@ Page({
    * 页面的初始数据
    */
   data: {
+    countryCode: Number,
     phoneNumber: Number,
-    verificationCode: Number,
+    isChecked: false,
   },
-
-
-
-  sendVerificationCode() {
-    cloudAction.wxCloudApi('sendVerificationCode', {
-      phone: this.data.phoneNumber
-    }).then(res => {
-      verboseLog(res);
-    }).catch(err => {
-      verboseError(err);
-    });
-  },
-
-  inputVerificationCode(e) {
+  toggleIsChecked() {
     this.setData({
-      verificationCode: e.detail.value
-    });
+      isChecked: !this.data.isChecked,
+    })
+  },
+  openPrivacyContract() {
+    wx.openPrivacyContract({
+      success: res => {
+        console.log('openPrivacyContract success')
+      },
+      fail: res => {
+        console.error('openPrivacyContract fail', res)
+      }
+    })
   },
 
-  // TODO: verification success or fail handler
-  // TODO: verification cloud functions need to be finished
-  signup() {
-    cloudAction.wxCloudApi('checkVerificationCode', {
-      phone: this.data.phoneNumber,
-      code: this.data.verificationCode,
-    }).then(res => {
-      verboseLog(res);
-      
-    }).catch(err => {
+  getPhoneNumber(e) {
+    cloudAction.cloudGetPhoneNumber(e.detail.cloudID).then((res) => {
+      verboseLog("this is res:", res);
+      this.setData({
+        countryCode: countryCode,
+        phoneNumber: res.phoneNumber,
+      });
+    }).catch((err) => {
       verboseError(err);
     });
   },
+  
+
 
   /**
    * 生命周期函数--监听页面加载

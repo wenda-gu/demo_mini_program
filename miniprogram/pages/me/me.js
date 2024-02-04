@@ -3,6 +3,7 @@ import { verboseLog, verboseError } from "../../static/utils/logging";
 import dbAction from "../../static/utils/dbAction.js";
 import storageAction from "../../static/utils/storageAction.js";
 import validation from "../../static/utils/validation.js";
+import {sleep} from "../../static/utils/wxapi";
 
 
 const userLogin = getApp().userLogin
@@ -19,6 +20,7 @@ Page({
     userInfo: Object,
     avatarUrl: String,
     loggedin: false,
+    isNewUser: Boolean,
   },
 
   handleChooseAvatar(e) {
@@ -54,18 +56,33 @@ Page({
   },
 
   setupPage() {
-    var title = global.personalInfo.companyName + global.personalInfo.department;
-    if (global.personalInfo.isHealthcareWorker) {
-      title += global.personalInfo.title;
+    if (global.isNewUser) {
+      this.setData({
+        isNewUser: true,
+        loggedin: true,
+        avatarUrl: global.avatarUrl,
+      })
     }
     else {
-      title += global.personalInfo.position;
+      var title = global.personalInfo.companyName + global.personalInfo.department;
+      if (global.personalInfo.isHealthcareWorker) {
+        title += global.personalInfo.title;
+      }
+      else {
+        title += global.personalInfo.position;
+      }
+      this.setData({
+        title: title,
+        userInfo: global.personalInfo,
+        avatarUrl: global.avatarUrl,
+        loggedin: true,
+      });
     }
-    this.setData({
-      title: title,
-      userInfo: global.personalInfo,
-      avatarUrl: global.avatarUrl,
-      loggedin: true,
+  },
+
+  navToSignUp() {
+    wx.redirectTo({
+      url: "/pages/auth/auth",
     });
   },
 
@@ -99,21 +116,29 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-    if ( global.loggedin ) {
+  onShow: function () {
+    (async () => {
+      while ( !global.loggedin ) {
+        await sleep(10);
+      }
       this.setupPage();
       verboseLog("me.onLoad() already logged in, success.");
-    }
-    else {
-      verboseLog("me.onLoad()");
-      userLogin().then((res) => {
-        this.setupPage();
-        verboseLog("me.onLoad() logged in success.");
-      }).catch((err) => {
-        verboseError("me.onLoad() failed:", err);
-      });
-    }
+    })()
   },
+    
+    // if ( global.loggedin ) {
+    //   this.setupPage();
+    //   verboseLog("me.onLoad() already logged in, success.");
+    // }
+    // else {
+    //   verboseLog("me.onLoad()");
+    //   userLogin().then((res) => {
+    //     this.setupPage();
+    //     verboseLog("me.onLoad() logged in success.");
+    //   }).catch((err) => {
+    //     verboseError("me.onLoad() failed:", err);
+    //   });
+    // }
 
   /**
    * 生命周期函数--监听页面隐藏

@@ -6,6 +6,7 @@
       <Separator></Separator>
       <FormInputBinary isRequired="{{true}}" label="性别" switchMethod="changeGender" bind:changeGender="handleGender" first="男" second="女" firstFlag="{{isMale}}" disabled="{{!isEditing}}"></FormInputBinary>
       <Separator></Separator>
+      <!-- TODO: change phone number -->
       <FormInputItem isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="邮箱" name="emailPersonal" placeholder="请输入个人邮箱" value="{{emailPersonal}}" bindinput="handleEmailPersonal" disabled="{{!isEditing}}"></FormInputItem>
@@ -25,7 +26,6 @@
       <Separator></Separator>
 
       <view wx:if="{{isHealthcareWorker}}">
-        <!-- TODO: needs a new component for choice as other and specify -->
         <FormInputPicker isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}" range="{{medicalDepartmentList}}"></FormInputPicker>
         <Separator></Separator>
         <FormInputItem wx:if="{{department == '其他'}}" isRequired="{{true}}" label="其他科室" name="otherDepartment" placeholder="请填写科室" value="{{otherDepartment}}" bindinput="handleOtherDepartment" disabled="{{!isEditing}}"></FormInputItem>

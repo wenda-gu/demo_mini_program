@@ -96,7 +96,20 @@ function cloudSendVerificationCode(phone) {
   });
 }
 
-
+function cloudGetPhoneNumber(cloudID) {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: "getPhoneNumber",
+      data: {
+        phoneNumber: wx.cloud.CloudID(cloudID),
+      }
+    }).then((res) => {
+      resolve(res.result.phoneNumber.data);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+}
 
 export default {
   wxCloudApi: wxCloudApi,
@@ -105,4 +118,5 @@ export default {
   wxgetBasicUserInfo: wxgetBasicUserInfo,
   isNewUser: isNewUser,
   cloudSendVerificationCode: cloudSendVerificationCode,
+  cloudGetPhoneNumber: cloudGetPhoneNumber,
 }

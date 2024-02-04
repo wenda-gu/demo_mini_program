@@ -28,6 +28,14 @@ const wxapi = {
       });
     }
   },
+
+  sleep: (time) => {
+    return new Promise((resolve) => {
+      setTimeout(function(){
+        resolve();
+      }, time);
+    });
+  },
 }
 
 module.exports = wxapi;

@@ -4,6 +4,7 @@
 - [微信小程序修改switch组件大小](https://juejin.cn/post/6844903609411305486)
 - [小程序登录案例](https://www.jianshu.com/p/7414a543c622)
 - [支付宝支付在微信小程序中也能实现？SpringBoot+沙箱教你一键搞定 —— 支付宝沙箱](https://www.bilibili.com/read/cv26705328/)
+- [完美适配最新微信小程序隐私协议开发指南，兼容uniapp版本](https://zhuanlan.zhihu.com/p/652937327)
 
 # 云开发 quickstart
 

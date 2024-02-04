@@ -59,13 +59,16 @@ Component({
       privacyResolves.clear()
     },
     handleDisagree(e) {
-      this.disPopUp()
+      this.disPopUp();
       privacyResolves.forEach(resolve => {
         resolve({
           event: 'disagree',
         })
-      })
-      privacyResolves.clear()
+      });
+      privacyResolves.clear();
+      // wx.switchTab({
+      //   url: 'pages/index/index',
+      // });
     },
     popUp() {
       if (this.data.innerShow === false) {

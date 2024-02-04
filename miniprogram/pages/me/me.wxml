@@ -1,5 +1,5 @@
 <!--pages/me/me.wxml-->
-<UserInfoCard avatarUrl="{{avatarUrl}}" userName="{{userInfo.name}}" userTitle="{{title}}" bind:chooseAvatar="handleChooseAvatar"></UserInfoCard>
+<UserInfoCard isNewUser="{{isNewUser}}" avatarUrl="{{avatarUrl}}" userName="{{userInfo.name}}" userTitle="{{title}}" bind:signUp="navToSignUp" bind:chooseAvatar="handleChooseAvatar"></UserInfoCard>
 <view class="me-menu">
   <Separator></Separator>
   <MenuItem itemName="我的报名" route="/pages/registration/registration" img="/static/images/icons/fillin.png"></MenuItem>

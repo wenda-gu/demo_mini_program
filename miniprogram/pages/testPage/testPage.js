@@ -14,58 +14,32 @@ Page({
     items: medicalDepartmentList,
     department: String,
     region: Object,
-    customItem: '全部'
+    customItem: '全部',
+    code: String,
+    countryCode: Number,
+    phoneNumber: Number,
   },
-  bindPickerChange: function(e) {
-    this.setData({
-      department: medicalDepartmentList[e.detail.value],
-    });
-    console.log('picker发送选择改变，携带值为', this.data.department);
-  },
-  bindRegionChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      region: e.detail.value
+  
+  getPhoneNumber (e) {
+    cloudAction.cloudGetPhoneNumber(e.detail.cloudID).then((res) => {
+      verboseLog("this is res:", res);
     })
   },
 
-
+  getRealTimePhoneNumber(e) {
+    cloudAction.cloudGetPhoneNumber(e.detail.cloudID).then((res) => {
+      verboseLog("this is res:", res);
+      this.setData({
+        countryCode: countryCode,
+        phoneNumber: res.purePhoneNumber,
+      });
+    }).catch((err) => {
+      verboseError(err);
+    });
+  },
   
-  showOpenId() {
-    cloudAction.wxgetOpenId().then((res) => {
-      verboseLog("testPage.showOpenId() got openid:", res);
-      this.setData({
-        openid: res,
-      });
-    });
-  },
-
-  showUserInfo() {
-    cloudAction.wxgetUserInfo().then((res) => {
-      verboseLog("testPage.showUserInfo() got userInfo:", res);
-      this.setData({
-        userInfo: res,
-      });
-    });
-  },
-
-  showMoreUserInfo() {
-    wx.getUserInfo({
-      success:res=> {
-        console.log("returned:", res)    
-        console.log("cloudID:", res.cloudID)    
-        wx.cloud.callFunction({
-          name: 'myFunc',
-          data: {
-            userInfo: wx.cloud.CloudID(res.cloudID)
-          },
-        }).then(resData=>{    
-          console.log(resData) //注意这里
-          console.log(resData.result.event)//今天的步数
-        });
-      },
-    });
-  },
+  
+         
 
   /**
    * 生命周期函数--监听页面加载

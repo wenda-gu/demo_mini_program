@@ -7,8 +7,8 @@ Component({
   properties: {
     userName: String,
     userTitle: String,
-    avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
-    
+    avatarUrl: String,
+    isNewUser: Boolean,
   },
 
   /**
@@ -26,5 +26,9 @@ Component({
       this.setData(e.detail);
       this.triggerEvent("chooseAvatar", e.detail);
     },
+
+    onSignUp(e) {
+      this.triggerEvent("signUp", e.detail);
+    }
   }
 })

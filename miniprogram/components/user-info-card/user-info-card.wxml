@@ -3,12 +3,15 @@
   <view class="card">
     <view class="image-container">
       <view class="image-cropper">
-        <button class="avatar-action" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <button class="avatar-action" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" disabled="{{isNewUser}}">
           <image src="{{avatarUrl}}" alt="Profile Image" class="profile-pic" ></image>
         </button>
       </view>
     </view>
-    <view class="text-container">
+    <view wx:if="{{isNewUser}}" class="text-container">
+      <view class="signup" bind:tap="onSignUp">点击注册</view>
+    </view>
+    <view wx:else class="text-container">
       <view class="name">{{userName}}</view>
       <view class="title">{{userTitle}}</view>
     </view>
