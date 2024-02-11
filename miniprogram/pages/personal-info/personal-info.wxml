@@ -7,7 +7,7 @@
       <FormInputBinary isRequired="{{true}}" label="性别" switchMethod="changeGender" bind:changeGender="handleGender" first="男" second="女" firstFlag="{{isMale}}" disabled="{{!isEditing}}"></FormInputBinary>
       <Separator></Separator>
       <!-- TODO: change phone number -->
-      <FormInputItem isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing || isNewUser}}"></FormInputItem>
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="邮箱" name="emailPersonal" placeholder="请输入个人邮箱" value="{{emailPersonal}}" bindinput="handleEmailPersonal" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
