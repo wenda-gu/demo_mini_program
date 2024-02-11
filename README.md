@@ -6,6 +6,10 @@
 - [支付宝支付在微信小程序中也能实现？SpringBoot+沙箱教你一键搞定 —— 支付宝沙箱](https://www.bilibili.com/read/cv26705328/)
 - [完美适配最新微信小程序隐私协议开发指南，兼容uniapp版本](https://zhuanlan.zhihu.com/p/652937327)
 
+# improvement
+- `personal-info.医务工作者` 更改选项以后不应将内容清空，以便选择回来的时候不用重新输入。提交以后就可以清空了 
+
+
 # 云开发 quickstart
 
 这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：

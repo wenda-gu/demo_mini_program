@@ -1,5 +1,7 @@
 // components/form-input-phone/form-input-phone.js
 import {placeholderColorDisabled} from "../../static/utils/staticData"
+import cloudAction from "../../static/utils/cloudAction.js";
+import validation from "../../static/utils/validation.js";
 
 Component({
 
@@ -30,8 +32,18 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    onTap(e) {
-      this.triggerEvent('changePhone', e);
-    }
+    async getPhoneNumber(e) {
+      try {
+        var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
+        if (validation.validateCountryCode(res.countryCode)) {
+          this.triggerEvent('changePhone', res.purePhoneNumber);
+        }
+        else {
+          showUseChinesePhoneNumber();
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    },
   }
 })

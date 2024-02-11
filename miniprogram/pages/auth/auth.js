@@ -28,14 +28,10 @@ Page({
         else {
           prevPage.setPhonePersonal(res.purePhoneNumber);
         }
-        // wx.redirectTo({
-        //   url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
-        // });
       }
       else {
         showUseChinesePhoneNumber();
       }
-      
     } catch (err) {
       verboseError(err);
     }

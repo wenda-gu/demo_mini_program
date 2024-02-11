@@ -4,6 +4,6 @@
   <view class="container">
     <input class="phone-number" placeholder-style="{{placeholderColorDisabled}}" required="{{isRequired}}" value="{{value}}" type="number" maxlength="11" disabled="true"></input>
 
-    <button class="choice" disabled="{{disabled}}" bind:tap="onTap">更改</button>
+    <button class="choice" disabled="{{disabled}}" open-type="getRealtimePhoneNumber" bindgetrealtimephonenumber="getPhoneNumber">更改</button>
   </view>
 </view>
