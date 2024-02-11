@@ -3,7 +3,7 @@
 <view wx:if="{{loggedin}}">
   <!-- new user -->
   <view wx:if="{{isNewUser}}">
-    <Agreement innerShow="{{isNewUser}}"></Agreement>
+    <Agreement innerShow="{{isNewUser}}" bind:disagree="handleDisagree"></Agreement>
     <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{disabled}}">手机号快捷登录</button>
     <button open-type="getRealtimePhoneNumber" bindgetrealtimephonenumber="getPhoneNumber" disabled="{{disabled}}">手机号验证码登录</button>
     <Footer content="未注册的用户在首次登录时将自动注册"></Footer>

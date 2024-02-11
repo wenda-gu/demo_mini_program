@@ -248,17 +248,12 @@ Page({
           wx.hideLoading();
           showSubmissionSuccess();
           await updatePersonalInfo();
-
-          verboseLog("page:", this.data.personalInfoDocId);
-          verboseLog("global", getApp().globalData.personalInfoDocId);
           this.setData({
             personalInfoDocId: getApp().globalData.personalInfoDocId,
             isNewUser: false,
           });
-          verboseLog("page:", this.data.personalInfoDocId);
-          // TODO: why not working
           wx.reLaunch({
-            url: 'pages/me/me',
+            url: '../me/me',
           });
         } catch (err) {
           verboseError("personal-info.btnSubmit() addPersonalInfo() failed:", err);

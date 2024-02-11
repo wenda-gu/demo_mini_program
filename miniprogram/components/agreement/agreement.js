@@ -69,9 +69,7 @@ Component({
         })
       });
       privacyResolves.clear();
-      // wx.switchTab({
-      //   url: 'pages/index/index',
-      // });
+      this.triggerEvent('disagree', e);
     },
     popUp() {
       if (this.data.innerShow === false) {

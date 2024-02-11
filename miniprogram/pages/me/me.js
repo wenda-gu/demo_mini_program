@@ -48,7 +48,16 @@ Page({
       }
     } catch (err) {
       verboseError(err);
+      this.setData({
+        disabled: false,
+      });
     }
+  },
+
+  handleDisagree(e) {
+    wx.reLaunch({
+      url: '../index/index',
+    })
   },
 
   handleChooseAvatar(e) {
