@@ -1,8 +1,9 @@
 // pages/invoice-add/invoice-add.js
 
 import validation from "../../static/utils/validation.js";
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
 import dbAction from "../../static/utils/dbAction.js";
+import {verboseLog, verboseError} from "../../static/utils/logging";
+import {showSubmitting, showAddSuccess, showAddFailed, showSubmissionFailed, showEditSuccess, showEditFailed} from "../../static/utils/wxapi";
 
 Page({
 
@@ -11,7 +12,7 @@ Page({
    */
   data: {
     id: String,
-    isVAT: false,
+    // isVAT: false,
     companyName: String,
     taxId: String,
     isDefault: false,
@@ -66,15 +67,13 @@ Page({
     })
   },
 
-
-  
-  toggleVAT() {
-    verboseLog("invoice-add.toggleVAT() isVAT before:", this.data.isVAT);
-    this.setData({
-      isVAT: !this.data.isVAT
-    });
-    verboseLog("invoice-add.toggleVAT() isVAT after:", this.data.isVAT);
-  },
+  // toggleVAT() {
+  //   verboseLog("invoice-add.toggleVAT() isVAT before:", this.data.isVAT);
+  //   this.setData({
+  //     isVAT: !this.data.isVAT
+  //   });
+  //   verboseLog("invoice-add.toggleVAT() isVAT after:", this.data.isVAT);
+  // },
 
   toggleDefault() {
     verboseLog("invoice-add.toggleVAT() isDefault before:", this.data.isDefault);
@@ -90,7 +89,7 @@ Page({
   },
 
 
-  resetDefault(isDefault, isDefaultOriginal) {
+  async resetDefault(isDefault, isDefaultOriginal) {
     return new Promise((resolve, reject) => {
       verboseLog("invoice-add.resetDefault()");
       if ( !isDefault ) {
@@ -144,7 +143,7 @@ Page({
     };
   },
 
-  isValid() {
+  async isValid() {
     return new Promise((resolve, reject) => {
       if (validation.isEmpty(this.data.companyName, String)) {
         verboseError("invoice-add.isValid() no companyName.");
@@ -191,143 +190,115 @@ Page({
     });
   },
 
-  btnSubmit() {
-    return new Promise((resolve, reject) => {
-      wx.showLoading({
-        title: '提交中',
-        mask: true,
-      });
-      this.toggleIsEditing();
-      this.isValid().then((res) => {
-        const formData = this.prepareForm();
-        const isDefault = this.data.isDefault;
-        verboseLog("invoice-add.btnSubmit() submitting:", formData);
-        verboseLog("invoice-add.btnSubmit() item isDefault:", isDefault);
-        // reset all titles' isDefault to false, if current isDefault if true
-        this.resetDefault(isDefault, this.data.isDefaultOriginal).then((res) => {
-          const id = this.data.id;
-          verboseLog("invoice-add.btnSubmit() item id: " + id);
-          // if edit, update; else, add
-          if (id != String) {
-            verboseLog("invoice-add.btnSubmit() id is not null, as edit");
-            verboseLog("invoice-add.btnSubmit() submitting:", formData);
-            dbAction.editInvoiceTitleById(id, formData).then((res) => {
-              verboseLog("invoice-add.btnSubmit() edit success.");
-              wx.disableAlertBeforeUnload();
-              wx.hideLoading();
-              wx.showToast({
-                title: '修改成功',
-                duration: 800,
-              });
-              setTimeout(function () {
-                wx.navigateBack({
-                  delta: 1,
-                })
-              }, 800);
-              resolve("invoice-add.btnSubmit() success.");
-            }).catch((err) => {
-              verboseError("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
-              wx.hideLoading();
-              wx.showToast({
-                title: '修改失败请重试',
-                icon: 'error',
-                duration: 2000,
-              });
-              reject(err);
-            });
-          }
-          else {
-            verboseLog("invoice-add.btnSubmit() id is null, as add");
-            dbAction.addInvoiceTitle(formData).then((res) => {
-              verboseLog("invoice-add.btnSubmit() addInvoiceTitle() success.");
-              wx.disableAlertBeforeUnload();
-              wx.hideLoading();
-              wx.showToast({
-                title: '添加成功',
-                duration: 800,
-              });
-              setTimeout(function () {
-                wx.navigateBack({
-                  delta: 1,
-                })
-              }, 800);
-              resolve("invoice-add.btnSubmit() addInvoiceTitle() success.");
-            }).catch((err) => {
-              verboseError("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
-              wx.hideLoading();
-              wx.showToast({
-                title: '添加失败请重试',
-                icon: 'error',
-                duration: 2000,
-              });
-              reject(err);
-            });
-          };
-        }).catch((err) => {
-          verboseError("invoice-add.btnSubmit() resetDefault() failed:", err);
-          wx.hideLoading();
-          wx.showToast({
-            title: '提交失败请重试',
-            icon: 'error',
-            duration: 2000,
+  async btnSubmit() {
+    showSubmitting();
+    this.toggleIsEditing();
+    try {
+      await this.isValid();
+      const formData = this.prepareForm();
+      const isDefault = this.data.isDefault;
+      verboseLog("invoice-add.btnSubmit() submitting:", formData);
+      verboseLog("invoice-add.btnSubmit() item isDefault:", isDefault);
+      // reset all titles' isDefault to false, if current isDefault if true
+      this.resetDefault(isDefault, this.data.isDefaultOriginal).then((res) => {
+        const id = this.data.id;
+        verboseLog("invoice-add.btnSubmit() item id: " + id);
+        // if edit, update; else, add
+        if (id != String) {
+          verboseLog("invoice-add.btnSubmit() id is not null, as edit");
+          verboseLog("invoice-add.btnSubmit() submitting:", formData);
+          dbAction.editInvoiceTitleById(id, formData).then((res) => {
+            verboseLog("invoice-add.btnSubmit() edit success.");
+            wx.disableAlertBeforeUnload();
+            wx.hideLoading();
+            showEditSuccess();
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 800);;
+          }).catch((err) => {
+            verboseError("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
+            wx.hideLoading();
+            showEditFailed();
           });
-          reject(err);
-        });
-      }).catch((err) => {
-        verboseError("invoice-add.btnSubmit() isValid() failed:", err);
-        wx.hideLoading();
-        var msg, iconStr = 'error';
-        switch(err) {
-          case "No companyName.":
-            msg = "请填写单位名称";
-            this.toggleIsEditing();
-            break;
-          case "No taxId.":
-            msg = "请填写税号";
-            this.toggleIsEditing();
-            break;
-          case "No phoneReceive.":
-            msg = "请填写个人手机";
-            this.toggleIsEditing();
-            break;
-          case "No emailReceive.":
-            msg = "请填写个人邮箱";
-            this.toggleIsEditing();
-            break;
-          case "Wrong format taxId.":
-            msg = "税号格式错误";
-            iconStr = "none";
-            this.toggleIsEditing();
-            break;
-          case "Wrong format phoneCompany.":
-            msg = "单位电话格式错误";
-            iconStr = "none";
-            this.toggleIsEditing();
-            break;
-          case "Wrong format bankAccount.":
-            msg = "银行账号格式错误";
-            iconStr = "none";
-            this.toggleIsEditing();
-            break;
-          case "Wrong format phoneReceive.":
-            msg = "个人手机号格式错误";
-            iconStr = "none";
-            this.toggleIsEditing();
-            break;
-          case "Wrong format emailReceive.":
-            msg = "个人邮箱格式错误";
-            iconStr = "none";
-            this.toggleIsEditing();
-            break;
         }
-        wx.showToast({
-          title: msg,
-          icon: iconStr,
-          duration: 2000,
-        });
-        reject(err);
+        else {
+          verboseLog("invoice-add.btnSubmit() id is null, as add");
+          dbAction.addInvoiceTitle(formData).then((res) => {
+            verboseLog("invoice-add.btnSubmit() addInvoiceTitle() success.");
+            wx.disableAlertBeforeUnload();
+            wx.hideLoading();
+            showAddSuccess();
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 800);
+          }).catch((err) => {
+            verboseError("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
+            wx.hideLoading();
+            showAddFailed();
+          });
+        };
+      }).catch((err) => {
+        verboseError("invoice-add.btnSubmit() resetDefault() failed:", err);
+        wx.hideLoading();
+        showSubmissionFailed();
       });
-    });
+    } catch (err) {
+      verboseError("invoice-add.btnSubmit() isValid() failed:", err);
+      wx.hideLoading();
+      var msg, iconStr = 'error';
+      switch(err) {
+        case "No companyName.":
+          msg = "请填写单位名称";
+          this.toggleIsEditing();
+          break;
+        case "No taxId.":
+          msg = "请填写税号";
+          this.toggleIsEditing();
+          break;
+        case "No phoneReceive.":
+          msg = "请填写个人手机";
+          this.toggleIsEditing();
+          break;
+        case "No emailReceive.":
+          msg = "请填写个人邮箱";
+          this.toggleIsEditing();
+          break;
+        case "Wrong format taxId.":
+          msg = "税号格式错误";
+          iconStr = "none";
+          this.toggleIsEditing();
+          break;
+        case "Wrong format phoneCompany.":
+          msg = "单位电话格式错误";
+          iconStr = "none";
+          this.toggleIsEditing();
+          break;
+        case "Wrong format bankAccount.":
+          msg = "银行账号格式错误";
+          iconStr = "none";
+          this.toggleIsEditing();
+          break;
+        case "Wrong format phoneReceive.":
+          msg = "个人手机号格式错误";
+          iconStr = "none";
+          this.toggleIsEditing();
+          break;
+        case "Wrong format emailReceive.":
+          msg = "个人邮箱格式错误";
+          iconStr = "none";
+          this.toggleIsEditing();
+          break;
+      }
+      wx.showToast({
+        title: msg,
+        icon: iconStr,
+        duration: 2000,
+      });
+    }
   },
 
   /**

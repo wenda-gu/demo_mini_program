@@ -1,1 +1,15 @@
 /* pages/me/me.wxss */
+@import "/static/styles/style.wxss";
+page {
+  height: 100%;
+}
+.auth-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blue-btn {
+  width: 100%!important;
+}

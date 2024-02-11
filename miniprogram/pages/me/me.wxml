@@ -1,36 +1,37 @@
 <!--pages/me/me.wxml-->
 
-<view wx:if="{{loggedin}}">
-  <!-- new user -->
-  <view wx:if="{{isNewUser}}">
+<!-- new user -->
+<view wx:if="{{loggedin && isNewUser}}" class="auth-container">
+  <view>
     <Agreement innerShow="{{isNewUser}}" bind:disagree="handleDisagree"></Agreement>
-    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{disabled}}">手机号快捷登录</button>
-    <button open-type="getRealtimePhoneNumber" bindgetrealtimephonenumber="getPhoneNumber" disabled="{{disabled}}">手机号验证码登录</button>
+    <button class="choice blue-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{disabled}}">手机号快捷登录</button>
+    <Spacer h="3"></Spacer>
+    <button class="choice blue-btn" open-type="getRealtimePhoneNumber" bindgetrealtimephonenumber="getPhoneNumber" disabled="{{disabled}}">手机号验证码登录</button>
     <Footer content="未注册的用户在首次登录时将自动注册"></Footer>
     <!-- <view class="radio" bind:tap="toggleIsChecked">
-      <radio checked="{{isChecked}}">已同意并阅读<text class="privacy-link" bindtap="openPrivacyContract">《用户隐私保护指引》</text></radio>
+    <radio checked="{{isChecked}}">已同意并阅读<text class="privacy-link" bindtap="openPrivacyContract">《用户隐私保护指引》</text></radio>
     </view> -->
   </view>
+</view>
 
-  <!-- existing user -->
-  <view wx:else class="me-menu">
-    <UserInfoCard isNewUser="{{isNewUser}}" avatarUrl="{{avatarUrl}}" userName="{{userInfo.name}}" userTitle="{{title}}" bind:signUp="navToSignUp" bind:chooseAvatar="handleChooseAvatar"></UserInfoCard>
-    <Separator></Separator>
-    <MenuItem itemName="我的报名" route="/pages/registration/registration" img="/static/images/icons/fillin.png"></MenuItem>
-    <Separator></Separator>
-    <!-- TODO: 参会历史隐藏，之后上线 -->
-    <!-- <MenuItem itemName="参会历史" route="/pages/history/history" img="/static/images/icons/content.png"></MenuItem>
-    <Separator></Separator> -->
-    <Spacer></Spacer>
-    <Separator></Separator>
-    <MenuItem itemName="我的信息" img="/static/images/icons/edit.png" routeDisabled="{{true}}" bind:tap="navToPersonalInfo"></MenuItem>
-    <Separator></Separator>
-    <MenuItem itemName="开票信息" route="/pages/invoice/invoice" img="/static/images/icons/text.png"></MenuItem>
-    <Separator></Separator>
-    <Spacer></Spacer>
-    <Separator></Separator>
-    <MenuItem itemName="联系我们" route="/pages/contact/contact" img="/static/images/icons/chat.png"></MenuItem>
-    <Separator></Separator>
-  </view>
+<!-- existing user -->
+<view wx:if="{{loggedin && !isNewUser}}" class="me-menu">
+  <UserInfoCard isNewUser="{{isNewUser}}" avatarUrl="{{avatarUrl}}" userName="{{userInfo.name}}" userTitle="{{title}}" bind:signUp="navToSignUp" bind:chooseAvatar="handleChooseAvatar"></UserInfoCard>
+  <Separator></Separator>
+  <MenuItem itemName="我的报名" route="/pages/registration/registration" img="/static/images/icons/fillin.png"></MenuItem>
+  <Separator></Separator>
+  <!-- TODO: 参会历史隐藏，之后上线 -->
+  <!-- <MenuItem itemName="参会历史" route="/pages/history/history" img="/static/images/icons/content.png"></MenuItem>
+  <Separator></Separator> -->
+  <Spacer></Spacer>
+  <Separator></Separator>
+  <MenuItem itemName="我的信息" img="/static/images/icons/edit.png" routeDisabled="{{true}}" bind:tap="navToPersonalInfo"></MenuItem>
+  <Separator></Separator>
+  <MenuItem itemName="开票信息" route="/pages/invoice/invoice" img="/static/images/icons/text.png"></MenuItem>
+  <Separator></Separator>
+  <Spacer></Spacer>
+  <Separator></Separator>
+  <MenuItem itemName="联系我们" route="/pages/contact/contact" img="/static/images/icons/chat.png"></MenuItem>
+  <Separator></Separator>
 </view>
 

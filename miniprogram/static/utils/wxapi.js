@@ -44,6 +44,13 @@ const wxapi = {
     });
   },
 
+  showSubmitting: () => {
+    wx.showLoading({
+      title: '提交中',
+      mask: true,
+    });
+  },
+
   showSubmissionSuccess: () => {
     wx.showToast({
       title: '提交成功',
@@ -69,6 +76,21 @@ const wxapi = {
   showEditFailed: () => {
     wx.showToast({
       title: '修改失败请重试',
+      icon: 'error',
+      duration: 2000,
+    });
+  },
+
+  showAddSuccess: () => {
+    wx.showToast({
+      title: '添加成功',
+      duration: 800,
+    });
+  },
+
+  showAddFailed: () => {
+    wx.showToast({
+      title: '添加失败请重试',
       icon: 'error',
       duration: 2000,
     });
