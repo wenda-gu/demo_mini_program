@@ -96,7 +96,7 @@ function cloudSendVerificationCode(phone) {
   });
 }
 
-function cloudGetPhoneNumber(cloudID) {
+async function cloudGetPhoneNumber(cloudID) {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: "getPhoneNumber",

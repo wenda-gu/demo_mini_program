@@ -20,7 +20,10 @@ const closeOtherPagePopUp = (closePopUp) => {
 }
 Component({
   properties: {
-    innerShow: false,
+    innerShow: {
+      type: Boolean,
+      value: false,
+    },
   },
   lifetimes: {
     attached: function() {

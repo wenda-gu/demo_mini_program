@@ -1,4 +1,7 @@
 // components/form-input-picker/form-input-picker.js
+import { verboseLog } from "../../static/utils/logging";
+import {placeholderColorDisabled, placeholderColorEnabled, fieldColorDisabled} from "../../static/utils/staticData";
+
 Component({
 
   /**
@@ -33,7 +36,9 @@ Component({
    * 组件的初始数据
    */
   data: {
-
+    placeholderColorDisabled: placeholderColorDisabled,
+    placeholderColorEnabled: placeholderColorEnabled,
+    fieldColorDisabled: fieldColorDisabled,
   },
 
   /**

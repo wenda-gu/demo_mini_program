@@ -4,7 +4,7 @@ import {verboseLog, verboseError} from "logging.js";
 // Methods
 
 // INVOICE
-function addInvoiceTitle(formData) {
+async function addInvoiceTitle(formData) {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("invoice-title").add({
       data: formData,
@@ -19,7 +19,7 @@ function addInvoiceTitle(formData) {
   });
 }
 
-function deleteInvoiceTitleById(id) {
+async function deleteInvoiceTitleById(id) {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("invoice-title").doc(id).remove()
     .then((res) => {
@@ -33,7 +33,7 @@ function deleteInvoiceTitleById(id) {
   });
 }
 
-function editInvoiceTitleById(id, formData) {
+async function editInvoiceTitleById(id, formData) {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("invoice-title").doc(id).update({
       data: formData,
@@ -49,7 +49,7 @@ function editInvoiceTitleById(id, formData) {
 }
 
 // Get all invoice titles that matches the user openid
-function getAllInvoiceTitles() {
+async function getAllInvoiceTitles() {
   return new Promise((resolve, reject) => {
     verboseLog("dbAction.getAllInvoiceTitles()");
     wx.cloud.database().collection("invoice-title").get().then(res => {
@@ -68,7 +68,7 @@ function getAllInvoiceTitles() {
 
 
 // Personal Info
-function getPersonalInfo() {
+async function getPersonalInfo() {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("personal-info").get().then((res) => {
       verboseLog("dbAction.getPersonalInfo() success:", res);
@@ -82,8 +82,25 @@ function getPersonalInfo() {
   });
 }
 
-function editPersonalInfo(id, formData) {
+async function addPersonalInfo(formData) {
   return new Promise((resolve, reject) => {
+    wx.cloud.database().collection("personal-info").add({
+      data: formData,
+    }).then((res) => {
+      verboseLog("dbAction.editPersonalInfo() success:", res);
+      resolve(res);
+    }).catch((err) => {
+      reject({
+        errMsg: "dbAction.editPersonalInfo() failed.",
+        err,
+      });
+    });
+  });
+}
+
+async function editPersonalInfo(id, formData) {
+  return new Promise((resolve, reject) => {
+    verboseLog("This is id:", id)
     wx.cloud.database().collection("personal-info").doc(id).update({
       data: formData,
     }).then((res) => {
@@ -98,7 +115,7 @@ function editPersonalInfo(id, formData) {
   });
 }
 
-function editAvatarUrl(id, url) {
+async function editAvatarUrl(id, url) {
   return new Promise((resolve, reject) => {
     wx.cloud.database().collection("personal-info").doc(id).update({
       data: {
@@ -123,6 +140,7 @@ export default {
   editInvoiceTitleById: editInvoiceTitleById,
   getAllInvoiceTitles: getAllInvoiceTitles,
   getPersonalInfo: getPersonalInfo,
+  addPersonalInfo: addPersonalInfo,
   editPersonalInfo: editPersonalInfo,
   editAvatarUrl: editAvatarUrl,
 }

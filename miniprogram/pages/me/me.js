@@ -1,12 +1,12 @@
 // pages/me/me.js
 import { verboseLog, verboseError } from "../../static/utils/logging";
 import dbAction from "../../static/utils/dbAction.js";
+import cloudAction from "../../static/utils/cloudAction.js";
 import storageAction from "../../static/utils/storageAction.js";
 import validation from "../../static/utils/validation.js";
 import {sleep} from "../../static/utils/wxapi";
 
 
-const userLogin = getApp().userLogin
 const global = getApp().globalData;
 
 
@@ -20,7 +20,35 @@ Page({
     userInfo: Object,
     avatarUrl: String,
     loggedin: false,
-    isNewUser: Boolean,
+    isNewUser: true,
+    disabled: false,
+  },
+
+  async getPhoneNumber(e) {
+    this.setData({
+      disabled: true,
+    });
+    try {
+      var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
+      verboseLog("this is res:", res);
+      if (res.countryCode != "86") {
+        this.setData({
+          disabled: false,
+        });
+        wx.showToast({
+          title: '请使用国内手机号',
+          icon: 'error',
+          duration: 2000,
+        });
+      }
+      else {
+        wx.redirectTo({
+          url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
+        })
+      }
+    } catch (err) {
+      verboseError(err);
+    }
   },
 
   handleChooseAvatar(e) {
@@ -61,7 +89,7 @@ Page({
         isNewUser: true,
         loggedin: true,
         avatarUrl: global.avatarUrl,
-      })
+      });
     }
     else {
       var title = global.personalInfo.companyName + global.personalInfo.department;
@@ -76,15 +104,16 @@ Page({
         userInfo: global.personalInfo,
         avatarUrl: global.avatarUrl,
         loggedin: true,
+        isNewUser: false,
       });
     }
   },
 
-  navToSignUp() {
-    wx.redirectTo({
-      url: "/pages/auth/auth",
-    });
-  },
+  // navToSignUp() {
+  //   wx.redirectTo({
+  //     url: "/pages/auth/auth",
+  //   });
+  // },
 
   navToPersonalInfo() {
     if (!this.data.loggedin) {
@@ -116,29 +145,13 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    (async () => {
-      while ( !global.loggedin ) {
-        await sleep(10);
-      }
-      this.setupPage();
-      verboseLog("me.onLoad() already logged in, success.");
-    })()
+  async onShow() {
+    while ( !global.loggedin ) {
+      await sleep(10);
+    }
+    this.setupPage();
+    verboseLog("me.onLoad() already logged in, success.");
   },
-    
-    // if ( global.loggedin ) {
-    //   this.setupPage();
-    //   verboseLog("me.onLoad() already logged in, success.");
-    // }
-    // else {
-    //   verboseLog("me.onLoad()");
-    //   userLogin().then((res) => {
-    //     this.setupPage();
-    //     verboseLog("me.onLoad() logged in success.");
-    //   }).catch((err) => {
-    //     verboseError("me.onLoad() failed:", err);
-    //   });
-    // }
 
   /**
    * 生命周期函数--监听页面隐藏

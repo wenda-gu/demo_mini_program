@@ -36,6 +36,44 @@ const wxapi = {
       }, time);
     });
   },
+
+  showSaving: () => {
+    wx.showLoading({
+      title: '保存中',
+      mask: true,
+    });
+  },
+
+  showSubmissionSuccess: () => {
+    wx.showToast({
+      title: '提交成功',
+      duration: 800,
+    });
+  },
+
+  showSubmissionFailed: () => {
+    wx.showToast({
+      title: '提交失败请重试',
+      icon: 'error',
+      duration: 2000,
+    });
+  },
+
+  showEditSuccess: () => {
+    wx.showToast({
+      title: '修改成功',
+      duration: 800,
+    });
+  },
+
+  showEditFailed: () => {
+    wx.showToast({
+      title: '修改失败请重试',
+      icon: 'error',
+      duration: 2000,
+    });
+  },
 }
+
 
 module.exports = wxapi;

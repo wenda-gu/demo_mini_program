@@ -24,6 +24,10 @@ const staticData = {
   ],
 
   defaultAvatarUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/avatar/0.png',
+
+  placeholderColorDisabled: 'color: rgb(175, 175, 175)',
+  placeholderColorEnabled: 'color: rgb(120, 120, 120)',
+  fieldColorDisabled: 'color: rgb(120, 120, 120)',
 }
 
 // Exporting methods

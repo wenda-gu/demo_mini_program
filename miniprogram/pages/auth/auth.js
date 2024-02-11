@@ -1,6 +1,6 @@
 // pages/auth/auth.js
 import {verboseLog, verboseError} from "../../static/utils/logging.js";
-import {cloudAction} from "../../static/utils/cloudAction.js";
+import cloudAction from "../../static/utils/cloudAction.js";
 import {defaultAvatarUrl} from "../../static/utils/staticData.js";
 
 
@@ -10,36 +10,44 @@ Page({
    * 页面的初始数据
    */
   data: {
-    countryCode: Number,
-    phoneNumber: Number,
-    isChecked: false,
+    innerShow: true,
+    // isChecked: false,
   },
-  toggleIsChecked() {
-    this.setData({
-      isChecked: !this.data.isChecked,
-    })
-  },
-  openPrivacyContract() {
-    wx.openPrivacyContract({
-      success: res => {
-        console.log('openPrivacyContract success')
-      },
-      fail: res => {
-        console.error('openPrivacyContract fail', res)
-      }
-    })
-  },
+  // toggleIsChecked() {
+  //   this.setData({
+  //     isChecked: !this.data.isChecked,
+  //   })
+  // },
+  // openPrivacyContract() {
+  //   wx.openPrivacyContract({
+  //     success: res => {
+  //       console.log('openPrivacyContract success')
+  //     },
+  //     fail: res => {
+  //       console.error('openPrivacyContract fail', res)
+  //     }
+  //   })
+  // },
 
-  getPhoneNumber(e) {
-    cloudAction.cloudGetPhoneNumber(e.detail.cloudID).then((res) => {
+  async getPhoneNumber(e) {
+    try {
+      var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
       verboseLog("this is res:", res);
-      this.setData({
-        countryCode: countryCode,
-        phoneNumber: res.phoneNumber,
-      });
-    }).catch((err) => {
+      if (res.countryCode != "86") {
+        wx.showToast({
+          title: '请使用国内手机号',
+          icon: 'error',
+          duration: 2000,
+        });
+      }
+      else {
+        wx.redirectTo({
+          url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
+        })
+      }
+    } catch (err) {
       verboseError(err);
-    });
+    }
   },
   
 

@@ -4,12 +4,22 @@
 
   <view wx:if="{{mode == 'selector'}}">
     <picker bindchange="bindPickerChange" range="{{range}}" disabled="{{disabled}}">
-        {{value ? value : placeholder}}
+      <view wx:if="{{value}}" style="{{disabled ? fieldColorDisabled : ''}}">
+        {{value}}
+      </view>
+      <view wx:else style="{{disabled ? placeholderColorDisabled : placeholderColorEnabled}}">
+        {{placeholder}}
+      </view>
     </picker>
   </view>
   <view wx:else>
     <picker mode="region" bindchange="bindRegionChange" custom-item="{{customItem}}" disabled="{{disabled}}">
-      {{region ? region[0] + '，' + region[1] + '，' + region[2] : placeholder}}
+      <view wx:if="{{region}}" style="{{disabled ? fieldColorDisabled : ''}}">
+        {{region[0] + '，' + region[1] + '，' + region[2]}}
+      </view>
+      <view wx:else style="{{disabled ? placeholderColorDisabled : placeholderColorEnabled}}">
+        {{placeholder}}
+      </view>
     </picker>
   </view>
 </view>

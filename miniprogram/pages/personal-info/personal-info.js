@@ -2,10 +2,10 @@
 
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
-import {medicalDepartmentList} from "../../static/utils/staticData.js";
+import {verboseLog, verboseError} from "../../static/utils/logging";
+import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/staticData";
+import {showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed} from "../../static/utils/wxapi";
 
-const personalInfoDocId = getApp().globalData.personalInfoDocId;
 const updatePersonalInfo = getApp().updatePersonalInfo;
 
 Page({
@@ -22,13 +22,15 @@ Page({
     companyName: String,
     region: Object,
     address: String,
-    phoneCompany: Number,
+    phoneCompany: String,
     isHealthcareWorker: true,
     department: String,
     otherDepartment: String,
     title: String,
     position: String,
     isEditing: false,
+    personalInfoDocId: String,
+    isNewUser: Boolean,
     medicalDepartmentList: medicalDepartmentList,
   },
 
@@ -45,7 +47,6 @@ Page({
       wx.disableAlertBeforeUnload();
     }
   },
-
   toggleIsHealthcareWorker(e) {
     if (this.data.isHealthcareWorker != e.detail) {
       this.setData({
@@ -146,18 +147,12 @@ Page({
     };
   },
 
-  
-
-  isValid() {
+  async isValid() {
     return new Promise((resolve, reject) => {
       // check if empty
       if (validation.isEmpty(this.data.name, String)) {
         verboseError("personal-info.isValid() no name.");
         reject("No name.");
-      }
-      else if (validation.isEmpty(this.data.isMale, Boolean)) {
-        verboseError("personal-info.isValid() no gender.");
-        reject("No gender.");
       }
       else if (validation.isEmpty(this.data.phonePersonal, Number)) {
         verboseError("personal-info.isValid() no phonePersonal.");
@@ -216,15 +211,15 @@ Page({
         verboseError("personal-info.isValid() wrong format emailPersonal.");
         reject("Wrong format emailPersonal.");
       }
-      else if (!validation.validatePersonalId(this.data.personalId)) {
+      else if (!validation.isEmpty(this.data.personalId, String) && !validation.validatePersonalId(this.data.personalId)) {
         verboseError("personal-info.isValid() wrong format personalId.");
         reject("Wrong format personalId.");
       }
-      else if (!validation.validatePhoneNumAndSymbols(this.data.phoneCompany) && !(this.data.phoneCompany == Number)) {
+      else if (!validation.isEmpty(this.data.phoneCompany, String) && !validation.validatePhoneNumAndSymbols(this.data.phoneCompany)) {
         verboseError("personal-info.isValid() wrong format phoneCompany.");
         reject("Wrong format phoneCompany.");
       }
-      else if (!validation.validatePersonalIdAndGender(this.data.personalId, this.data.isMale)) {
+      else if (!validation.isEmpty(this.data.personalId, String) && !validation.validatePersonalIdAndGender(this.data.personalId, this.data.isMale)) {
         verboseError("personal-info.isValid() personal id and gender do not match.");
         reject("Personal id and gender do not match.");
       }
@@ -235,109 +230,124 @@ Page({
     });
   },
 
-  btnSubmit() {
-    return new Promise((resolve, reject) => {
-      wx.showLoading({
-        title: '保存中',
-        mask: true,
-      });
-      this.toggleIsEditing();
-      verboseLog("personal-info.btnSubmit()。");
-      this.isValid().then((res) => {
-        const formData = this.prepareForm();
-        verboseLog("personal-info.btnSubmit() submitting:", formData);
-        dbAction.editPersonalInfo(personalInfoDocId, formData).then((res) => {
-          verboseLog("personal-info.btnSubmit() edit success.");
+  async btnSubmit() {
+    showSaving();
+    this.toggleIsEditing();
+    verboseLog("personal-info.btnSubmit()");
+    try {
+      await this.isValid();
+      var formData = this.prepareForm();
+      verboseLog("personal-info.btnSubmit() submitting:", formData);
+      
+      // new user
+      if (this.data.isNewUser) {
+        try {
+          formData.avatarUrl = defaultAvatarUrl;
+          await dbAction.addPersonalInfo(formData);
+          verboseLog("personal-info.btnSubmit() addPersonalInfo() success.");
           wx.hideLoading();
-          wx.showToast({
-            title: '修改成功',
-            duration: 800,
+          showSubmissionSuccess();
+          await updatePersonalInfo();
+
+          verboseLog("page:", this.data.personalInfoDocId);
+          verboseLog("global", getApp().globalData.personalInfoDocId);
+          this.setData({
+            personalInfoDocId: getApp().globalData.personalInfoDocId,
+            isNewUser: false,
           });
-          updatePersonalInfo();
-          resolve("personal-info.btnSubmit() success.");
-        }).catch((err) => {
+          verboseLog("page:", this.data.personalInfoDocId);
+          // TODO: why not working
+          wx.reLaunch({
+            url: 'pages/me/me',
+          });
+        } catch (err) {
+          verboseError("personal-info.btnSubmit() addPersonalInfo() failed:", err);
+          wx.hideLoading();
+          showSubmissionFailed();
+          this.toggleIsEditing();
+        }
+      }
+      // existing user
+      else {
+        try {
+          await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
+          verboseLog("personal-info.btnSubmit() editPersonalInfo success.");
+          wx.hideLoading();
+          showEditSuccess();
+          await updatePersonalInfo();
+        } catch (err) {
           verboseError("personal-info.btnSubmit() editPersonalInfo() failed:", err);
           wx.hideLoading();
-          wx.showToast({
-            title: '修改失败请重试',
-            icon: 'error',
-            duration: 2000,
-          });
-          reject(err);
+          showEditFailed();
           this.toggleIsEditing();
-        });
-        
-      }).catch((err) => {
-        verboseError("personal-info.btnSubmit() isValid() failed:", err);
-        wx.hideLoading();
-        var msg, iconStr = 'error';
-        switch(err) {
-          case "No name.":
-            msg = "请填写姓名";
-            break;
-          case "No gender.":
-            msg = "请选择性别";
-            break;
-          case "No phonePersonal.":
-            msg = "请填写个人手机";
-            break;
-          case "No emailPersonal.":
-            msg = "请填写个人邮箱";
-            break;
-          case "No companyName.":
-            msg = "请填写单位名称";
-            break;
-          case "No region.":
-            msg = "请选择单位地区";
-            break;
-          case "No address.":
-            msg = "请填写单位地址";
-            break;
-          case "No medical department.":
-            msg = "请选择科室";
-            break;
-          case "No medical other department.":
-            msg = "请填写科室";
-            break;
-          case "No title.":
-            msg = "请填写职称";
-            break;
-          case "No position.":
-            msg = "请填写职务";
-            break;
-          case "No department.":
-            msg = "请填写部门";
-            break;
-          case "Wrong format phonePersonal.":
-            msg = "个人手机号格式错误";
-            iconStr = "none";
-            break;
-          case "Wrong format emailPersonal.":
-            msg = "个人邮箱格式错误";
-            iconStr = "none";
-            break;
-          case "Wrong format personalId.":
-            msg = "身份证号码格式错误";
-            iconStr = "none";
-            break;
-          case "Wrong format phoneCompany.":
-            msg = "单位电话格式错误";
-            iconStr = "none";
-            break;
-          case "Personal id and gender do not match.":
-            msg = "身份证号码与性别不符";
-            iconStr = "none";
-            break;
         }
-        wx.showToast({
-          title: msg,
-          icon: iconStr,
-          duration: 2000,
-        });
-        reject(err);
-        this.toggleIsEditing();
+      }        
+    } catch (err) {
+      verboseError("personal-info.btnSubmit() isValid() failed:", err);
+      wx.hideLoading();
+      var msg, iconStr = 'error';
+      switch(err) {
+        case "No name.":
+          msg = "请填写姓名";
+          break;
+        case "No phonePersonal.":
+          msg = "请填写个人手机";
+          break;
+        case "No emailPersonal.":
+          msg = "请填写个人邮箱";
+          break;
+        case "No companyName.":
+          msg = "请填写单位名称";
+          break;
+        case "No region.":
+          msg = "请选择单位地区";
+          break;
+        case "No address.":
+          msg = "请填写单位地址";
+          break;
+        case "No medical department.":
+          msg = "请选择科室";
+          break;
+        case "No medical other department.":
+          msg = "请填写科室";
+          break;
+        case "No title.":
+          msg = "请填写职称";
+          break;
+        case "No position.":
+          msg = "请填写职务";
+          break;
+        case "No department.":
+          msg = "请填写部门";
+          break;
+        case "Wrong format phonePersonal.":
+          msg = "个人手机号格式错误";
+          iconStr = "none";
+          break;
+        case "Wrong format emailPersonal.":
+          msg = "个人邮箱格式错误";
+          iconStr = "none";
+          break;
+        case "Wrong format personalId.":
+          msg = "身份证号码格式错误";
+          iconStr = "none";
+          break;
+        case "Wrong format phoneCompany.":
+          msg = "单位电话格式错误";
+          iconStr = "none";
+          break;
+        case "Personal id and gender do not match.":
+          msg = "身份证号码与性别不符";
+          iconStr = "none";
+          break;
+      }
+      wx.showToast({
+        title: msg,
+        icon: iconStr,
+        duration: 2000,
       });
-    });
+      this.toggleIsEditing();
+    }
   },
   
 
@@ -350,37 +360,60 @@ Page({
     if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("personal-info.onLoad() got item:", item);
-    var isHealthcareWorker = true, department = '', title = '', position = '', otherDepartment = '';
-    // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
-    if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
-      department = '其他';
-      otherDepartment = item.department;
-    }
-    else {
-      department = item.department;
-    }
+    
     // if item.isHealthcareWorker is undefined, first time filling out personal info form
     if (item.isHealthcareWorker != undefined) {
-      isHealthcareWorker = item.isHealthcareWorker;
+      var title = '', position = '', department = '', otherDepartment = '';
+
       title = item.title ? item.title : '';
       position = item.position ? item.position : '';
+
+      // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
+      if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
+        department = '其他';
+        otherDepartment = item.department;
+      }
+      else {
+        department = item.department;
+      }
+
+      this.setData({
+        name: item.name,
+        isMale: item.isMale,
+        phonePersonal: item.phonePersonal,
+        emailPersonal: item.emailPersonal,
+        personalId: item.personalId,
+        companyName: item.companyName,
+        region: item.region,
+        address: item.address,
+        phoneCompany: item.phoneCompany,
+        isHealthcareWorker: item.isHealthcareWorker,
+        department: department,
+        otherDepartment: otherDepartment,
+        title: title,
+        position: position,
+      });
     }
-    this.setData({
-      name: item.name,
-      isMale: item.isMale,
-      phonePersonal: item.phonePersonal,
-      emailPersonal: item.emailPersonal,
-      personalId: item.personalId,
-      companyName: item.companyName,
-      region: item.region,
-      address: item.address,
-      phoneCompany: item.phoneCompany,
-      isHealthcareWorker: isHealthcareWorker,
-      department: department,
-      otherDepartment: otherDepartment,
-      title: title,
-      position: position,
-    });
+    else {
+      this.setData({
+        isEditing: true,
+        name: '',
+        isMale: true,
+        phonePersonal: item.phonePersonal,
+        emailPersonal: '',
+        personalId: '',
+        companyName: '',
+        region: null,
+        address: '',
+        phoneCompany: '',
+        isHealthcareWorker: true,
+        department: '',
+        otherDepartment: '',
+        title: '',
+        position: '',
+      });
+    }
+    
   },
 
   /**
@@ -394,7 +427,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.setData({
+      isNewUser: getApp().globalData.isNewUser,
+      personalInfoDocId: getApp().globalData.personalInfoDocId,
+    });
   },
 
   /**
