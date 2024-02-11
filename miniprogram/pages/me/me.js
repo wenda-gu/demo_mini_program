@@ -4,7 +4,7 @@ import dbAction from "../../static/utils/dbAction.js";
 import cloudAction from "../../static/utils/cloudAction.js";
 import storageAction from "../../static/utils/storageAction.js";
 import validation from "../../static/utils/validation.js";
-import {sleep} from "../../static/utils/wxapi";
+import {sleep, showUseChinesePhoneNumber} from "../../static/utils/wxapi";
 
 
 const global = getApp().globalData;
@@ -24,33 +24,29 @@ Page({
     disabled: false,
   },
 
-  async getPhoneNumber(e) {
+  setDisabled(b) {
     this.setData({
-      disabled: true,
+      disabled: b,
     });
+  },
+
+  async getPhoneNumber(e) {
+    this.setDisabled(true);
     try {
       var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
       verboseLog("this is res:", res);
-      if (res.countryCode != "86") {
-        this.setData({
-          disabled: false,
-        });
-        wx.showToast({
-          title: '请使用国内手机号',
-          icon: 'error',
-          duration: 2000,
+      if (validation.validateCountryCode(res.countryCode)) {
+        wx.redirectTo({
+          url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
         });
       }
       else {
-        wx.redirectTo({
-          url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
-        })
+        this.setDisabled(false);
+        showUseChinesePhoneNumber();
       }
     } catch (err) {
-      verboseError(err);
-      this.setData({
-        disabled: false,
-      });
+      console.error(err);
+      this.setDisabled(false);
     }
   },
 
@@ -118,12 +114,6 @@ Page({
     }
   },
 
-  // navToSignUp() {
-  //   wx.redirectTo({
-  //     url: "/pages/auth/auth",
-  //   });
-  // },
-
   navToPersonalInfo() {
     if (!this.data.loggedin) {
       verboseError("me.navToPersonalInfo() user not logged in. Retry later.");
@@ -136,6 +126,13 @@ Page({
       verboseLog("me.navToPersonalInfo() nav to personal-info:", destination);
     });
   },
+
+  // navToSignUp() {
+  //   wx.redirectTo({
+  //     url: "/pages/auth/auth",
+  //   });
+  // },
+
 
   /**
    * 生命周期函数--监听页面加载

@@ -95,6 +95,14 @@ const wxapi = {
       duration: 2000,
     });
   },
+
+  showUseChinesePhoneNumber: () => {
+    wx.showToast({
+      title: '请使用国内手机号',
+      icon: 'error',
+      duration: 2000,
+    });
+  },
 }
 
 

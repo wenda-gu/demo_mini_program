@@ -57,8 +57,18 @@ Page({
       });
     }
   },
+  setPhonePersonal(num) {
+    verboseLog("in setPhonePersonal:", num);
+    this.setData({
+      phonePersonal: num,
+    });
+  },
 
-
+  handleChangePhonePersonal(e) {
+    wx.navigateTo({
+      url: '../auth/auth',
+    });
+  },
   handleName(e) {
     this.setData({
       name: e.detail

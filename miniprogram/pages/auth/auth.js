@@ -1,7 +1,8 @@
 // pages/auth/auth.js
 import {verboseLog, verboseError} from "../../static/utils/logging.js";
 import cloudAction from "../../static/utils/cloudAction.js";
-import {defaultAvatarUrl} from "../../static/utils/staticData.js";
+import validation from "../../static/utils/validation.js";
+import {showUseChinesePhoneNumber} from "../../static/utils/wxapi";
 
 
 Page({
@@ -10,41 +11,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-    innerShow: true,
-    // isChecked: false,
+
   },
-  // toggleIsChecked() {
-  //   this.setData({
-  //     isChecked: !this.data.isChecked,
-  //   })
-  // },
-  // openPrivacyContract() {
-  //   wx.openPrivacyContract({
-  //     success: res => {
-  //       console.log('openPrivacyContract success')
-  //     },
-  //     fail: res => {
-  //       console.error('openPrivacyContract fail', res)
-  //     }
-  //   })
-  // },
 
   async getPhoneNumber(e) {
     try {
       var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
       verboseLog("this is res:", res);
-      if (res.countryCode != "86") {
-        wx.showToast({
-          title: '请使用国内手机号',
-          icon: 'error',
-          duration: 2000,
-        });
+      if (validation.validateCountryCode(res.countryCode)) {
+        var pages = getCurrentPages();
+        var prevPage = pages[pages.length - 2];
+        await wx.navigateBack({delta: 1});
+        if (prevPage == undefined || prevPage == null) {
+          return;
+        }
+        else {
+          prevPage.setPhonePersonal(res.purePhoneNumber);
+        }
+        // wx.redirectTo({
+        //   url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
+        // });
       }
       else {
-        wx.redirectTo({
-          url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
-        })
+        showUseChinesePhoneNumber();
       }
+      
     } catch (err) {
       verboseError(err);
     }

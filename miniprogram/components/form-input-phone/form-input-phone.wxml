@@ -1,0 +1,9 @@
+<!--components/form-input-phone/form-input-phone.wxml-->
+<view class="form-input-format">
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
+  <view class="container">
+    <input class="phone-number" placeholder-style="{{placeholderColorDisabled}}" required="{{isRequired}}" value="{{value}}" type="number" maxlength="11" disabled="true"></input>
+
+    <button class="choice" disabled="{{disabled}}" bind:tap="onTap">更改</button>
+  </view>
+</view>

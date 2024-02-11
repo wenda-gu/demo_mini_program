@@ -12,6 +12,8 @@ const personalId = /^[1-9]\d{5}(19|20)\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10
 
 // Methods for validation
 
+
+
 // check if avatar is default
 function isDefaultAvatar(url) {
   return (defaultAvatarUrl == url);
@@ -20,6 +22,10 @@ function isDefaultAvatar(url) {
 // check if field is empty
 function isEmpty(item, type) {
   return (item == undefined || item == type || item == '');
+}
+
+function validateCountryCode(code) {
+  return code == "86";
 }
 
 function validateTaxId(e) {
@@ -84,6 +90,7 @@ function parsePersonalId(id){
 export default {
   isDefaultAvatar: isDefaultAvatar,
   isEmpty: isEmpty,
+  validateCountryCode: validateCountryCode,
   validateTaxId: validateTaxId,
   validateNum: validateNum,
   validateNumNotEmpty: validateNumNotEmpty,

@@ -1,9 +1,15 @@
 /* pages/auth/auth.wxss */
+@import "/static/styles/style.wxss";
 page {
-  align-items: center;
+  height: 100%;
+}
+.auth-container {
+  height: 100%;
+  display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.container {
-  width: 60%;
+.blue-btn {
+  width: 100%!important;
 }

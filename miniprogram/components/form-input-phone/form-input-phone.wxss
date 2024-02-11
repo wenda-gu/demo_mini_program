@@ -1,0 +1,29 @@
+/* components/form-input-phone/form-input-phone.wxss */
+@import "/static/styles/style.wxss";
+
+
+.container {
+  height: 80%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* background-color: aqua; */
+  overflow: hidden;
+}
+
+.phone-number {
+  height: 100%;
+  color: rgb(124, 124, 124);
+}
+
+.choice {
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%!important;
+  display: inline-flex;
+  /* background-color: rgb(243, 243, 243); */
+}

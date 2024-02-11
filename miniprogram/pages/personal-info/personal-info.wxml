@@ -8,7 +8,7 @@
       <Separator></Separator>
       <!-- TODO: change phone number logic -->
       <FormInputItem wx:if="{{isNewUser}}" isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="true"></FormInputItem>
-      <FormInputItem wx:else isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing || isNewUser}}"></FormInputItem>
+      <FormInputPhone wx:else isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bind:changePhone="handleChangePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing || isNewUser}}"></FormInputPhone>
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="邮箱" name="emailPersonal" placeholder="请输入个人邮箱" value="{{emailPersonal}}" bindinput="handleEmailPersonal" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
