@@ -1,6 +1,6 @@
 // pages/testPage/testPage.js
 import cloudAction from "../../static/utils/cloudAction.js";
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {verboseLog} from "../../static/utils/logging.js";
 import {medicalDepartmentList} from "../../static/utils/staticData.js";
 
 Page({
@@ -34,7 +34,7 @@ Page({
         phoneNumber: res.purePhoneNumber,
       });
     }).catch((err) => {
-      verboseError(err);
+      console.error(err);
     });
   },
   

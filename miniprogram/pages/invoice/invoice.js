@@ -1,6 +1,6 @@
 // pages/invoice/invoice.js
 
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {verboseLog} from "../../static/utils/logging";
 import dbAction from "../../static/utils/dbAction.js";
 import {wxapi} from "../../static/utils/wxapi.js";
 
@@ -11,7 +11,6 @@ Page({
    */
   data: {
     dataObj: "",
-    show: false,
   },
 
   handleEditInvoiceTitle(e) {
@@ -58,7 +57,7 @@ Page({
         this.getData().then((res) => {
           resolve(res);
         }).catch((err) => {
-          verboseError("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
+          console.error("invoice.deleteInvoiceTitle() delete success, getData() failed:", err);
           reject(err);
         });
       }).catch((err) => {
@@ -75,65 +74,10 @@ Page({
     wx.navigateTo( {url: '/pages/invoice-add/invoice-add',} );
   },
 
-  getData(){
-    return new Promise((resolve, reject) => {
-      verboseLog("invoice.getData()");
-      dbAction.getAllInvoiceTitles().then((items) => {
-        verboseLog("invoice.getData() got invoice title(s):", items);
-        this.setData({
-          dataObj: items,
-          show: true,
-        });
-        verboseLog("invoice.getData() success.");
-        resolve("invoice.getData() success.");
-      }).catch((err) => {
-        verboseError("invoice.getData() failed:", err);
-        reject(err);
-      });
-    });
-  },
-
-  getDataWrapper(mode) {
-    return new Promise((resolve, reject) => {
-      var funcName, loadingTitle, toastTitle;
-      if (mode == "show") {
-        funcName = "invoice.onShow()";
-        loadingTitle = "加载中";
-        toastTitle = "加载失败请刷新";
-      }
-      else {
-        funcName = "invoice.onPullDownRefresh()";
-        loadingTitle = "刷新中";
-        toastTitle = "刷新失败请重试";
-      }
-      verboseLog(funcName);
-      wx.showLoading({
-        title: loadingTitle,
-        mask: true,
-      });
-      this.getData().then((res) => {
-        wx.hideLoading();
-        verboseLog(`${funcName} getData() success.`);
-        resolve(`${funcName} getData() success.`);
-      }).catch((err) => {
-        verboseError(`${funcName} getData() failed:`, err);
-        wx.hideLoading();
-        wx.showToast({
-          title: toastTitle,
-          icon: 'error',
-          duration: 2000,
-        });
-        reject(err);
-      });
-    });
-  },
-
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    verboseLog("invoice.onLoad()");
     wx.setNavigationBarTitle({ title: '开票信息' });
   },
 
@@ -147,8 +91,15 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-    this.getDataWrapper("show");
+  async onShow() {
+    try {
+      var items = await dbAction.getDataWrapper("show", "invoice");
+      this.setData({
+        dataObj: items,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   /**
@@ -168,19 +119,18 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
-    return new Promise((resolve, reject) => {
+  async onPullDownRefresh() {
+    try {
       wx.startPullDownRefresh();
-      verboseLog("invoice.onPullDownRefresh() refreshing...");
-      this.getDataWrapper("refresh").then((res) => {
-        wx.stopPullDownRefresh();
-        verboseLog("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
-        resolve("invoice.onPullDownRefresh() getDataWrapper() refreshed.");
-      }).catch((err) => {
-        verboseError("invoice.onPullDownRefresh() getDataWrapper() failed:", err);
-        reject(err);
+      var items = await dbAction.getDataWrapper("refresh", "invoice");
+      wx.stopPullDownRefresh();
+      verboseLog("invoice.pullDownRefresh() refreshed.");
+      this.setData({
+        dataObj: items,
       });
-    });
+    } catch (err)  {
+      console.error("at invoice.pullDownRefresh()\n", err);
+    }
   },
 
   /**

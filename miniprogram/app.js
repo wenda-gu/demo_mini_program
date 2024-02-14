@@ -1,6 +1,6 @@
 // app.js
 
-import {verboseLog, verboseError} from "/static/utils/logging.js";
+import {verboseLog} from "/static/utils/logging.js";
 import cloudAction from "/static/utils/cloudAction.js";
 import dbAction from "/static/utils/dbAction.js";
 import {defaultAvatarUrl} from "/static/utils/staticData.js";
@@ -48,7 +48,7 @@ App({
         this.globalData.loggedin = true;
       }
     } catch (err) {
-      verboseError("App.onLaunch() cloudAction.isNewUser() failed:", err);
+      console.error("App.onLaunch() cloudAction.isNewUser() failed:", err);
     }
   },
 
@@ -58,7 +58,7 @@ App({
       var data = res.data[0];
       this.setPersonalInfo(data);
     } catch (err) {
-      verboseError("App.updatePersonalInfo() failed:", err);
+      console.error("App.updatePersonalInfo() failed:", err);
     }
   },
   

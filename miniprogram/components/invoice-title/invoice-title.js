@@ -1,6 +1,6 @@
 // components/invoice/invoice-title/invoice-title.js
 
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {verboseLog} from "../../static/utils/logging.js";
 
 Component({
 

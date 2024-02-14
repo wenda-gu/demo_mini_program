@@ -1,7 +1,7 @@
 
 // static/utils/storageAction.js
 
-import { verboseError, verboseLog } from "./logging";
+import {verboseLog} from "./logging";
 
 // upload file
 function uploadFile(data) {

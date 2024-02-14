@@ -2,7 +2,7 @@
 
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
-import {verboseLog, verboseError} from "../../static/utils/logging";
+import {verboseLog} from "../../static/utils/logging";
 import {showSubmitting, showAddSuccess, showAddFailed, showSubmissionFailed, showEditSuccess, showEditFailed} from "../../static/utils/wxapi";
 
 Page({
@@ -117,11 +117,11 @@ Page({
             verboseLog("invoice-add.resetDefault() success.");
             resolve("invoice-add.resetDefault() success.");
           }).catch((err) => {
-            verboseError("invoice-add.resetDefault() failed:");
+            console.error("invoice-add.resetDefault() failed:");
             reject(err);
           });
         }).catch((err) => {
-          verboseError("invoice-add.resetDefault() dbAction.getAllInvoiceTitles() failed:", err);
+          console.error("invoice-add.resetDefault() dbAction.getAllInvoiceTitles() failed:", err);
           reject(err);
         });
       }
@@ -146,40 +146,40 @@ Page({
   async isValid() {
     return new Promise((resolve, reject) => {
       if (validation.isEmpty(this.data.companyName, String)) {
-        verboseError("invoice-add.isValid() no companyName.");
+        console.error("invoice-add.isValid() no companyName.");
         reject("No companyName.");
       }
       else if (validation.isEmpty(this.data.taxId, String)) {
-        verboseError("invoice-add.isValid() no taxId.");
+        console.error("invoice-add.isValid() no taxId.");
         reject("No taxId.");
       }
       else if (validation.isEmpty(this.data.phoneReceive, Number)) {
-        verboseError("invoice-add.isValid() no phoneReceive.");
+        console.error("invoice-add.isValid() no phoneReceive.");
         reject("No phoneReceive.");
       }
       else if (validation.isEmpty(this.data.emailReceive, String)) {
-        verboseError("invoice-add.isValid() no emailReceive.");
+        console.error("invoice-add.isValid() no emailReceive.");
         reject("No emailReceive.");
       }
       else {
         if (!validation.validateTaxId(this.data.taxId)) {
-          verboseError("invoice-add.isValid() wrong format taxId.");
+          console.error("invoice-add.isValid() wrong format taxId.");
           reject("Wrong format taxId.");
         }
         else if (!validation.validatePhoneNumAndSymbols(this.data.phoneCompany) && !(this.data.phoneCompany == Number)) {
-          verboseError("invoice-add.isValid() wrong format phoneCompany.");
+          console.error("invoice-add.isValid() wrong format phoneCompany.");
           reject("Wrong format phoneCompany.");
         }
         else if (!validation.validateNum(this.data.bankAccount) && !(this.data.bankAccount == Number)) {
-          verboseError("invoice-add.isValid() wrong format bankAccount.");
+          console.error("invoice-add.isValid() wrong format bankAccount.");
           reject("Wrong format bankAccount.");
         }
         else if (!validation.validateCellphone(this.data.phoneReceive)) {
-          verboseError("invoice-add.isValid() wrong format phoneReceive.");
+          console.error("invoice-add.isValid() wrong format phoneReceive.");
           reject("Wrong format phoneReceive.");
         }
         else if (!validation.validateEmail(this.data.emailReceive)) {
-          verboseError("invoice-add.isValid() wrong format emailReceive.");
+          console.error("invoice-add.isValid() wrong format emailReceive.");
           reject("Wrong format emailReceive.");
         }
         else {
@@ -218,7 +218,7 @@ Page({
               })
             }, 800);;
           }).catch((err) => {
-            verboseError("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
+            console.error("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
             wx.hideLoading();
             showEditFailed();
           });
@@ -236,18 +236,18 @@ Page({
               })
             }, 800);
           }).catch((err) => {
-            verboseError("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
+            console.error("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
             wx.hideLoading();
             showAddFailed();
           });
         };
       }).catch((err) => {
-        verboseError("invoice-add.btnSubmit() resetDefault() failed:", err);
+        console.error("invoice-add.btnSubmit() resetDefault() failed:", err);
         wx.hideLoading();
         showSubmissionFailed();
       });
     } catch (err) {
-      verboseError("invoice-add.btnSubmit() isValid() failed:", err);
+      console.error("invoice-add.btnSubmit() isValid() failed:", err);
       wx.hideLoading();
       var msg, iconStr = 'error';
       switch(err) {

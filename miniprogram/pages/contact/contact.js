@@ -1,5 +1,5 @@
 // pages/contact/contact.js
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {verboseLog} from "../../static/utils/logging.js";
 import {wxapi} from "../../static/utils/wxapi.js";
 
 Page({
@@ -18,7 +18,7 @@ Page({
     }).then((res) => {
       verboseLog("copy success.");
     }).catch((err) => {
-      verboseError("copy failed:", err);
+      console.error("copy failed:", err);
     });
   },
 
@@ -36,7 +36,7 @@ Page({
     }).then((res) => {
       verboseLog("call success.");
     }).catch((err) => {
-      verboseError("call failed:", err);
+      console.error("call failed:", err);
     });
   },
 
@@ -46,7 +46,7 @@ Page({
     }).then((res) => {
       verboseLog("sms success.");
     }).catch((err) => {
-      verboseError("sms failed:", err);
+      console.error("sms failed:", err);
     });
   },
 

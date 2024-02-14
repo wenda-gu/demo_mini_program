@@ -1,5 +1,5 @@
 // pages/auth/auth.js
-import {verboseLog, verboseError} from "../../static/utils/logging.js";
+import {verboseLog} from "../../static/utils/logging.js";
 import cloudAction from "../../static/utils/cloudAction.js";
 import validation from "../../static/utils/validation.js";
 import {showUseChinesePhoneNumber} from "../../static/utils/wxapi";
@@ -33,7 +33,7 @@ Page({
         showUseChinesePhoneNumber();
       }
     } catch (err) {
-      verboseError(err);
+      console.error(err);
     }
   },
   

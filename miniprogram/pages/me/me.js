@@ -1,5 +1,5 @@
 // pages/me/me.js
-import { verboseLog, verboseError } from "../../static/utils/logging";
+import {verboseLog} from "../../static/utils/logging";
 import dbAction from "../../static/utils/dbAction.js";
 import cloudAction from "../../static/utils/cloudAction.js";
 import storageAction from "../../static/utils/storageAction.js";
@@ -73,16 +73,16 @@ Page({
         dbAction.editAvatarUrl(global.personalInfoDocId, newAvatar).then((res) => {
           verboseLog("me.handleChooseAvatar() editAvatarUrl() update avatarUrl success.");
         }).catch((err) => {
-          verboseError("me.handleChooseAvatar() editAvatarUrl() update avatarUrl failed:", err);
+          console.error("me.handleChooseAvatar() editAvatarUrl() update avatarUrl failed:", err);
         });
         if (!validation.isDefaultAvatar(oldAvatar)) {
           storageAction.deleteFile(oldAvatar).catch(err => {
-            verboseError("me.handleChooseAvatar() deleteFile() delete old avatarUrl failed:", err);
+            console.error("me.handleChooseAvatar() deleteFile() delete old avatarUrl failed:", err);
           });
         }
         verboseLog("me.handleChooseAvatar() uploadFile() upload avatar success.");
       }).catch((err) => {
-        verboseError("me.handleChooseAvatar() uploadFile() upload avatar failed:", err);
+        console.error("me.handleChooseAvatar() uploadFile() upload avatar failed:", err);
       });
       
     }
@@ -116,7 +116,7 @@ Page({
 
   navToPersonalInfo() {
     if (!this.data.loggedin) {
-      verboseError("me.navToPersonalInfo() user not logged in. Retry later.");
+      console.error("me.navToPersonalInfo() user not logged in. Retry later.");
       return;
     }
     var destination = '/pages/personal-info/personal-info?item=' + JSON.stringify(this.data.userInfo);

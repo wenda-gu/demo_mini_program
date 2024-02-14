@@ -2,7 +2,7 @@
 // static/utils/cloudAction.js
 
 import dbAction from "./dbAction.js";
-import { verboseError, verboseLog } from "./logging";
+import {verboseLog} from "./logging";
 
 // Wrapper for wx.cloud.callFunction with no param other than name
 function wxCloudApi(name, param) {
@@ -74,7 +74,7 @@ function isNewUser() {
         });
       }
     }).catch((err) => {
-      verboseError("cloudAction.isNewUser() failed:", err);
+      console.error("cloudAction.isNewUser() failed:", err);
       reject(err);
     });
   });

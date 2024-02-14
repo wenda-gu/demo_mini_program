@@ -1,5 +1,5 @@
 <!--pages/invoice/invoice.wxml-->
-<view wx:if="{{show}}" wx:for="{{dataObj}}" wx:key="taxId">
+<view wx:for="{{dataObj}}" wx:key="taxId">
   <InvoiceTitle item="{{item}}" bind:edit="handleEditInvoiceTitle" bind:delete="handleDeleteInvoiceTitle"></InvoiceTitle>
 </view>
 <Spacer bgcolor="transparent"></Spacer>

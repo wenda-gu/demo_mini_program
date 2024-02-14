@@ -2,7 +2,7 @@
 
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
-import {verboseLog, verboseError} from "../../static/utils/logging";
+import {verboseLog} from "../../static/utils/logging";
 import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/staticData";
 import {showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed} from "../../static/utils/wxapi";
 
@@ -155,76 +155,76 @@ Page({
     return new Promise((resolve, reject) => {
       // check if empty
       if (validation.isEmpty(this.data.name, String)) {
-        verboseError("personal-info.isValid() no name.");
+        console.error("personal-info.isValid() no name.");
         reject("No name.");
       }
       else if (validation.isEmpty(this.data.phonePersonal, Number)) {
-        verboseError("personal-info.isValid() no phonePersonal.");
+        console.error("personal-info.isValid() no phonePersonal.");
         reject("No phonePersonal.");
       }
       else if (validation.isEmpty(this.data.emailPersonal, String)) {
-        verboseError("personal-info.isValid() no emailPersonal.");
+        console.error("personal-info.isValid() no emailPersonal.");
         reject("No emailPersonal.");
       }
       else if (validation.isEmpty(this.data.companyName, String)) {
-        verboseError("personal-info.isValid() no companyName.");
+        console.error("personal-info.isValid() no companyName.");
         reject("No companyName.");
       }
       else if (validation.isEmpty(this.data.region, Object)) {
-        verboseError("personal-info.isValid() no region.");
+        console.error("personal-info.isValid() no region.");
         reject("No region.");
       }
       else if (validation.isEmpty(this.data.address, String)) {
-        verboseError("personal-info.isValid() no address.");
+        console.error("personal-info.isValid() no address.");
         reject("No address.");
       }
       else {
         // 是医务工作者
         if (this.data.isHealthcareWorker) {
           if (validation.isEmpty(this.data.department, String)) {
-            verboseError("personal-info.isValid() no medical department.");
+            console.error("personal-info.isValid() no medical department.");
             reject("No medical department.");
           }
           else if (this.data.department == "其他" && (validation.isEmpty(this.data.otherDepartment, String))) {
-            verboseError("personal-info.isValid() no medical other department.");
+            console.error("personal-info.isValid() no medical other department.");
             reject("No medical other department.");
           }
           else if (validation.isEmpty(this.data.title, String)) {
-            verboseError("personal-info.isValid() no title.");
+            console.error("personal-info.isValid() no title.");
             reject("No title.");
           }
         }
         // 非医务工作者
         else {
           if (validation.isEmpty(this.data.department, String)) {
-            verboseError("personal-info.isValid() no department.");
+            console.error("personal-info.isValid() no department.");
             reject("No department.");
           }
           else if (validation.isEmpty(this.data.position, String)) {
-            verboseError("personal-info.isValid() no position.");
+            console.error("personal-info.isValid() no position.");
             reject("No position.");
           }
         }
       }
       // check format
       if (!validation.validateCellphone(this.data.phonePersonal)) {
-        verboseError("personal-info.isValid() wrong format phonePersonal.");
+        console.error("personal-info.isValid() wrong format phonePersonal.");
         reject("Wrong format phonePersonal.");
       }
       else if (!validation.validateEmail(this.data.emailPersonal)) {
-        verboseError("personal-info.isValid() wrong format emailPersonal.");
+        console.error("personal-info.isValid() wrong format emailPersonal.");
         reject("Wrong format emailPersonal.");
       }
       else if (!validation.isEmpty(this.data.personalId, String) && !validation.validatePersonalId(this.data.personalId)) {
-        verboseError("personal-info.isValid() wrong format personalId.");
+        console.error("personal-info.isValid() wrong format personalId.");
         reject("Wrong format personalId.");
       }
       else if (!validation.isEmpty(this.data.phoneCompany, String) && !validation.validatePhoneNumAndSymbols(this.data.phoneCompany)) {
-        verboseError("personal-info.isValid() wrong format phoneCompany.");
+        console.error("personal-info.isValid() wrong format phoneCompany.");
         reject("Wrong format phoneCompany.");
       }
       else if (!validation.isEmpty(this.data.personalId, String) && !validation.validatePersonalIdAndGender(this.data.personalId, this.data.isMale)) {
-        verboseError("personal-info.isValid() personal id and gender do not match.");
+        console.error("personal-info.isValid() personal id and gender do not match.");
         reject("Personal id and gender do not match.");
       }
       else {
@@ -260,7 +260,7 @@ Page({
             url: '../me/me',
           });
         } catch (err) {
-          verboseError("personal-info.btnSubmit() addPersonalInfo() failed:", err);
+          console.error("personal-info.btnSubmit() addPersonalInfo() failed:", err);
           wx.hideLoading();
           showSubmissionFailed();
           this.toggleIsEditing();
@@ -275,14 +275,14 @@ Page({
           showEditSuccess();
           await updatePersonalInfo();
         } catch (err) {
-          verboseError("personal-info.btnSubmit() editPersonalInfo() failed:", err);
+          console.error("personal-info.btnSubmit() editPersonalInfo() failed:", err);
           wx.hideLoading();
           showEditFailed();
           this.toggleIsEditing();
         }
       }        
     } catch (err) {
-      verboseError("personal-info.btnSubmit() isValid() failed:", err);
+      console.error("personal-info.btnSubmit() isValid() failed:", err);
       wx.hideLoading();
       var msg, iconStr = 'error';
       switch(err) {

@@ -7,7 +7,7 @@ Component({
   properties: {
     itemName: String,
     route: String,
-    itemDate: Date,
+    itemDate: String,
     itemIsComplete: {
       type: Boolean,
       value: false

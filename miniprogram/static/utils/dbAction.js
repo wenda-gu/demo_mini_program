@@ -1,6 +1,7 @@
 // static/utils/dbAction.js
 
-import {verboseLog, verboseError} from "logging.js";
+import {verboseLog} from "logging.js";
+import dateTool from "dateTool.js"
 // Methods
 
 // INVOICE
@@ -133,6 +134,79 @@ async function editAvatarUrl(id, url) {
   });
 }
 
+// registration info
+async function getAllRegistrations() {
+  try {
+    var info = await wx.cloud.database().collection("personal-info").get();
+    var items = info.data[0].registrations;
+    verboseLog("dbAction.getAllRegistrations() success with registrations:", info.data[0]);
+    if (items == undefined)
+      return [];
+    else {
+      var registrations = [];
+      for (const element of items) {
+        var conference = await wx.cloud.database().collection("conferences").doc(element.conference).get();
+        registrations.push({
+          conference: conference.data.name_zh,
+          date: dateTool.formatDate(conference.data.date_start, 'yyyy/mm/dd'),
+          isComplete: element.isComplete,
+        });
+      }
+      return registrations;
+    }
+  } catch (err) {
+    throw new Error("at dbAction.getAllRegistrations()\n" + err);
+  }
+}
+
+// general get for invoice and registration page
+async function getDataWrapper(mode, pageName) {
+  try {
+    var funcName, loadingTitle, toastTitle;
+    if (mode == "show") {
+      funcName = `${pageName}.onShow()`;
+      loadingTitle = "加载中";
+      toastTitle = "加载失败请刷新";
+    }
+    else {
+      funcName = `${pageName}.onPullDownRefresh()`;
+      loadingTitle = "刷新中";
+      toastTitle = "刷新失败请重试";
+    }
+    wx.showLoading({
+      title: loadingTitle,
+      mask: true,
+    });
+    var items = await this.getData(pageName);
+    verboseLog(`${funcName} getData() success.`);
+    wx.hideLoading();
+    return items;
+  } catch (err) {
+    wx.hideLoading();
+    wx.showToast({
+      title: toastTitle,
+      icon: 'error',
+      duration: 2000,
+    });
+    throw new Error(`at ${funcName} getDataWrapper()\n` + err);
+  }
+}
+
+async function getData(pageName){
+  try {
+    var items;
+    if (pageName == "invoice") 
+      items = await this.getAllInvoiceTitles();
+    else
+      items = await this.getAllRegistrations();
+    verboseLog(`${pageName}.getData() success with items:`, items);
+    return items;
+  } catch (err)  {
+    throw new Error(`at ${pageName}.getData()\n` + err);
+  }
+}
+
+
 // Exporting methods
 export default {
   addInvoiceTitle: addInvoiceTitle,
@@ -143,4 +217,7 @@ export default {
   addPersonalInfo: addPersonalInfo,
   editPersonalInfo: editPersonalInfo,
   editAvatarUrl: editAvatarUrl,
+  getAllRegistrations: getAllRegistrations,
+  getDataWrapper: getDataWrapper,
+  getData: getData,
 }

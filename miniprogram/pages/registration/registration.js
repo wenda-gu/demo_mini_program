@@ -1,13 +1,18 @@
 // pages/registration/registration.js
+
+import {verboseLog} from "../../static/utils/logging";
+import dbAction from "../../static/utils/dbAction.js";
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    dataObj: "",
-    show: true /* remember to set to false in getData methods */
+    dataObj: Object,
+    registrationExists: true,
   },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -26,8 +31,19 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow() {
-
+  async onShow() {
+    try {
+      var items = await dbAction.getDataWrapper("show", "registration");
+      var l = false;
+      if (items.length) l = true;
+      this.setData({
+        dataObj: items,
+        registrationExists: l,
+      });
+      verboseLog("This is dataObj:", this.data.dataObj);
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   /**
@@ -47,8 +63,18 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh() {
-
+  async onPullDownRefresh() {
+    try {
+      wx.startPullDownRefresh();
+      var items = await dbAction.getDataWrapper("refresh", "registration");
+      wx.stopPullDownRefresh();
+      verboseLog("registration.pullDownRefresh() refreshed.");
+      this.setData({
+        dataObj: items,
+      });
+    } catch (err)  {
+      console.error("at registration.pullDownRefresh()\n", err);
+    }
   },
 
   /**

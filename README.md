@@ -1,5 +1,6 @@
 # Glitch
 - add env id in `app.js` to set up cloud dev env
+- `wx.startPullDownRefresh()` and `wx.stopPullDownRefresh()` can only be used in `onPullDownRefresh()`. They cannot be written in another function and be called by `onPullDownRefresh()`.
 - [微信小程序自定义组件的坑之 hidden、boolean 属性和花括号](https://www.cnblogs.com/flipped/p/15640229.html)
 - [微信小程序修改switch组件大小](https://juejin.cn/post/6844903609411305486)
 - [小程序登录案例](https://www.jianshu.com/p/7414a543c622)
@@ -8,6 +9,8 @@
 
 # improvement
 - `personal-info.医务工作者` 更改选项以后不应将内容清空，以便选择回来的时候不用重新输入。提交以后就可以清空了 
+- `name` attribute in `personal-info` and `invoice-add` can be deleted?
+- 
 
 
 # 云开发 quickstart
