@@ -1,7 +1,7 @@
 <!--pages/registration/registration.wxml-->
 <Separator wx:if="{{registrationExists}}"></Separator>
 <view class="conference-item" wx:if="{{registrationExists}}" wx:for="{{dataObj}}">
-  <ConferenceItem itemName="{{item.conference}}" itemDate="{{item.date}}" itemIsComplete="{{item.isComplete}}"></ConferenceItem>
+  <ConferenceItem conference="{{item.conference}}" conferenceDate="{{item.date}}" isComplete="{{item.isComplete}}" registration="{{item.registration}}"></ConferenceItem>
   <Separator></Separator>
 </view>
 <Footer wx:if="{{registrationExists}}" content="到底啦"></Footer>

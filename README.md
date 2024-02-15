@@ -1,6 +1,7 @@
 # Glitch
 - add env id in `app.js` to set up cloud dev env
 - `wx.startPullDownRefresh()` and `wx.stopPullDownRefresh()` can only be used in `onPullDownRefresh()`. They cannot be written in another function and be called by `onPullDownRefresh()`.
+- to enable pulldown refresh, `"enablePullDownRefresh": true` needs to be added to the page `json` file.
 - [微信小程序自定义组件的坑之 hidden、boolean 属性和花括号](https://www.cnblogs.com/flipped/p/15640229.html)
 - [微信小程序修改switch组件大小](https://juejin.cn/post/6844903609411305486)
 - [小程序登录案例](https://www.jianshu.com/p/7414a543c622)

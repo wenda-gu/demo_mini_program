@@ -1,10 +1,10 @@
 <!--components/conference-item/conference-item.wxml-->
-<view class="border" bindtap="onTapNavTo" hover-class="item-hover">
+<view class="border" bindtap="onTap" hover-class="item-hover">
   <view class="content">
     <IconItem img="/static/images/icons/content.png" w="70" h="70" scaler="1"></IconItem>
-    <text class="title">{{itemName}}</text>
-    <text class="date">{{itemDate}}</text>
-    <text class="isComplete">{{itemIsComplete == true ? "已报名" : "正在报名"}}</text>
+    <text class="title">{{conference}}</text>
+    <text class="date">{{conferenceDate}}</text>
+    <text class="isComplete">{{isComplete ? "已报名" : "正在报名"}}</text>
     <IconItem img="/static/images/icons/arrow.png" w="35" h="70" scaler="1"></IconItem>
   </view>
 </view>

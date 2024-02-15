@@ -5,13 +5,17 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    itemName: String,
-    route: String,
-    itemDate: String,
-    itemIsComplete: {
-      type: Boolean,
-      value: false
+    conference: String,
+    route: {
+      type: String,
+      value: "../auth/auth",
     },
+    conferenceDate: String,
+    isComplete: {
+      type: Boolean,
+      value: false,
+    },
+    registration: Object,
   },
 
   /**
@@ -25,6 +29,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
-
+    onTap(e) {
+      console.log("here")
+      wx.navigateTo({
+        url: this.data.route + "?item=" + JSON.stringify(this.data.registration),
+      })
+    }
   }
 })
