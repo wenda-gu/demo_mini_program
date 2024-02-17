@@ -1,7 +1,7 @@
 // static/utils/dbAction.js
 
 import {verboseLog} from "logging.js";
-import dateTool from "dateTool.js"
+import {formatDate} from "dateTool";
 // Methods
 
 // INVOICE
@@ -84,36 +84,26 @@ async function getPersonalInfo() {
 }
 
 async function addPersonalInfo(formData) {
-  return new Promise((resolve, reject) => {
-    wx.cloud.database().collection("personal-info").add({
+  try {
+    await wx.cloud.database().collection("personal-info").add({
       data: formData,
-    }).then((res) => {
-      verboseLog("dbAction.editPersonalInfo() success:", res);
-      resolve(res);
-    }).catch((err) => {
-      reject({
-        errMsg: "dbAction.editPersonalInfo() failed.",
-        err,
-      });
     });
-  });
+    verboseLog("dbAction.addPersonalInfo() success:", res);
+  } catch (err) {
+    throw new Error("at dbAction.addPersonalInfo()\n" + err);
+  }
 }
 
 async function editPersonalInfo(id, formData) {
-  return new Promise((resolve, reject) => {
-    verboseLog("This is id:", id)
-    wx.cloud.database().collection("personal-info").doc(id).update({
+  verboseLog("This is id:", id);
+  try {
+    await wx.cloud.database().collection("personal-info").doc(id).update({
       data: formData,
-    }).then((res) => {
-      verboseLog("dbAction.editPersonalInfo() success:", res);
-      resolve(res);
-    }).catch((err) => {
-      reject({
-        errMsg: "dbAction.editPersonalInfo() failed.",
-        err,
-      });
     });
-  });
+    verboseLog("dbAction.editPersonalInfo() success:", res);
+  } catch (err) {
+    throw new Error("at dbAction.editPersonalInfo()\n" + err);
+  }
 }
 
 async function editAvatarUrl(id, url) {
@@ -148,7 +138,7 @@ async function getAllRegistrations() {
         var conference = await wx.cloud.database().collection("conferences").doc(element.conference).get();
         registrations.push({
           conference: conference.data.name_zh,
-          date: dateTool.formatDate(conference.data.date_start, 'yyyy/mm/dd'),
+          date: formatDate(conference.data.date_start, 'yyyy/mm/dd'),
           isComplete: element.isComplete,
         });
       }
@@ -156,6 +146,15 @@ async function getAllRegistrations() {
     }
   } catch (err) {
     throw new Error("at dbAction.getAllRegistrations()\n" + err);
+  }
+}
+
+// conference info
+async function getAllConferencesOnRelease() {
+  try {
+    return await wx.cloud.database().collection("conferences").where({release: true}).get();
+  } catch (err) {
+    throw new Error("at dbAction.getAllConferences()\n" + err);
   }
 }
 
@@ -218,6 +217,7 @@ export default {
   editPersonalInfo: editPersonalInfo,
   editAvatarUrl: editAvatarUrl,
   getAllRegistrations: getAllRegistrations,
+  getAllConferencesOnRelease: getAllConferencesOnRelease,
   getDataWrapper: getDataWrapper,
   getData: getData,
 }

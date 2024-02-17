@@ -1,0 +1,3 @@
+<!--pages/conference/conference.wxml-->
+<text>pages/conference/conference.wxml</text>
+{{conference.name_zh}}

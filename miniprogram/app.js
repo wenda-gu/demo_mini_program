@@ -33,22 +33,19 @@ App({
       var res = await cloudAction.isNewUser();
       // if new user, create entry in database and prompt user to set up profile; else, load user info
       if (res.isNewUser) {
-        verboseLog("App.onLaunch() is new user");
+        verboseLog("app.onLaunch() is new user");
         this.globalData.isNewUser = true;
         this.globalData.loggedin = true;
         this.globalData.avatarUrl = defaultAvatarUrl;
       }
       // Not a new user
       else {
-        verboseLog("App.onLaunch() user exists:", res.data);
+        verboseLog("app.onLaunch() user exists:", res.data);
         this.setPersonalInfo(res.data)
-        verboseLog("App.onLaunch() openid is set:", this.globalData._openid);
-        verboseLog("App.onLaunch() personal info is set:", this.globalData.personalInfo);
-        // set login status to true
         this.globalData.loggedin = true;
       }
     } catch (err) {
-      console.error("App.onLaunch() cloudAction.isNewUser() failed:", err);
+      throw new Error("at app.userLogin()\n" + err);
     }
   },
 
@@ -58,7 +55,7 @@ App({
       var data = res.data[0];
       this.setPersonalInfo(data);
     } catch (err) {
-      console.error("App.updatePersonalInfo() failed:", err);
+      throw new Error("at app.updatePersonalInfo()\n" + err);
     }
   },
   

@@ -1,4 +1,4 @@
-/* pages/invoice-add/invoice-add.wxss */
+/* pages/registration-personal-info/registration-personal-info.wxss */
 
 @import "/static/styles/style.wxss";
 
@@ -8,8 +8,8 @@ page {
 
 .info {
   background-color: white;
-  padding-left: 3vw;
-  padding-right: 3vw;
+  padding-left: 2vh;
+  padding-right: 2vh;
   
 }
 
@@ -27,6 +27,6 @@ page {
 
 
 .spacer-mid {
-  padding-left: 3vw;
-  padding-right: 3vw;
+  padding-left: 2vh;
+  padding-right: 2vh;
 }

@@ -1,4 +1,4 @@
-// pages/personal-info/personal-info.js
+// pages/registration-personal-info/registration-personal-info.js
 
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
@@ -28,9 +28,8 @@ Page({
     otherDepartment: String,
     title: String,
     position: String,
-    isEditing: false,
+    isEditing: true,
     personalInfoDocId: String,
-    isNewUser: Boolean,
     medicalDepartmentList: medicalDepartmentList,
   },
 
@@ -155,127 +154,94 @@ Page({
     return new Promise((resolve, reject) => {
       // check if empty
       if (validation.isEmpty(this.data.name, String)) {
-        console.error("personal-info.isValid() no name.");
+        console.error("registration-personal-info.isValid() no name.");
         reject("No name.");
       }
       else if (validation.isEmpty(this.data.phonePersonal, Number)) {
-        console.error("personal-info.isValid() no phonePersonal.");
+        console.error("registration-personal-info.isValid() no phonePersonal.");
         reject("No phonePersonal.");
       }
       else if (validation.isEmpty(this.data.emailPersonal, String)) {
-        console.error("personal-info.isValid() no emailPersonal.");
+        console.error("registration-personal-info.isValid() no emailPersonal.");
         reject("No emailPersonal.");
       }
       else if (validation.isEmpty(this.data.companyName, String)) {
-        console.error("personal-info.isValid() no companyName.");
+        console.error("registration-personal-info.isValid() no companyName.");
         reject("No companyName.");
       }
       else if (validation.isEmpty(this.data.region, Object)) {
-        console.error("personal-info.isValid() no region.");
+        console.error("registration-personal-info.isValid() no region.");
         reject("No region.");
       }
       else if (validation.isEmpty(this.data.address, String)) {
-        console.error("personal-info.isValid() no address.");
+        console.error("registration-personal-info.isValid() no address.");
         reject("No address.");
       }
       else {
         // 是医务工作者
         if (this.data.isHealthcareWorker) {
           if (validation.isEmpty(this.data.department, String)) {
-            console.error("personal-info.isValid() no medical department.");
+            console.error("registration-personal-info.isValid() no medical department.");
             reject("No medical department.");
           }
           else if (this.data.department == "其他" && (validation.isEmpty(this.data.otherDepartment, String))) {
-            console.error("personal-info.isValid() no medical other department.");
+            console.error("registration-personal-info.isValid() no medical other department.");
             reject("No medical other department.");
           }
           else if (validation.isEmpty(this.data.title, String)) {
-            console.error("personal-info.isValid() no title.");
+            console.error("registration-personal-info.isValid() no title.");
             reject("No title.");
           }
         }
         // 非医务工作者
         else {
           if (validation.isEmpty(this.data.department, String)) {
-            console.error("personal-info.isValid() no department.");
+            console.error("registration-personal-info.isValid() no department.");
             reject("No department.");
           }
           else if (validation.isEmpty(this.data.position, String)) {
-            console.error("personal-info.isValid() no position.");
+            console.error("registration-personal-info.isValid() no position.");
             reject("No position.");
           }
         }
       }
       // check format
       if (!validation.validateCellphone(this.data.phonePersonal)) {
-        console.error("personal-info.isValid() wrong format phonePersonal.");
+        console.error("registration-personal-info.isValid() wrong format phonePersonal.");
         reject("Wrong format phonePersonal.");
       }
       else if (!validation.validateEmail(this.data.emailPersonal)) {
-        console.error("personal-info.isValid() wrong format emailPersonal.");
+        console.error("registration-personal-info.isValid() wrong format emailPersonal.");
         reject("Wrong format emailPersonal.");
       }
       else if (!validation.isEmpty(this.data.personalId, String) && !validation.validatePersonalId(this.data.personalId)) {
-        console.error("personal-info.isValid() wrong format personalId.");
+        console.error("registration-personal-info.isValid() wrong format personalId.");
         reject("Wrong format personalId.");
       }
       else if (!validation.isEmpty(this.data.phoneCompany, String) && !validation.validatePhoneNumAndSymbols(this.data.phoneCompany)) {
-        console.error("personal-info.isValid() wrong format phoneCompany.");
+        console.error("registration-personal-info.isValid() wrong format phoneCompany.");
         reject("Wrong format phoneCompany.");
       }
       else if (!validation.isEmpty(this.data.personalId, String) && !validation.validatePersonalIdAndGender(this.data.personalId, this.data.isMale)) {
-        console.error("personal-info.isValid() personal id and gender do not match.");
+        console.error("registration-personal-info.isValid() personal id and gender do not match.");
         reject("Personal id and gender do not match.");
       }
       else {
-        verboseLog("personal-info.isValid() success.");
-        resolve("personal-info.isValid() success.");
+        verboseLog("registration-personal-info.isValid() success.");
+        resolve("registration-personal-info.isValid() success.");
       }
     });
   },
-
+  
   async btnSubmit() {
     showSaving();
     this.toggleIsEditing();
-    verboseLog("personal-info.btnSubmit()");
+    verboseLog("registration-personal-info.btnSubmit()");
+
     try {
       await this.isValid();
-      var formData = this.prepareForm();
-      verboseLog("personal-info.btnSubmit() submitting:", formData);
-      
-      try {
-        // new user
-        if (this.data.isNewUser) {
-          formData.avatarUrl = defaultAvatarUrl;
-          await dbAction.addPersonalInfo(formData);
-          verboseLog("personal-info.btnSubmit() addPersonalInfo() success.");
-          wx.hideLoading();
-          showSubmissionSuccess();
-          await updatePersonalInfo();
-          this.setData({
-            personalInfoDocId: getApp().globalData.personalInfoDocId,
-            isNewUser: false,
-          });
-          wx.reLaunch({
-            url: '../me/me',
-          });
-        }
-        // existing user
-        else {
-          await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
-          verboseLog("personal-info.btnSubmit() editPersonalInfo success.");
-          wx.hideLoading();
-          showEditSuccess();
-          await updatePersonalInfo();
-        }
-      } catch (err) {
-        console.error("personal-info.btnSubmit() failed:", err);
-        wx.hideLoading();
-        showEditFailed();
-        this.toggleIsEditing();
-      }
     } catch (err) {
-      console.error("personal-info.btnSubmit() isValid() failed:", err);
+      console.error("registration-personal-info.btnSubmit() isValid() failed:", err);
       wx.hideLoading();
       var msg, iconStr = 'error';
       switch(err) {
@@ -336,76 +302,91 @@ Page({
       showError(msg, iconStr);
       this.toggleIsEditing();
     }
+
+    var formData = this.prepareForm();
+    verboseLog("registration-personal-info.btnSubmit() submitting:", formData);
+    try {
+      await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
+      verboseLog("registration-personal-info.btnSubmit() editPersonalInfo success.");
+      wx.hideLoading();
+      showEditSuccess();
+      await updatePersonalInfo();
+    } catch (err) {
+      console.error("registration-personal-info.btnSubmit() failed:", err);
+      wx.hideLoading();
+      showEditFailed();
+      this.toggleIsEditing();
+    }
   },
-  
+
+
+  async saveAndExit() {
+    showSaving();
+    this.toggleIsEditing();
+    
+    var formData = this.prepareForm();
+    verboseLog("registration-personal-info.saveAndExit() saving:", formData);
+    try {
+      await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
+      verboseLog("registration-personal-info.saveAndExit() editPersonalInfo success.");
+      wx.hideLoading();
+      showEditSuccess();
+      await updatePersonalInfo();
+      wx.reLaunch({
+        url: 'pages/index/index',
+      });
+    } catch (err) {
+      console.error("registration-personal-info.saveAndExit() failed:", err);
+      wx.hideLoading();
+      showEditFailed();
+      this.toggleIsEditing();
+    }
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '我的信息' });
+    wx.setNavigationBarTitle({ title: '个人信息' });
     wx.disableAlertBeforeUnload();
     if (options.item == null || options.item == "") {
-      console.error("personal-info no input");
+      console.error("registratio-personal-info no input");
       wx.navigateBack();
       return;
     }
     const item = JSON.parse(options.item);
-    verboseLog("personal-info.onLoad() got item:", item);
-    
-    // if item.isHealthcareWorker is undefined, first time filling out personal info form
-    if (item.isHealthcareWorker != undefined) {
-      var title = '', position = '', department = '', otherDepartment = '';
+    verboseLog("registration-personal-info.onLoad() got item:", item);
+  
+    var title = '', position = '', department = '', otherDepartment = '';
 
-      title = item.title ? item.title : '';
-      position = item.position ? item.position : '';
+    title = item.title ? item.title : '';
+    position = item.position ? item.position : '';
 
-      // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
-      if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
-        department = '其他';
-        otherDepartment = item.department;
-      }
-      else {
-        department = item.department;
-      }
-
-      this.setData({
-        name: item.name,
-        isMale: item.isMale,
-        phonePersonal: item.phonePersonal,
-        emailPersonal: item.emailPersonal,
-        personalId: item.personalId,
-        companyName: item.companyName,
-        region: item.region,
-        address: item.address,
-        phoneCompany: item.phoneCompany,
-        isHealthcareWorker: item.isHealthcareWorker,
-        department: department,
-        otherDepartment: otherDepartment,
-        title: title,
-        position: position,
-      });
+    // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
+    if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
+      department = '其他';
+      otherDepartment = item.department;
     }
     else {
-      this.setData({
-        isEditing: true,
-        name: '',
-        isMale: true,
-        phonePersonal: item.phonePersonal,
-        emailPersonal: '',
-        personalId: '',
-        companyName: '',
-        region: null,
-        address: '',
-        phoneCompany: '',
-        isHealthcareWorker: true,
-        department: '',
-        otherDepartment: '',
-        title: '',
-        position: '',
-      });
+      department = item.department;
     }
-    
+
+    this.setData({
+      name: item.name,
+      isMale: item.isMale,
+      phonePersonal: item.phonePersonal,
+      emailPersonal: item.emailPersonal,
+      personalId: item.personalId,
+      companyName: item.companyName,
+      region: item.region,
+      address: item.address,
+      phoneCompany: item.phoneCompany,
+      isHealthcareWorker: item.isHealthcareWorker,
+      department: department,
+      otherDepartment: otherDepartment,
+      title: title,
+      position: position,
+    });
   },
 
   /**
@@ -420,7 +401,6 @@ Page({
    */
   onShow() {
     this.setData({
-      isNewUser: getApp().globalData.isNewUser,
       personalInfoDocId: getApp().globalData.personalInfoDocId,
     });
   },

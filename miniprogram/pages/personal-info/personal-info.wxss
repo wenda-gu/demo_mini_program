@@ -8,16 +8,8 @@ page {
 
 .info {
   background-color: white;
-  padding-left: 2vh;
-  padding-right: 2vh;
-  
-}
-
-.form-input-format {
-  height: 5.5vh;
-  display: grid;
-  grid-template-columns: 2fr 5fr;
-  align-items: center; /* Center vertically */
+  padding-left: 3vw;
+  padding-right: 3vw;
 }
 
 .switch {
@@ -27,6 +19,6 @@ page {
 
 
 .spacer-mid {
-  padding-left: 2vh;
-  padding-right: 2vh;
+  padding-left: 3vw;
+  padding-right: 3vw;
 }

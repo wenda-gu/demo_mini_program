@@ -1,0 +1,24 @@
+<!--components/conference-display/conference-display.wxml-->
+<view>
+  <image class="poster" src='{{poster}}' mode='aspectFill'></image>
+  <view class="info">
+    <Spacer h="4"></Spacer>
+    <view class="line">
+      <text class="field">会议名称：</text>
+      <text class="content">{{conference}}</text>
+    </view>
+    <Separator></Separator>
+    <view class="line">
+      <text class="field">会议时间：</text>
+      <text class="content">{{date_start_string}} - {{date_end_string}}</text>
+    </view>
+    <Separator></Separator>
+    <view class="line">
+      <text class="field">会议地点：</text>
+      <text class="content">{{location ? location : "待定"}}</text>
+    </view>
+    <Separator></Separator>
+    <Spacer h="4"></Spacer>
+    <button class="blue-btn" bind:tap="onTap">点击了解详情及报名</button>
+  </view>
+</view>

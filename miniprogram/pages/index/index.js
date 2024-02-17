@@ -1,19 +1,46 @@
 // pages/index/index.js
 
+import {verboseLog} from "../../static/utils/logging.js";
+import dbAction from "../../static/utils/dbAction.js";
+import {formatDate} from "../../static/utils/dateTool";
+
 Page({
 
   /**
    * 页面的初始数据 JSON
    */
   data: {
+    conferences: [],
+  },
 
+  handleEnterDetail(e) {
+    for (let i = 0; i < this.data.conferences.length; i++) {
+      if (this.data.conferences[i]._id == e.detail) {
+        wx.navigateTo({
+          url: '../conference/conference?item=' + JSON.stringify(this.data.conferences[i]),
+        });
+      }
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-
+  async onLoad(options) {
+    try {
+      var conferences = await dbAction.getAllConferencesOnRelease();
+      conferences = conferences.data;
+      for (let i = 0; i < conferences.length; i++) {
+        conferences[i].date_start_string = formatDate(conferences[i].date_start, 'yyyy/mm/dd');
+        conferences[i].date_end_string = formatDate(conferences[i].date_end, 'yyyy/mm/dd');
+      }
+      console.log(conferences);
+      this.setData({
+        conferences: conferences,
+      });
+    } catch (err) {
+      console.error("index.onLoad() failed:\n", err);
+    }
   },
 
   /**

@@ -1,12 +1,10 @@
 <!--pages/index/index.wxml-->
-<!-- <scroll-view class="ribbon" scroll-x>
-  <view class="poster">1</view>
-  <view class="poster">2</view>
-  <view class="poster">3</view>
-  <view class="poster">4</view>
-  <view class="poster">5</view>
-  <view class="poster">6</view>
-  <view class="poster">7</view>
-  <view class="poster">8</view>
-</scroll-view> -->
-<image src="cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/conferences/4cpb/画面_早产大会-水牌-竖.png"></image>
+<view class="swiper-container">
+  <swiper class="swiper-box" autoplay='true' interval='5000'  duration='1000' circular='true'>
+    <block wx:for="{{conferences}}" wx:key="_id">
+      <swiper-item>
+        <ConferenceDisplay conference_id="{{item._id}}" poster="{{item.poster}}" conference="{{item.name_zh}}" date_start_string="{{item.date_start_string}}" date_end_string="{{item.date_end_string}}" location="{{item.location ? item.location : '待定'}}" bind:enterDetail="handleEnterDetail"></ConferenceDisplay>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

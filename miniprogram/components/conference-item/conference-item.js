@@ -8,7 +8,7 @@ Component({
     conference: String,
     route: {
       type: String,
-      value: "../auth/auth",
+      value: "../registration-personal-info/registration-personal-info",
     },
     conferenceDate: String,
     isComplete: {

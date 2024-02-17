@@ -15,7 +15,10 @@
     "pages/personal-info/personal-info",
     "pages/invoice-add/invoice-add",
     "pages/auth/auth",
-    "pages/testPage/testPage"
+    "pages/testPage/testPage",
+    "pages/registration-form/registration-form",
+    "pages/conference/conference",
+    "pages/registration-personal-info/registration-personal-info"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -59,6 +62,7 @@
     "FormInputBinary": "components/form-input-binary/form-input-binary",
     "TextAsterisk": "components/text-asterisk/text-asterisk",
     "InvoiceTitle": "components/invoice-title/invoice-title",
-    "IconItem": "components/icon-item/icon-item"
+    "IconItem": "components/icon-item/icon-item",
+    "ConferenceDisplay": "components/conference-display/conference-display"
   }
 }

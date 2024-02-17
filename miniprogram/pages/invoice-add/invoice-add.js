@@ -3,7 +3,7 @@
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {verboseLog} from "../../static/utils/logging";
-import {showSubmitting, showAddSuccess, showAddFailed, showSubmissionFailed, showEditSuccess, showEditFailed} from "../../static/utils/wxapi";
+import {showSubmitting, showAddSuccess, showAddFailed, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
 
 Page({
 
@@ -130,7 +130,7 @@ Page({
 
   prepareForm() {
     return {
-      isVAT: this.data.isVAT,
+      // isVAT: this.data.isVAT,
       companyName: this.data.companyName,
       taxId: this.data.taxId,
       isDefault: this.data.isDefault,
@@ -198,9 +198,9 @@ Page({
       const formData = this.prepareForm();
       const isDefault = this.data.isDefault;
       verboseLog("invoice-add.btnSubmit() submitting:", formData);
-      verboseLog("invoice-add.btnSubmit() item isDefault:", isDefault);
+      
       // reset all titles' isDefault to false, if current isDefault if true
-      this.resetDefault(isDefault, this.data.isDefaultOriginal).then((res) => {
+      await this.resetDefault(isDefault, this.data.isDefaultOriginal).then((res) => {
         const id = this.data.id;
         verboseLog("invoice-add.btnSubmit() item id: " + id);
         // if edit, update; else, add
@@ -221,6 +221,7 @@ Page({
             console.error("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
             wx.hideLoading();
             showEditFailed();
+            this.toggleIsEditing();
           });
         }
         else {
@@ -239,12 +240,14 @@ Page({
             console.error("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
             wx.hideLoading();
             showAddFailed();
+            this.toggleIsEditing();
           });
         };
       }).catch((err) => {
         console.error("invoice-add.btnSubmit() resetDefault() failed:", err);
         wx.hideLoading();
         showSubmissionFailed();
+        this.toggleIsEditing();
       });
     } catch (err) {
       console.error("invoice-add.btnSubmit() isValid() failed:", err);
@@ -293,11 +296,8 @@ Page({
           this.toggleIsEditing();
           break;
       }
-      wx.showToast({
-        title: msg,
-        icon: iconStr,
-        duration: 2000,
-      });
+      showError(msg, iconStr);
+      this.toggleIsEditing();
     }
   },
 
@@ -309,7 +309,6 @@ Page({
     wx.enableAlertBeforeUnload({
       message: '尚未保存，是否返回',
     });
-    if (options.item == null) return;
     const item = JSON.parse(options.item);
     verboseLog("invoice-add.onLoad() got item:", item);
     // check if field is undefined
@@ -326,7 +325,7 @@ Page({
     }
     this.setData({
       id: item._id,
-      isVAT: item.isVAT,
+      // isVAT: item.isVAT,
       companyName: item.companyName,
       taxId: item.taxId,
       isDefault: item.isDefault,

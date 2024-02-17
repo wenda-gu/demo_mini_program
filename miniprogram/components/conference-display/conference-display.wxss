@@ -1,0 +1,22 @@
+/* components/conference-display/conference-display.wxss */
+@import "/static/styles/style.wxss";
+.poster {
+  height: 100vw;
+  width: 100%;
+}
+.info {
+  background-color: white;
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+.line {
+  height: 5.5vh;
+  align-items: center;
+  display: flex;
+}
+.content {
+  font-weight: 500;
+}
+.blue-btn {
+  width: 100%!important;
+}
