@@ -1,3 +1,22 @@
 <!--pages/conference/conference.wxml-->
-<text>pages/conference/conference.wxml</text>
-{{conference.name_zh}}
+<image class="poster" src="{{conference.header}}"></image>
+<Spacer h="2"></Spacer>
+<view class="btn-group">
+  <view class="btn-row">
+    <button class="blue-btn">欢迎致辞</button>
+    <button class="blue-btn">组织机构</button>
+    <button class="blue-btn">讲者名单</button>
+  </view>
+  <Spacer h="2"></Spacer>
+  <view class="btn-row">
+    <button class="blue-btn">会议报名</button>
+    <button class="blue-btn">大会议程</button>
+    <button class="blue-btn">住宿安排</button>
+  </view>
+  <Spacer h="2"></Spacer>
+  <view class="btn-row">
+    <button class="blue-btn">问卷调查</button>
+    <button class="blue-btn">文件下载</button>
+    <button class="blue-btn">企业风采</button>
+  </view>
+</view>

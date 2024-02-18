@@ -31,10 +31,14 @@ Page({
       var conferences = await dbAction.getAllConferencesOnRelease();
       conferences = conferences.data;
       for (let i = 0; i < conferences.length; i++) {
-        conferences[i].date_start_string = formatDate(conferences[i].date_start, 'yyyy/mm/dd');
-        conferences[i].date_end_string = formatDate(conferences[i].date_end, 'yyyy/mm/dd');
+        if (conferences[i].date_start_string == undefined) {
+          conferences[i].date_start_string = formatDate(conferences[i].date_start, 'yyyy/mm/dd');
+          conferences[i].date_end_string = formatDate(conferences[i].date_end, 'yyyy/mm/dd');
+        }
+        // 如果有date_start_string，为时间待定会议
+        else conferences[i].date_end_string = "";
       }
-      console.log(conferences);
+      verboseLog("Current conferences:", conferences);
       this.setData({
         conferences: conferences,
       });

@@ -10,7 +10,8 @@
     <Separator></Separator>
     <view class="line">
       <text class="field">会议时间：</text>
-      <text class="content">{{date_start_string}} - {{date_end_string}}</text>
+      <text wx:if="{{date_end_string}}" class="content">{{date_start_string}} - {{date_end_string}}</text>
+      <text wx:else class="content">{{date_start_string}}</text>
     </view>
     <Separator></Separator>
     <view class="line">

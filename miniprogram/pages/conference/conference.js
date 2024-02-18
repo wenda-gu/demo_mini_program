@@ -1,3 +1,5 @@
+import { verboseLog } from "../../static/utils/logging";
+
 // pages/conference/conference.js
 Page({
 
@@ -22,7 +24,7 @@ Page({
       conference: item,
     });
     wx.setNavigationBarTitle({
-      title: this.data.conference.name_zh
+      title: this.data.conference.name_zh,
     });
   },
 
