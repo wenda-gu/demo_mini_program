@@ -3,6 +3,7 @@
 import {verboseLog} from "../../static/utils/logging.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {formatDate} from "../../static/utils/dateTool";
+import { navTo } from "../../static/utils/wxapi";
 
 Page({
 
@@ -20,9 +21,7 @@ Page({
         data.name_zh = this.data.conferences[i].name_zh;
         data._id = this.data.conferences[i]._id;
         verboseLog("this is data:", data);
-        wx.navigateTo({
-          url: '../conference/conference?item=' + JSON.stringify(data),
-        });
+        navTo('../conference/conference', data);
       }
     }
   },

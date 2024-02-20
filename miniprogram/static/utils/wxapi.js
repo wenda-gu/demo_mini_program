@@ -59,6 +59,35 @@ const wxapi = {
     });
   },
 
+  navTo: async (url, obj) => {
+    try {
+      await wx.navigateTo({
+        url: url + (obj == undefined ? '' : ('?item=' + JSON.stringify(obj))),
+      });
+    } catch (err) {
+      throw new Error("at wxapi.navTo()\n" + err);
+    }
+  },
+
+  redirectTo: async (url, obj) => {
+    try {
+      await wx.redirectTo({
+        url: url + (obj == undefined ? '' : ('?item=' + JSON.stringify(obj))),
+      });
+    } catch (err) {
+      throw new Error("at wxapi.redirectTo()\n" + err);
+    }
+  },
+
+  reLaunch: async (url, obj) => {
+    try {
+      await wx.reLaunch({
+        url: url + (obj == undefined ? '' : ('?item=' + JSON.stringify(obj))),
+      });
+    } catch (err) {
+      throw new Error("at wxapi.reLaunch()\n" + err);
+    }
+  },
 
   showSaving: () => {
     showLoadingWrapper('保存中');

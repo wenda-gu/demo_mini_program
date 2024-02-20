@@ -24,6 +24,8 @@ const staticData = {
   ],
 
   defaultAvatarUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/avatar/0.png',
+  comingSoonImage: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/image/general/coming_soon.png',
+  comingSoonPage: '../coming-soon/coming-soon',
 
   placeholderColorDisabled: 'color: rgb(175, 175, 175)',
   placeholderColorEnabled: 'color: rgb(124, 124, 124)',

@@ -2,7 +2,7 @@
 
 import {verboseLog} from "../../static/utils/logging";
 import dbAction from "../../static/utils/dbAction.js";
-import {wxapi} from "../../static/utils/wxapi.js";
+import {wxapi, navTo} from "../../static/utils/wxapi";
 
 Page({
 
@@ -14,13 +14,7 @@ Page({
   },
 
   handleEditInvoiceTitle(e) {
-    const item = e.detail;
-    var destination = '/pages/invoice-add/invoice-add?item=' + JSON.stringify(item);
-    wx.navigateTo({
-      url: destination,
-    }).then(res => {
-      verboseLog("invoice.handleEditInvoiceTitle() nav to invoice-add as edit success:", destination);
-    });
+    navTo('/pages/invoice-add/invoice-add', e.detail);
   },
 
   handleDeleteInvoiceTitle(e) {
@@ -71,7 +65,7 @@ Page({
   },
 
   navigateToInvoiceAdd() {
-    wx.navigateTo( {url: '/pages/invoice-add/invoice-add',} );
+    navTo('/pages/invoice-add/invoice-add');
   },
 
   /**

@@ -1,0 +1,10 @@
+/* pages/coming-soon/coming-soon.wxss */
+@import "/static/styles/style.wxss";
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.poster {
+  width: 100vw;
+}

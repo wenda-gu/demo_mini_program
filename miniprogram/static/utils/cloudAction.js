@@ -116,6 +116,7 @@ async function cloudDownload(fileID, downloadToPath) {
   try {
     const temp = await wx.cloud.downloadFile({
       fileID: fileID,
+      timeout: 30,
     });
     wx.getFileSystemManager().saveFile({
       tempFilePath: temp.tempFilePath,

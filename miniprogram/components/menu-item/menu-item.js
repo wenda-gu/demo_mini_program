@@ -1,4 +1,5 @@
 // components/menu-item/menu-item.js
+import {navTo} from "../../static/utils/wxapi";
 Component({
   /**
    * 组件的属性列表
@@ -34,11 +35,9 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    navTo: function() {
+    navigateTo: function() {
       const r = this.properties.route;
-      if (r) {
-        wx.navigateTo( {url: r,} );
-      }
+      if (r) navTo(r);
     },
   }
 })

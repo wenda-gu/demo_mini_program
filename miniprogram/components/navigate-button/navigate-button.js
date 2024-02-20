@@ -1,4 +1,5 @@
 // components/navigate-button/navigate-button.js
+import {navTo} from "../../static/utils/wxapi";
 Component({
 
   /**
@@ -20,9 +21,7 @@ Component({
    */
   methods: {
     onTap() {
-      wx.navigateTo({
-        url: this.data.item.url,
-      });
+      navTo(this.data.item.url);
     }
   }
 })

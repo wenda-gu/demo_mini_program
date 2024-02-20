@@ -1,4 +1,7 @@
 import { verboseLog } from "../../static/utils/logging";
+import {comingSoonPage} from "../../static/utils/staticData";
+import {navTo} from "../../static/utils/wxapi";
+
 
 // pages/conference/conference.js
 Page({
@@ -10,11 +13,36 @@ Page({
     conference: Object,
   },
 
+  navToComingSoon() {
+    navTo(comingSoonPage);
+  },
 
+  handleWelcome() {
+    navTo('../welcome-letter/welcome-letter', this.data.conference.welcome_letter);
+  },
+  handleOrganizers() {
+    this.navToComingSoon();
+  },
+  handleSpeakers() {
+    this.navToComingSoon();
+  },
+  handleRegistration() {
+
+  },
+  handleAgenda() {
+    this.navToComingSoon();
+  },
+  handleAccommodationInfo() {
+    this.navToComingSoon();
+  },
+  handleSurvey() {
+    this.navToComingSoon();
+  },
   handleDownload() {
-    wx.navigateTo({
-      url: '../download-files/download-files?item=' + JSON.stringify(this.data.conference.downloads),
-    });
+    navTo('../download-files/download-files', this.data.conference.downloads);
+  },
+  handleSponsor() {
+    this.navToComingSoon();
   },
 
   /**

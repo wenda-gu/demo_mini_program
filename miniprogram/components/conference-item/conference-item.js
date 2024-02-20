@@ -1,4 +1,5 @@
 // components/conference-item/conference-item.js
+import {navTo} from "../../static/utils/wxapi";
 Component({
 
   /**
@@ -30,10 +31,7 @@ Component({
    */
   methods: {
     onTap(e) {
-      console.log("here")
-      wx.navigateTo({
-        url: this.data.route + "?item=" + JSON.stringify(this.data.registration),
-      })
+      navTo(this.data.route, this.data.registration);
     }
   }
 })

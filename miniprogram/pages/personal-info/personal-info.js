@@ -4,7 +4,7 @@ import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {verboseLog} from "../../static/utils/logging";
 import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/staticData";
-import {showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
+import {reLaunch, showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
 
 const updatePersonalInfo = getApp().updatePersonalInfo;
 
@@ -255,9 +255,7 @@ Page({
             personalInfoDocId: getApp().globalData.personalInfoDocId,
             isNewUser: false,
           });
-          wx.reLaunch({
-            url: '../me/me',
-          });
+          reLaunch('../me/me');
         }
         // existing user
         else {

@@ -3,20 +3,20 @@
 <Spacer h="2"></Spacer>
 <view class="btn-group">
   <view class="btn-row">
-    <button class="blue-btn">欢迎致辞</button>
-    <button class="blue-btn">组织机构</button>
-    <button class="blue-btn">讲者名单</button>
+    <button class="blue-btn" bind:tap="handleWelcome">欢迎致辞</button>
+    <button class="blue-btn" bind:tap="handleOrganizers">组织机构</button>
+    <button class="blue-btn" bind:tap="handleSpeakers">讲者名单</button>
   </view>
   <Spacer h="2"></Spacer>
   <view class="btn-row">
-    <button class="blue-btn">会议报名</button>
-    <button class="blue-btn">大会议程</button>
-    <button class="blue-btn">住宿安排</button>
+    <button class="blue-btn" bind:tap="handleRegistration">会议报名</button>
+    <button class="blue-btn" bind:tap="handleAgenda">大会议程</button>
+    <button class="blue-btn" bind:tap="handleAccommodationInfo">住宿安排</button>
   </view>
   <Spacer h="2"></Spacer>
   <view class="btn-row">
-    <button class="blue-btn">问卷调查</button>
+    <button class="blue-btn" bind:tap="handleSurvey">问卷调查</button>
     <button class="blue-btn" bind:tap="handleDownload">文件下载</button>
-    <button class="blue-btn">企业风采</button>
+    <button class="blue-btn" bind:tap="handleSponsor">企业风采</button>
   </view>
 </view>

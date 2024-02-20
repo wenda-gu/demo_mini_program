@@ -4,7 +4,7 @@ import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {verboseLog} from "../../static/utils/logging";
 import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/staticData";
-import {showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
+import {reLaunch, showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
 
 const updatePersonalInfo = getApp().updatePersonalInfo;
 
@@ -332,9 +332,7 @@ Page({
       wx.hideLoading();
       showEditSuccess();
       await updatePersonalInfo();
-      wx.reLaunch({
-        url: 'pages/index/index',
-      });
+      reLaunch('pages/index/index');
     } catch (err) {
       console.error("registration-personal-info.saveAndExit() failed:", err);
       wx.hideLoading();

@@ -4,7 +4,7 @@ import dbAction from "../../static/utils/dbAction.js";
 import cloudAction from "../../static/utils/cloudAction.js";
 import storageAction from "../../static/utils/storageAction.js";
 import validation from "../../static/utils/validation.js";
-import {sleep, showUseChinesePhoneNumber} from "../../static/utils/wxapi";
+import {navTo, redirectTo, reLaunch, sleep, showUseChinesePhoneNumber} from "../../static/utils/wxapi";
 
 
 const global = getApp().globalData;
@@ -36,9 +36,7 @@ Page({
       var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
       verboseLog("this is res:", res);
       if (validation.validateCountryCode(res.countryCode)) {
-        wx.redirectTo({
-          url: '/pages/personal-info/personal-info?item=' + JSON.stringify({phonePersonal: res.purePhoneNumber}),
-        });
+        redirectTo('/pages/personal-info/personal-info', {phonePersonal: res.purePhoneNumber});
       }
       else {
         this.setDisabled(false);
@@ -51,9 +49,7 @@ Page({
   },
 
   handleDisagree(e) {
-    wx.reLaunch({
-      url: '../index/index',
-    })
+    reLaunch('../index/index');
   },
 
   handleChooseAvatar(e) {
@@ -117,14 +113,10 @@ Page({
   navToPersonalInfo() {
     if (!this.data.loggedin) {
       console.error("me.navToPersonalInfo() user not logged in. Retry later.");
-      return;
     }
-    var destination = '/pages/personal-info/personal-info?item=' + JSON.stringify(this.data.userInfo);
-    wx.navigateTo({
-      url: destination,
-    }).then(res => {
-      verboseLog("me.navToPersonalInfo() nav to personal-info:", destination);
-    });
+    else {
+      navTo('/pages/personal-info/personal-info', this.data.userInfo);
+    }
   },
 
   // navToSignUp() {

@@ -1,0 +1,5 @@
+<!--pages/welcome-letter/welcome-letter.wxml-->
+<view>
+  <view>{{letter.recipient}}</view>
+  <view wx:for="{{letter.body}}">{{item}}</view>
+</view>

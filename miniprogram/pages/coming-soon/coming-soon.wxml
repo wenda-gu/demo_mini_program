@@ -1,0 +1,4 @@
+<!--pages/coming-soon/coming-soon.wxml-->
+<view class="container">
+  <image class="poster" src="{{comingSoonUrl}}"></image>
+</view>
