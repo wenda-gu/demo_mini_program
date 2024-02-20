@@ -12,9 +12,9 @@
       <Separator></Separator>
       <FormInputItem isRequired="{{true}}" label="邮箱" name="emailPersonal" placeholder="请输入个人邮箱" value="{{emailPersonal}}" bindinput="handleEmailPersonal" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{false}}" label="身份证号码" name="personalId" placeholder="请输入身份证号码" value="{{personalId}}" bindinput="handlePersonalId" type="idcard" maxlength="18" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="身份证号码" name="personalId" placeholder="请输入身份证号码" value="{{personalId}}" bindinput="handlePersonalId" type="idcard" maxlength="18" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{true}}" label="单位名称" name="companyName" placeholder="请输入单位名称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="单位名称" name="companyName" placeholder="请输入单位标准全称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputPicker isRequired="{{true}}" label="单位地区" name="region" placeholder="请选择单位地区" region="{{region}}" bindinput="handleRegion" disabled="{{!isEditing}}" mode="region"></FormInputPicker>
       <Separator></Separator>
@@ -27,6 +27,8 @@
       <Separator></Separator>
 
       <view wx:if="{{isHealthcareWorker}}">
+        <FormInputBinary isRequired="{{true}}" label="是否来自基层（县及以下、社区等医疗卫生机构）" switchMethod="local" bind:local="toggleFromLocal" firstFlag="{{fromLocal}}" disabled="{{!isEditing}}"></FormInputBinary>
+        <Separator></Separator>
         <FormInputPicker isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}" range="{{medicalDepartmentList}}"></FormInputPicker>
         <Separator></Separator>
         <FormInputItem wx:if="{{department == '其他'}}" isRequired="{{true}}" label="其他科室" name="otherDepartment" placeholder="请填写科室" value="{{otherDepartment}}" bindinput="handleOtherDepartment" disabled="{{!isEditing}}"></FormInputItem>

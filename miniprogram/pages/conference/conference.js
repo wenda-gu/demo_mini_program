@@ -13,36 +13,32 @@ Page({
     conference: Object,
   },
 
-  navToComingSoon() {
-    navTo(comingSoonPage);
-  },
-
   handleWelcome() {
     navTo('../welcome-letter/welcome-letter', this.data.conference.welcome_letter);
   },
   handleOrganizers() {
-    this.navToComingSoon();
+    navTo(comingSoonPage);
   },
   handleSpeakers() {
-    this.navToComingSoon();
+    navTo(comingSoonPage);
   },
   handleRegistration() {
-
+    navTo('../auth/auth');
   },
   handleAgenda() {
-    this.navToComingSoon();
+    navTo(comingSoonPage);
   },
   handleAccommodationInfo() {
-    this.navToComingSoon();
+    navTo(comingSoonPage);
   },
   handleSurvey() {
-    this.navToComingSoon();
+    navTo(comingSoonPage);
   },
   handleDownload() {
     navTo('../download-files/download-files', this.data.conference.downloads);
   },
   handleSponsor() {
-    this.navToComingSoon();
+    navTo(comingSoonPage);
   },
 
   /**

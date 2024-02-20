@@ -7,6 +7,7 @@ import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/static
 import {reLaunch, showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
 
 const updatePersonalInfo = getApp().updatePersonalInfo;
+const global = getApp().globalData;
 
 Page({
 
@@ -347,13 +348,7 @@ Page({
   onLoad(options) {
     wx.setNavigationBarTitle({ title: '个人信息' });
     wx.disableAlertBeforeUnload();
-    if (options.item == null || options.item == "") {
-      console.error("registratio-personal-info no input");
-      wx.navigateBack();
-      return;
-    }
-    const item = JSON.parse(options.item);
-    verboseLog("registration-personal-info.onLoad() got item:", item);
+    const item = global.personalInfo;
   
     var title = '', position = '', department = '', otherDepartment = '';
 

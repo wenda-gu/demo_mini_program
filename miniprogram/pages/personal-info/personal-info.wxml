@@ -14,7 +14,7 @@
       <Separator></Separator>
       <FormInputItem isRequired="{{false}}" label="身份证号码" name="personalId" placeholder="请输入身份证号码" value="{{personalId}}" bindinput="handlePersonalId" type="idcard" maxlength="18" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
-      <FormInputItem isRequired="{{true}}" label="单位名称" name="companyName" placeholder="请输入单位名称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
+      <FormInputItem isRequired="{{true}}" label="单位名称" name="companyName" placeholder="请输入单位标准全称" value="{{companyName}}" bindinput="handleCompanyName" disabled="{{!isEditing}}"></FormInputItem>
       <Separator></Separator>
       <FormInputPicker isRequired="{{true}}" label="单位地区" name="region" placeholder="请选择单位地区" region="{{region}}" bindinput="handleRegion" disabled="{{!isEditing}}" mode="region"></FormInputPicker>
       <Separator></Separator>

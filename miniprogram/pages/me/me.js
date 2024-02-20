@@ -148,7 +148,7 @@ Page({
       await sleep(10);
     }
     this.setupPage();
-    verboseLog("me.onLoad() already logged in, success.");
+    verboseLog("me.onShow() already logged in, success.");
   },
 
   /**

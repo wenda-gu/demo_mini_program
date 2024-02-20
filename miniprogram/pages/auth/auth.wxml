@@ -1,8 +1,11 @@
 <!--pages/auth/auth.wxml-->
-<view class="auth-container">
+<!-- new user -->
+<view wx:if="{{loggedin && isNewUser}}" class="auth-container">
   <view>
-    <button class="blue-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{disabled}}">手机号快捷登录</button>
+    <Agreement innerShow="{{isNewUser}}" bind:disagree="handleDisagree"></Agreement>
+    <button class="choice blue-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{disabled}}">手机号快捷登录</button>
     <Spacer h="3"></Spacer>
     <button class="choice blue-btn" open-type="getRealtimePhoneNumber" bindgetrealtimephonenumber="getPhoneNumber" disabled="{{disabled}}">手机号验证码登录</button>
+    <Footer content="未注册的用户在首次登录时将自动注册"></Footer>
   </view>
 </view>
