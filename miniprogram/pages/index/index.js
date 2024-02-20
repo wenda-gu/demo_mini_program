@@ -16,8 +16,12 @@ Page({
   handleEnterDetail(e) {
     for (let i = 0; i < this.data.conferences.length; i++) {
       if (this.data.conferences[i]._id == e.detail) {
+        var data = this.data.conferences[i].conference_page;
+        data.name_zh = this.data.conferences[i].name_zh;
+        data._id = this.data.conferences[i]._id;
+        verboseLog("this is data:", data);
         wx.navigateTo({
-          url: '../conference/conference?item=' + JSON.stringify(this.data.conferences[i]),
+          url: '../conference/conference?item=' + JSON.stringify(data),
         });
       }
     }

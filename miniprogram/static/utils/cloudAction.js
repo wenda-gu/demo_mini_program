@@ -111,6 +111,36 @@ async function cloudGetPhoneNumber(cloudID) {
   });
 }
 
+async function cloudDownload(fileID, downloadToPath) {
+  verboseLog(fileID);
+  try {
+    const temp = await wx.cloud.downloadFile({
+      fileID: fileID,
+    });
+    wx.getFileSystemManager().saveFile({
+      tempFilePath: temp.tempFilePath,
+      filePath: downloadToPath,
+      success: function (res) {
+        verboseLog("this is the path:", res.savedFilePath);
+        wx.openDocument({
+          filePath: res.savedFilePath,
+          showMenu: true,
+          success: function (res) {
+            return res.savedFilePath;
+          }
+        });
+      },
+      fail: function (err) {
+        throw new Error("at cloudAction.cloudDownload() wx.getFileSystemManager().saveFile()\n" + err);
+      }
+    });
+  } catch (err) {
+    throw new Error("at cloudAction.cloudDownload()\n" + err);
+  }
+}
+
+
+
 export default {
   wxCloudApi: wxCloudApi,
   wxcallCloudFunction: wxcallCloudFunction,
@@ -119,4 +149,5 @@ export default {
   isNewUser: isNewUser,
   cloudSendVerificationCode: cloudSendVerificationCode,
   cloudGetPhoneNumber: cloudGetPhoneNumber,
+  cloudDownload: cloudDownload,
 }

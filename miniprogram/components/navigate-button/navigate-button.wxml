@@ -1,0 +1,2 @@
+<!--components/navigate-button/navigate-button.wxml-->
+<button class="blue-btn" bind:tap="onTap">{{item.title}}</button>

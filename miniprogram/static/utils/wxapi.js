@@ -1,5 +1,27 @@
 // static/utils/wxapi.js
 
+function showLoadingWrapper(msg)  {
+  wx.showLoading({
+    title: msg,
+    mask: true,
+  });
+}
+
+function showError(msg) {
+  wx.showToast({
+    title: msg,
+    icon: 'error',
+    duration: 2000,
+  });
+}
+
+function showSuccess(msg) {
+  wx.showToast({
+    title: msg,
+    duration: 800,
+  });
+}
+
 const wxapi = {
   /**
    * 对微信Api Promise化的公共函数
@@ -37,77 +59,59 @@ const wxapi = {
     });
   },
 
+
   showSaving: () => {
-    wx.showLoading({
-      title: '保存中',
-      mask: true,
-    });
+    showLoadingWrapper('保存中');
   },
 
   showSubmitting: () => {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-    });
+    showLoadingWrapper('提交中');
   },
 
-  showSubmissionSuccess: () => {
-    wx.showToast({
-      title: '提交成功',
-      duration: 800,
-    });
+  showDownloading: () => {
+    showLoadingWrapper('下载中');
   },
 
   showSubmissionFailed: () => {
-    wx.showToast({
-      title: '提交失败请重试',
-      icon: 'error',
-      duration: 2000,
-    });
-  },
-
-  showEditSuccess: () => {
-    wx.showToast({
-      title: '修改成功',
-      duration: 800,
-    });
+    showError('提交失败请重试');
   },
 
   showEditFailed: () => {
-    wx.showToast({
-      title: '修改失败请重试',
-      icon: 'error',
-      duration: 2000,
-    });
-  },
-
-  showAddSuccess: () => {
-    wx.showToast({
-      title: '添加成功',
-      duration: 800,
-    });
+    showError('修改失败请重试');
   },
 
   showAddFailed: () => {
-    wx.showToast({
-      title: '添加失败请重试',
-      icon: 'error',
-      duration: 2000,
-    });
+    showError('添加失败请重试');
+  },
+
+  showDownloadFailed: () => {
+    showError('下载失败请重试');
+  },
+
+  showUseChinesePhoneNumber: () => {
+    showError('请使用国内手机号');
+  },
+
+  showSubmissionSuccess: () => {
+    showSuccess('提交成功');
+  },
+
+  showEditSuccess: () => {
+    showSuccess('修改成功');
+  },
+
+  showAddSuccess: () => {
+    showSuccess('添加成功');
+  },
+
+  showDownloadSucess: () => {
+    showSuccess('下载成功');
   },
 
   showError: (msg, iconStr) => {
     wx.showToast({
       title: msg,
       icon: iconStr,
-      duration: 2000,
-    });
-  },
-
-  showUseChinesePhoneNumber: () => {
-    wx.showToast({
-      title: '请使用国内手机号',
-      icon: 'error',
       duration: 2000,
     });
   },

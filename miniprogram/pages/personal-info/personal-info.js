@@ -242,7 +242,6 @@ Page({
       await this.isValid();
       var formData = this.prepareForm();
       verboseLog("personal-info.btnSubmit() submitting:", formData);
-      
       try {
         // new user
         if (this.data.isNewUser) {

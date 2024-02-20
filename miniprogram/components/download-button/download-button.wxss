@@ -1,0 +1,5 @@
+/* components/download-button/download-button.wxss */
+@import "/static/styles/style.wxss";
+.blue-btn {
+  width: 80vw!important;
+}

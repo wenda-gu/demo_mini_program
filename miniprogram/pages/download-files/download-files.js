@@ -1,20 +1,11 @@
-import { verboseLog } from "../../static/utils/logging";
-
-// pages/conference/conference.js
+// pages/download-files/download-files.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    conference: Object,
-  },
-
-
-  handleDownload() {
-    wx.navigateTo({
-      url: '../download-files/download-files?item=' + JSON.stringify(this.data.conference.downloads),
-    });
+    items: [],
   },
 
   /**
@@ -22,17 +13,16 @@ Page({
    */
   onLoad(options) {
     if (options.item == null || options.item == "") {
-      console.error("conference no input");
+      console.error("download-files no input");
       wx.navigateBack();
       return;
     }
-    verboseLog(options.item);
+    wx.setNavigationBarTitle({
+      title: "文件下载",
+    });
     const item = JSON.parse(options.item);
     this.setData({
-      conference: item,
-    });
-    wx.setNavigationBarTitle({
-      title: this.data.conference.name_zh,
+      items: item,
     });
   },
 

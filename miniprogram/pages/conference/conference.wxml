@@ -16,7 +16,7 @@
   <Spacer h="2"></Spacer>
   <view class="btn-row">
     <button class="blue-btn">问卷调查</button>
-    <button class="blue-btn">文件下载</button>
+    <button class="blue-btn" bind:tap="handleDownload">文件下载</button>
     <button class="blue-btn">企业风采</button>
   </view>
 </view>

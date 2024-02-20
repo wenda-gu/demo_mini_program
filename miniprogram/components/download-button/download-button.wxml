@@ -1,0 +1,2 @@
+<!--components/download-button/download-button.wxml-->
+<button class="blue-btn" bind:tap="onTap">打开{{item.title}}</button>

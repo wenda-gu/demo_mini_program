@@ -1,0 +1,5 @@
+<!--pages/download-files/download-files.wxml-->
+<view wx:for="{{items}}">
+  <Spacer></Spacer>
+  <DownloadButton item="{{item}}"></DownloadButton>
+</view>
