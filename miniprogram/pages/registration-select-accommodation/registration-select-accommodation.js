@@ -11,8 +11,26 @@ Page({
     conferenceId: String,
     accommodations: Object,
     chosenPackage: String,
+    chosenDate: String,
     chooseAccommodation: true,
     isEditing: true,
+  },
+
+  handleChooseAccommodation() {
+
+  },
+  
+  setChosenDate() {
+    const dates = this.data.accommodations.dates;
+    for (const date of dates) {
+      for (const p of date.for_packages) {
+        if (p == this.data.chosenPackage) {
+          this.setData({
+            chosenDate: date.date_string,
+          });
+        }
+      }
+    }
   },
 
   /**
@@ -36,9 +54,10 @@ Page({
         accommodations: await dbAction.getAccommodations(item.conferenceId),
         chosenPackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
       });
-      verboseLog(this.data);
+      this.setChosenDate();
+      verboseLog("registration-select-accommodation.onLoad() got data:", this.data);
     } catch (err) {
-      console.error("registration-select-package.accommodation() failed:\n", err);
+      console.error("registration-select-accommodation.onLoad() failed:\n", err);
     }
   },
 
