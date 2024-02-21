@@ -1,4 +1,6 @@
 // pages/registration-select-accommodation/registration-select-accommodation.js
+import dbAction from "../../static/utils/dbAction";
+import {verboseLog} from "../../static/utils/logging";
 Page({
 
   /**
@@ -34,6 +36,7 @@ Page({
         accommodations: await dbAction.getAccommodations(item.conferenceId),
         chosenPackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
       });
+      verboseLog(this.data);
     } catch (err) {
       console.error("registration-select-package.accommodation() failed:\n", err);
     }
