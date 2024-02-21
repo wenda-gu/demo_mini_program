@@ -88,7 +88,7 @@ async function addPersonalInfo(formData) {
     await wx.cloud.database().collection("personal-info").add({
       data: formData,
     });
-    verboseLog("dbAction.addPersonalInfo() success:", res);
+    verboseLog("dbAction.addPersonalInfo() success.");
   } catch (err) {
     throw new Error("at dbAction.addPersonalInfo()\n" + err);
   }
@@ -100,7 +100,7 @@ async function editPersonalInfo(id, formData) {
     await wx.cloud.database().collection("personal-info").doc(id).update({
       data: formData,
     });
-    verboseLog("dbAction.editPersonalInfo() success:", res);
+    verboseLog("dbAction.editPersonalInfo() success.");
   } catch (err) {
     throw new Error("at dbAction.editPersonalInfo()\n" + err);
   }

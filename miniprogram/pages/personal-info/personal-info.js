@@ -7,6 +7,7 @@ import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/static
 import {reLaunch, showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
 
 const updatePersonalInfo = getApp().updatePersonalInfo;
+const global = getApp().globalData;
 
 Page({
 
@@ -28,10 +29,11 @@ Page({
     otherDepartment: String,
     title: String,
     position: String,
-    isEditing: false,
     personalInfoDocId: String,
     isNewUser: Boolean,
     medicalDepartmentList: medicalDepartmentList,
+
+    isEditing: false,
   },
 
   toggleIsEditing() {
@@ -252,7 +254,7 @@ Page({
           showSubmissionSuccess();
           await updatePersonalInfo();
           this.setData({
-            personalInfoDocId: getApp().globalData.personalInfoDocId,
+            personalInfoDocId: global.personalInfoDocId,
             isNewUser: false,
           });
           reLaunch('../me/me');
@@ -340,7 +342,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '我的信息' });
     wx.disableAlertBeforeUnload();
     if (options.item == null || options.item == "") {
       console.error("personal-info no input");
@@ -349,9 +350,32 @@ Page({
     }
     const item = JSON.parse(options.item);
     verboseLog("personal-info.onLoad() got item:", item);
+    this.setData({
+      isNewUser: global.isNewUser,
+    });
     
-    // if item.isHealthcareWorker is undefined, first time filling out personal info form
-    if (item.isHealthcareWorker != undefined) {
+    if (this.data.isNewUser) {
+      wx.setNavigationBarTitle({ title: '用户注册' });
+      this.setData({
+        isEditing: true,
+        name: '',
+        isMale: true,
+        phonePersonal: item.phonePersonal,
+        emailPersonal: '',
+        personalId: '',
+        companyName: '',
+        region: null,
+        address: '',
+        phoneCompany: '',
+        isHealthcareWorker: true,
+        department: '',
+        otherDepartment: '',
+        title: '',
+        position: '',
+      });
+    }
+    else {
+      wx.setNavigationBarTitle({ title: '我的信息' });
       var title = '', position = '', department = '', otherDepartment = '';
 
       title = item.title ? item.title : '';
@@ -381,25 +405,7 @@ Page({
         otherDepartment: otherDepartment,
         title: title,
         position: position,
-      });
-    }
-    else {
-      this.setData({
-        isEditing: true,
-        name: '',
-        isMale: true,
-        phonePersonal: item.phonePersonal,
-        emailPersonal: '',
-        personalId: '',
-        companyName: '',
-        region: null,
-        address: '',
-        phoneCompany: '',
-        isHealthcareWorker: true,
-        department: '',
-        otherDepartment: '',
-        title: '',
-        position: '',
+        personalInfoDocId: global.personalInfoDocId
       });
     }
     
@@ -417,8 +423,8 @@ Page({
    */
   onShow() {
     this.setData({
-      isNewUser: getApp().globalData.isNewUser,
-      personalInfoDocId: getApp().globalData.personalInfoDocId,
+      isNewUser: global.isNewUser,
+      personalInfoDocId: global.personalInfoDocId,
     });
   },
 

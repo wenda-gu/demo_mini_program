@@ -21,7 +21,8 @@
     "pages/registration-personal-info/registration-personal-info",
     "pages/download-files/download-files",
     "pages/welcome-letter/welcome-letter",
-    "pages/coming-soon/coming-soon"
+    "pages/coming-soon/coming-soon",
+    "pages/registration-select-package/registration-select-package"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

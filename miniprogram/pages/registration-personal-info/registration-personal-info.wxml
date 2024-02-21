@@ -6,7 +6,6 @@
       <Separator></Separator>
       <FormInputBinary isRequired="{{true}}" label="性别" switchMethod="changeGender" bind:changeGender="handleGender" first="男" second="女" firstFlag="{{isMale}}" disabled="{{!isEditing}}"></FormInputBinary>
       <Separator></Separator>
-      <!-- TODO: change phone number logic -->
       <FormInputItem wx:if="{{isNewUser}}" isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bindinput="handlePhonePersonal" type="number" maxlength="11" disabled="true"></FormInputItem>
       <FormInputPhone wx:else isRequired="{{true}}" label="手机号" name="phonePersonal" placeholder="请输入个人手机号" value="{{phonePersonal}}" bind:changePhone="handleChangePhonePersonal" type="number" maxlength="11" disabled="{{!isEditing || isNewUser}}"></FormInputPhone>
       <Separator></Separator>
@@ -27,8 +26,6 @@
       <Separator></Separator>
 
       <view wx:if="{{isHealthcareWorker}}">
-        <FormInputBinary isRequired="{{true}}" label="是否来自基层（县及以下、社区等医疗卫生机构）" switchMethod="local" bind:local="toggleFromLocal" firstFlag="{{fromLocal}}" disabled="{{!isEditing}}"></FormInputBinary>
-        <Separator></Separator>
         <FormInputPicker isRequired="{{true}}" label="科室" name="department" placeholder="请选择科室" value="{{department}}" bindinput="handleDepartment" disabled="{{!isEditing}}" range="{{medicalDepartmentList}}"></FormInputPicker>
         <Separator></Separator>
         <FormInputItem wx:if="{{department == '其他'}}" isRequired="{{true}}" label="其他科室" name="otherDepartment" placeholder="请填写科室" value="{{otherDepartment}}" bindinput="handleOtherDepartment" disabled="{{!isEditing}}"></FormInputItem>
@@ -36,6 +33,8 @@
         <FormInputItem isRequired="{{true}}" label="职称" name="title" placeholder="请输入职称" value="{{title}}" bindinput="handleTitle" disabled="{{!isEditing}}"></FormInputItem>
         <Separator></Separator>
         <FormInputItem isRequired="{{false}}" label="职务" name="position" placeholder="请输入职务" value="{{position}}" bindinput="handlePosition" disabled="{{!isEditing}}"></FormInputItem>
+        <Separator></Separator>
+        <FormInputBinary isRequired="{{true}}" label="是否来自基层（县及以下、社区等医疗卫生机构）" switchMethod="local" bind:local="toggleIsFromLocal" firstFlag="{{isFromLocal}}" disabled="{{!isEditing}}"></FormInputBinary>
       </view>
 
       <view wx:else>
@@ -47,8 +46,6 @@
   </view>
   
   <Spacer bgcolor="transparent"></Spacer>
-  <button class="blue-btn" form-type="submit" hover-class="btn-hover">下一页</button>
-  <Spacer bgcolor="transparent"></Spacer>
-  <button class="blue-btn" hover-class="btn-hover" bind:tap="saveAndExit">保存并退出</button>
+  <button class="blue-btn" form-type="submit" hover-class="btn-hover">{{isNewUser ? "完成用户注册" : "下一页"}}</button>
 </form>
 <Spacer bgcolor="transparent" h="10"></Spacer>

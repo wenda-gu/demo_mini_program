@@ -1,13 +1,15 @@
 /* components/form-input-binary/form-input-binary.wxss */
 @import "/static/styles/style.wxss";
-
+.form-input-format {
+  height: auto;
+  overflow: show;
+}
 .container {
   height: 80%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: flex-start;
   justify-content: flex-start;
-  /* background-color: aqua; */
   overflow: hidden;
 }
 

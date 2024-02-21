@@ -4,7 +4,7 @@ import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {verboseLog} from "../../static/utils/logging";
 import {medicalDepartmentList, defaultAvatarUrl} from "../../static/utils/staticData";
-import {reLaunch, showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
+import {showSaving, showSubmissionSuccess, showSubmissionFailed, showEditSuccess, showEditFailed, showError, navTo} from "../../static/utils/wxapi";
 
 const updatePersonalInfo = getApp().updatePersonalInfo;
 const global = getApp().globalData;
@@ -29,9 +29,15 @@ Page({
     otherDepartment: String,
     title: String,
     position: String,
-    isEditing: true,
     personalInfoDocId: String,
+    isNewUser: Boolean,
     medicalDepartmentList: medicalDepartmentList,
+
+    registrations: [],
+    currentRegistration: Object,
+    isFromLocal: true,
+    conferenceId: String,
+    isEditing: true,
   },
 
   toggleIsEditing() {
@@ -130,10 +136,13 @@ Page({
   },
   
   prepareForm() {
+    this.data.currentRegistration.status = "selectPackage";
+    this.data.registrations.push(this.data.currentRegistration);
     var department = this.data.department;
     if (this.data.department == "其他") {
       department = this.data.otherDepartment;
     }
+
     return {
       name: this.data.name,
       isMale: this.data.isMale,
@@ -148,6 +157,9 @@ Page({
       department: department,
       title: this.data.title,
       position: this.data.position,
+
+      isFromLocal: this.data.isFromLocal,
+      registrations: this.data.registrations,
     };
   },
 
@@ -165,6 +177,10 @@ Page({
       else if (validation.isEmpty(this.data.emailPersonal, String)) {
         console.error("registration-personal-info.isValid() no emailPersonal.");
         reject("No emailPersonal.");
+      }
+      else if (validation.isEmpty(this.data.personalId, String)) {
+        console.error("registration-personal-info.isValid() no personalId.");
+        reject("No personalId.");
       }
       else if (validation.isEmpty(this.data.companyName, String)) {
         console.error("registration-personal-info.isValid() no companyName.");
@@ -239,10 +255,11 @@ Page({
     this.toggleIsEditing();
     verboseLog("registration-personal-info.btnSubmit()");
 
+    // validate input
     try {
       await this.isValid();
     } catch (err) {
-      console.error("registration-personal-info.btnSubmit() isValid() failed:", err);
+      console.error("registration-personal-info.btnSubmit() isValid() failed:\n", err);
       wx.hideLoading();
       var msg, iconStr = 'error';
       switch(err) {
@@ -254,6 +271,9 @@ Page({
           break;
         case "No emailPersonal.":
           msg = "请填写个人邮箱";
+          break;
+        case "No personalId.":
+          msg = "请填写身份证号码";
           break;
         case "No companyName.":
           msg = "请填写单位名称";
@@ -304,82 +324,117 @@ Page({
       this.toggleIsEditing();
     }
 
+    // prepare form
     var formData = this.prepareForm();
     verboseLog("registration-personal-info.btnSubmit() submitting:", formData);
     try {
-      await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
-      verboseLog("registration-personal-info.btnSubmit() editPersonalInfo success.");
-      wx.hideLoading();
-      showEditSuccess();
-      await updatePersonalInfo();
+      // new user
+      if (this.data.isNewUser) {
+        formData.avatarUrl = defaultAvatarUrl;
+        await dbAction.addPersonalInfo(formData);
+        verboseLog("registration-personal-info.btnSubmit() addPersonalInfo() success.");
+        wx.hideLoading();
+        showSubmissionSuccess();
+        await updatePersonalInfo();
+        this.setData({
+          personalInfoDocId: global.personalInfoDocId,
+          isNewUser: false,
+        });
+      }
+      // existing user
+      else {
+        await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData);
+        verboseLog("registration-personal-info.btnSubmit() editPersonalInfo success.");
+        wx.hideLoading();
+        showEditSuccess();
+        await updatePersonalInfo();
+      }
+      navTo("../registration-select-package/registration-select-package", {
+        personalInfoDocId: this.data.personalInfoDocId,
+        currentRegistration: this.data.currentRegistration,
+      });
     } catch (err) {
-      console.error("registration-personal-info.btnSubmit() failed:", err);
+      console.error("registration-personal-info.btnSubmit() failed:\n", err);
       wx.hideLoading();
       showEditFailed();
       this.toggleIsEditing();
     }
   },
 
-
-  async saveAndExit() {
-    showSaving();
-    this.toggleIsEditing();
-    
-    var formData = this.prepareForm();
-    verboseLog("registration-personal-info.saveAndExit() saving:", formData);
-    try {
-      await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
-      verboseLog("registration-personal-info.saveAndExit() editPersonalInfo success.");
-      wx.hideLoading();
-      showEditSuccess();
-      await updatePersonalInfo();
-      reLaunch('pages/index/index');
-    } catch (err) {
-      console.error("registration-personal-info.saveAndExit() failed:", err);
-      wx.hideLoading();
-      showEditFailed();
-      this.toggleIsEditing();
-    }
-  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '个人信息' });
     wx.disableAlertBeforeUnload();
-    const item = global.personalInfo;
+    if (options.item == null || options.item == "") {
+      console.error("registration-personal-info no input");
+      wx.navigateBack();
+      return;
+    }
+    const item = JSON.parse(options.item);
+    verboseLog("registration-personal-info.onLoad() got info:", item);
+    this.setData({
+      isNewUser: global.isNewUser,
+      currentRegistration: item.currentRegistration,
+    });
   
-    var title = '', position = '', department = '', otherDepartment = '';
-
-    title = item.title ? item.title : '';
-    position = item.position ? item.position : '';
-
-    // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
-    if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
-      department = '其他';
-      otherDepartment = item.department;
+    if (this.data.isNewUser) {
+      wx.setNavigationBarTitle({ title: '用户注册' });
+      this.setData({
+        isEditing: true,
+        name: '',
+        isMale: true,
+        phonePersonal: item.phonePersonal,
+        emailPersonal: '',
+        personalId: '',
+        companyName: '',
+        region: null,
+        address: '',
+        phoneCompany: '',
+        isHealthcareWorker: true,
+        department: '',
+        otherDepartment: '',
+        title: '',
+        position: '',
+      });
     }
     else {
-      department = item.department;
-    }
+      wx.setNavigationBarTitle({ title: '个人信息' });
+      var title = '', position = '', department = '', otherDepartment = '', registrations = [];
 
-    this.setData({
-      name: item.name,
-      isMale: item.isMale,
-      phonePersonal: item.phonePersonal,
-      emailPersonal: item.emailPersonal,
-      personalId: item.personalId,
-      companyName: item.companyName,
-      region: item.region,
-      address: item.address,
-      phoneCompany: item.phoneCompany,
-      isHealthcareWorker: item.isHealthcareWorker,
-      department: department,
-      otherDepartment: otherDepartment,
-      title: title,
-      position: position,
-    });
+      title = item.title ? item.title : '';
+      position = item.position ? item.position : '';
+      registrations = item.registrations ? item.registrations : []
+
+      // check department and other department. if department name not in list, set this.data.department to "其他" and set the name to this.data.otherDepartment
+      if ((medicalDepartmentList.indexOf(item.department) == -1) && (item.department != '')) {
+        department = '其他';
+        otherDepartment = item.department;
+      }
+      else {
+        department = item.department;
+      }
+
+      this.setData({
+        name: item.name,
+        isMale: item.isMale,
+        phonePersonal: item.phonePersonal,
+        emailPersonal: item.emailPersonal,
+        personalId: item.personalId,
+        companyName: item.companyName,
+        region: item.region,
+        address: item.address,
+        phoneCompany: item.phoneCompany,
+        isHealthcareWorker: item.isHealthcareWorker,
+        department: department,
+        otherDepartment: otherDepartment,
+        title: title,
+        position: position,
+        personalInfoDocId: global.personalInfoDocId,
+        registrations: registrations,
+      });
+    }
   },
 
   /**
@@ -393,9 +448,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.setData({
-      personalInfoDocId: getApp().globalData.personalInfoDocId,
-    });
+
   },
 
   /**

@@ -23,7 +23,7 @@ Page({
     navTo(comingSoonPage);
   },
   handleRegistration() {
-    navTo('../auth/auth');
+    navTo('../auth/auth', this.data.conference._id);
   },
   handleAgenda() {
     navTo(comingSoonPage);

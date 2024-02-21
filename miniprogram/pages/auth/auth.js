@@ -18,6 +18,35 @@ Page({
 
   },
 
+  handleNav() {
+    var status = "personalInfo";
+    if (global.personalInfo.registrations != undefined) {
+      for (const reg of global.personalInfo.registrations) {
+        if (reg.conference == this.data.conferenceId) {
+          status = reg.status;
+          break;
+        }
+      }
+    }
+    var currentRegistration = {
+      conference: this.data.conferenceId,
+      status: status,
+    };
+    switch(status) {
+      case "personalInfo":
+        let data = global.personalInfo;
+        data.currentRegistration = currentRegistration;
+        navTo("../registration-personal-info/registration-personal-info", data);
+        break;
+      case "selectPackage":
+        navTo("../registration-select-package/registration-select-package", {
+          personalInfoDocId: global.personalInfoDocId,
+          currentRegistration: currentRegistration,
+        });
+        break;
+    }
+  },
+
   setDisabled(b) {
     this.setData({
       disabled: b,
@@ -30,7 +59,13 @@ Page({
       var res = await cloudAction.cloudGetPhoneNumber(e.detail.cloudID);
       verboseLog("this is res:", res);
       if (validation.validateCountryCode(res.countryCode)) {
-        redirectTo('/pages/personal-info/personal-info', {phonePersonal: res.purePhoneNumber});
+        redirectTo('/pages/registration-personal-info/registration-personal-info', {
+          phonePersonal: res.purePhoneNumber,
+          currentRegistration: {
+            conference: this.data.conferenceId,
+            status: "signUp",
+          },
+        });
       }
       else {
         this.setDisabled(false);
@@ -52,7 +87,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    wx.setNavigationBarTitle({ title: '登录' });
+    wx.setNavigationBarTitle({ title: '用户登录' });
+    if (options.item == null || options.item == "") {
+      console.error("auth no input");
+      wx.navigateBack();
+      return;
+    }
+    const conferenceId = JSON.parse(options.item);
+    this.setData({
+      conferenceId: conferenceId,
+    });
+    verboseLog("auth.onLoad() got conferenceId:", conferenceId);
   },
 
   /**
@@ -76,7 +121,7 @@ Page({
       });
     }
     else {
-      navTo("../registration-personal-info/registration-personal-info");
+      this.handleNav();
     }
     verboseLog("auth.onShow() already logged in, success.");
   },
