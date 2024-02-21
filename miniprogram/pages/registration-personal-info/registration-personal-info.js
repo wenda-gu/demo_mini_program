@@ -34,7 +34,6 @@ Page({
     medicalDepartmentList: medicalDepartmentList,
 
     registrations: [],
-    currentRegistration: Object,
     isFromLocal: true,
     conferenceId: String,
     isEditing: true,
@@ -136,8 +135,6 @@ Page({
   },
   
   prepareForm() {
-    this.data.currentRegistration.status = "selectPackage";
-    this.data.registrations.push(this.data.currentRegistration);
     var department = this.data.department;
     if (this.data.department == "其他") {
       department = this.data.otherDepartment;
@@ -159,7 +156,6 @@ Page({
       position: this.data.position,
 
       isFromLocal: this.data.isFromLocal,
-      registrations: this.data.registrations,
     };
   },
 
@@ -325,17 +321,22 @@ Page({
     }
 
     // prepare form
-    var formData = this.prepareForm();
-    verboseLog("registration-personal-info.btnSubmit() submitting:", formData);
     try {
+      var formData = this.prepareForm();
+      verboseLog("registration-personal-info.btnSubmit() submitting:", formData);
       // new user
       if (this.data.isNewUser) {
+        var currentRegistration = {};
+        currentRegistration[this.data.conferenceId] = {
+          status: "personalInfo",
+        };
+        formData.registrations = currentRegistration;
         formData.avatarUrl = defaultAvatarUrl;
         await dbAction.addPersonalInfo(formData);
+        await updatePersonalInfo();
         verboseLog("registration-personal-info.btnSubmit() addPersonalInfo() success.");
         wx.hideLoading();
         showSubmissionSuccess();
-        await updatePersonalInfo();
         this.setData({
           personalInfoDocId: global.personalInfoDocId,
           isNewUser: false,
@@ -344,14 +345,14 @@ Page({
       // existing user
       else {
         await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData);
+        await dbAction.updateConferenceRegistrationStatus(this.data.personalInfoDocId, this.data.conferenceId, "personalInfo");
+        await updatePersonalInfo();
         verboseLog("registration-personal-info.btnSubmit() editPersonalInfo success.");
         wx.hideLoading();
         showEditSuccess();
-        await updatePersonalInfo();
       }
       navTo("../registration-select-package/registration-select-package", {
         personalInfoDocId: this.data.personalInfoDocId,
-        currentRegistration: this.data.currentRegistration,
       });
     } catch (err) {
       console.error("registration-personal-info.btnSubmit() failed:\n", err);
@@ -376,7 +377,7 @@ Page({
     verboseLog("registration-personal-info.onLoad() got info:", item);
     this.setData({
       isNewUser: global.isNewUser,
-      currentRegistration: item.currentRegistration,
+      conferenceId: item.conferenceId,
     });
   
     if (this.data.isNewUser) {

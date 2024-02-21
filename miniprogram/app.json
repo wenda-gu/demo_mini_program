@@ -22,7 +22,8 @@
     "pages/download-files/download-files",
     "pages/welcome-letter/welcome-letter",
     "pages/coming-soon/coming-soon",
-    "pages/registration-select-package/registration-select-package"
+    "pages/registration-select-package/registration-select-package",
+    "pages/registration-select-accommodation/registration-select-accommodation"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

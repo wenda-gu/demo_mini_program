@@ -3,6 +3,7 @@ import {verboseLog} from "../../static/utils/logging.js";
 import cloudAction from "../../static/utils/cloudAction.js";
 import validation from "../../static/utils/validation.js";
 import {sleep, showUseChinesePhoneNumber, navTo, redirectTo} from "../../static/utils/wxapi";
+import dbAction from "../../static/utils/dbAction.js";
 
 const global = getApp().globalData;
 
@@ -15,36 +16,35 @@ Page({
     loggedin: false,
     isNewUser: true,
     disabled: false,
-
   },
 
-  handleNav() {
-    var status = "personalInfo";
-    if (global.personalInfo.registrations != undefined) {
-      for (const reg of global.personalInfo.registrations) {
-        if (reg.conference == this.data.conferenceId) {
-          status = reg.status;
+  async handleNav() {
+    try {
+      var status = await dbAction.getConferenceRegistrationStatus(this.data.conferenceId);
+
+      switch (status) {
+        case "personalInfo":
+          let data = global.personalInfo;
+          data.conferenceId = this.data.conferenceId;
+          navTo("../registration-personal-info/registration-personal-info", data);
           break;
-        }
+        case "selectPackage":
+          navTo("../registration-select-package/registration-select-package", {
+            conferenceId: this.data.conferenceId,
+            personalInfoDocId: global.personalInfoDocId,
+          });
+          break;
+        case "selectAccommodation":
+          navTo("../registration-select-accommodation/registration-select-accommodation", {
+            conferenceId: this.data.conferenceId,
+            personalInfoDocId: global.personalInfoDocId,
+          });
+          break;
       }
+    } catch (err) {
+      console.error("auth.handleNav() failed:\n", err);
     }
-    var currentRegistration = {
-      conference: this.data.conferenceId,
-      status: status,
-    };
-    switch(status) {
-      case "personalInfo":
-        let data = global.personalInfo;
-        data.currentRegistration = currentRegistration;
-        navTo("../registration-personal-info/registration-personal-info", data);
-        break;
-      case "selectPackage":
-        navTo("../registration-select-package/registration-select-package", {
-          personalInfoDocId: global.personalInfoDocId,
-          currentRegistration: currentRegistration,
-        });
-        break;
-    }
+    
   },
 
   setDisabled(b) {
@@ -61,10 +61,6 @@ Page({
       if (validation.validateCountryCode(res.countryCode)) {
         redirectTo('/pages/registration-personal-info/registration-personal-info', {
           phonePersonal: res.purePhoneNumber,
-          currentRegistration: {
-            conference: this.data.conferenceId,
-            status: "signUp",
-          },
         });
       }
       else {
@@ -72,7 +68,7 @@ Page({
         showUseChinesePhoneNumber();
       }
     } catch (err) {
-      console.error(err);
+      console.error("auth.getPhoneNumber() failed:\n", err);
       this.setDisabled(false);
     }
   },
@@ -93,11 +89,10 @@ Page({
       wx.navigateBack();
       return;
     }
-    const conferenceId = JSON.parse(options.item);
     this.setData({
-      conferenceId: conferenceId,
+      conferenceId: JSON.parse(options.item),
     });
-    verboseLog("auth.onLoad() got conferenceId:", conferenceId);
+    verboseLog("auth.onLoad() got conferenceId:", this.data.conferenceId);
   },
 
   /**

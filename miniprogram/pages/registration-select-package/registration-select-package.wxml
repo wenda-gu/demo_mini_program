@@ -1,2 +1,36 @@
 <!--pages/registration-select-package/registration-select-package.wxml-->
-<text>pages/registration-select-package/registration-select-package.wxml</text>
+<view >说明：{{packages.ps}}</view>
+<form bindsubmit="btnSubmit">
+  <radio-group bindchange="handlePackageChange">
+    <label wx:for="{{packages.packages}}">
+      <Spacer></Spacer>
+      <view>
+        <radio value="{{item.name}}" checked="{{item.name == chosenPackage ? true : false}}"/>
+        <view>
+          <text>{{item.name}}</text>
+          <view>日期：{{item.date_string}}</view>
+          <view>金额：</view>
+        </view>
+      </view>
+    </label>
+  </radio-group>
+  <view>
+    <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
+    <button class="blue-btn" form-type="submit">下一页</button>
+  </view>
+</form>
+
+<!-- <view class="page-section">
+    <view class="page-section-title">推荐展示样式</view>
+    <view class="weui-cells weui-cells_after-title">
+      <radio-group bindchange="radioChange">
+        <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.value}}">
+
+          <view class="weui-cell__hd">
+            <radio value="{{item.name}}" checked="true"/>
+          </view>
+          <view class="weui-cell__bd">{{item.name}}</view>
+        </label>
+      </radio-group>
+    </view>
+  </view> -->

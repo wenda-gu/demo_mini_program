@@ -242,37 +242,6 @@ Page({
     verboseLog("personal-info.btnSubmit()");
     try {
       await this.isValid();
-      var formData = this.prepareForm();
-      verboseLog("personal-info.btnSubmit() submitting:", formData);
-      try {
-        // new user
-        if (this.data.isNewUser) {
-          formData.avatarUrl = defaultAvatarUrl;
-          await dbAction.addPersonalInfo(formData);
-          verboseLog("personal-info.btnSubmit() addPersonalInfo() success.");
-          wx.hideLoading();
-          showSubmissionSuccess();
-          await updatePersonalInfo();
-          this.setData({
-            personalInfoDocId: global.personalInfoDocId,
-            isNewUser: false,
-          });
-          reLaunch('../me/me');
-        }
-        // existing user
-        else {
-          await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData)
-          verboseLog("personal-info.btnSubmit() editPersonalInfo success.");
-          wx.hideLoading();
-          showEditSuccess();
-          await updatePersonalInfo();
-        }
-      } catch (err) {
-        console.error("personal-info.btnSubmit() failed:", err);
-        wx.hideLoading();
-        showEditFailed();
-        this.toggleIsEditing();
-      }
     } catch (err) {
       console.error("personal-info.btnSubmit() isValid() failed:", err);
       wx.hideLoading();
@@ -335,6 +304,38 @@ Page({
       showError(msg, iconStr);
       this.toggleIsEditing();
     }
+    try {
+      var formData = this.prepareForm();
+      verboseLog("personal-info.btnSubmit() submitting:", formData);
+      // new user
+      if (this.data.isNewUser) {
+        formData.avatarUrl = defaultAvatarUrl;
+        await dbAction.addPersonalInfo(formData);
+        await updatePersonalInfo();
+        verboseLog("personal-info.btnSubmit() addPersonalInfo() success.");
+        wx.hideLoading();
+        showSubmissionSuccess();
+        this.setData({
+          personalInfoDocId: global.personalInfoDocId,
+          isNewUser: false,
+        });
+        reLaunch('../me/me');
+      }
+      // existing user
+      else {
+        await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData);
+        await updatePersonalInfo();
+        verboseLog("personal-info.btnSubmit() editPersonalInfo success.");
+        wx.hideLoading();
+        showEditSuccess();
+      }
+    } catch (err) {
+      console.error("personal-info.btnSubmit() failed:", err);
+      wx.hideLoading();
+      showEditFailed();
+      this.toggleIsEditing();
+    }
+    
   },
   
 

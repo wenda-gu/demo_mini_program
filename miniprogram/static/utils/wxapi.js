@@ -101,6 +101,10 @@ const wxapi = {
     showLoadingWrapper('下载中');
   },
 
+  showSaveFailed: () => {
+    showError('保存失败请重试');
+  },
+
   showSubmissionFailed: () => {
     showError('提交失败请重试');
   },
@@ -119,6 +123,10 @@ const wxapi = {
 
   showUseChinesePhoneNumber: () => {
     showError('请使用国内手机号');
+  },
+
+  showSaveSuccess: () => {
+    showSuccess('保存成功');
   },
 
   showSubmissionSuccess: () => {
