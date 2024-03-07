@@ -2,14 +2,20 @@
 <view >说明：{{accommodations.ps}}</view>
 <form bindsubmit="btnSubmit">
   <radio-group bindchange="handleChooseAccommodation">
+    <label wx:for="{{chooseAccommodationChoice}}">
+      <view>
+        <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
+        <text>{{item.name}}</text>
+      </view>
+    </label>
   </radio-group>
-  <view>
-    您选择参加了：{{chosenPackage}}
-  </view>
-  <view>
-    已自动为您选择以下入住日期
-  </view>
-  <radio-group>
+  <radio-group wx:if="{{chooseAccommodation}}">
+    <view>
+      您选择参加了：{{chosenPackage}}
+    </view>
+    <view>
+      已自动为您选择以下入住日期
+    </view>
     <label wx:for="{{accommodations.dates}}" wx:key="date_string">
       <Spacer></Spacer>
       <view>

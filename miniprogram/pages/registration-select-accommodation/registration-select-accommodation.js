@@ -14,10 +14,17 @@ Page({
     chosenDate: String,
     chooseAccommodation: true,
     isEditing: true,
+    chooseAccommodationChoice: [
+      {value: false, name: "不需要住宿"},
+      {value: true, name: "需要住宿"},
+    ],
   },
 
-  handleChooseAccommodation() {
-
+  handleChooseAccommodation(e) {
+    this.setData({
+      chooseAccommodation: e.detail.value,
+    });
+    verboseLog("chose", this.data.chooseAccommodation);
   },
   
   setChosenDate() {
