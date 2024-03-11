@@ -1,11 +1,11 @@
 <!--pages/registration-payment/registration-payment.wxml-->
-<view>金额：￥{{conferencePrice + accommodationPrice}}</view>
+<view>金额：￥{{totalAmount}}</view>
 <view>明细：</view>
-<view>
-{{chosenConferencePackage}} ￥{{conferencePrice}}
+<view wx:for="{{conferenceChoiceInChosenPackage}}" wx:key="name">
+  {{item.name}} ￥{{item.price_discounted}}
 </view>
 <view>
-{{chosenAccommodationPackage}} ￥{{accommodationPrice}}
+{{chosenAccommodationPackage[0] + ', ' + chosenAccommodationPackage[1]}} ￥{{accommodationPrice}}
 </view>
 <form bindsubmit="btnSubmit">
 
@@ -20,6 +20,6 @@
 
   <view>
     <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
-    <button class="blue-btn" form-type="submit">下一页</button>
+    <button class="blue-btn" form-type="submit">支付</button>
   </view>
 </form>

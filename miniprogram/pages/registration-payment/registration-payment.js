@@ -14,8 +14,9 @@ Page({
     conferenceId: String,
     chosenConferencePackage: String,
     chosenAccommodationPackage: String,
-    conferencePrice: Number,
+    conferenceChoiceInChosenPackage: [],
     accommodationPrice: Number,
+    totalAmount: Number,
     chosenPaymentMethod: 0,
     paymentMethods: [
       {value: 0, name: "微信钱包"},
@@ -24,10 +25,59 @@ Page({
     isEditing: true,
   },
 
+  calcTotalAmount() {
+    let sum = 0;
+    for (const choice of this.data.conferenceChoiceInChosenPackage) {
+      sum += choice.price_discounted;
+    }
+    sum += this.data.accommodationPrice;
+    return sum;
+  },
 
+  toggleIsEditing() {
+    this.setData({
+      isEditing: !this.data.isEditing,
+    });
+  },
 
-  calcPrice() {
-    return dbAction.getPrice(this.chosenConferencePackage) + dbAction.getPrice(this.chosenAccommodationPackage);
+  handleChoosePaymentMethod(e) {
+    this.setData({
+      chosenPaymentMethod: e.detail.value,
+    });
+  },
+
+  saveAndExit() {
+    showSaving();
+    this.toggleIsEditing();
+    verboseLog("registration-payment.saveAndExit()");
+    wx.hideLoading();
+    showSaveSuccess();
+    reLaunch("../index/index");
+  },
+
+  async btnSubmit() {
+    try {
+      showSubmitting();
+      this.toggleIsEditing();
+      verboseLog("registration-payment.btnSubmit()");
+
+      // payment logic
+      // push this user to conference item
+      // await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenDate, this.data.chosenRoom);
+
+      await updatePersonalInfo();
+
+      wx.hideLoading();
+      showSubmissionSuccess();
+      reLaunch("../registration-invoice/registration-invoice", {
+        conferenceId: this.data.conferenceId,
+        personalInfoDocId: this.data.personalInfoDocId,
+      });
+    } catch (err) {
+      console.error("registration-payment.btnSubmit() failed:\n", err);
+      wx.hideLoading();
+      this.toggleIsEditing();
+    }
   },
 
   /**
@@ -50,9 +100,14 @@ Page({
         conferenceId: item.conferenceId,
         chosenAccommodationPackage: await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId),
         chosenConferencePackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
-        totalAmount: this.calcTotal(),
       });
-      this.setChosenDate();
+      this.setData({
+        conferenceChoiceInChosenPackage: await dbAction.getConferenceChoiceInChosenPackage(this.data.conferenceId, this.data.chosenConferencePackage),
+        accommodationPrice: await dbAction.getAccommodatioinPrice(this.data.conferenceId, this.data.chosenAccommodationPackage),
+      });
+      this.setData({
+        totalAmount: this.calcTotalAmount(),
+      })
       verboseLog("registration-payment.onLoad() got data:", this.data);
     } catch (err) {
       console.error("registration-payment.onLoad() failed:\n", err);

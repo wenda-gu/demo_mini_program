@@ -275,13 +275,14 @@ async function getAccommodationRegistrationChosenPackage(conferenceId) {
     const keys = Object.keys(reg);
     for (const key of keys) {
       if (key == conferenceId) {
-        return reg[key]["accommodation"];
+        return [reg[key]["chosenAccommodationPackage"], reg[key]["chosenRoom"]];
       }
     }
   } catch (err) {
     throw new Error("at dbAction.getAccommodationRegistrationChosenPackage()\n" + err);
   }
 }
+
 
 // conference info
 async function getAllConferencesOnRelease() {
@@ -306,7 +307,45 @@ async function getAccommodations(conferenceId) {
     const conference = await wx.cloud.database().collection("conferences").doc(conferenceId).get();
     return conference.data.conference_page.accommodations;
   } catch (err) {
-    throw new Error("at dbAction.getConferencePackages()\n" + err);
+    throw new Error("at dbAction.getAccommodations()\n" + err);
+  }
+}
+
+async function getConferenceChoiceInChosenPackage(conferenceId, chosenPackage) {
+  try {
+    var returnList = []
+    const packages = await getConferencePackages(conferenceId);
+    const choices = packages.choices, conferencePackages = packages.packages;
+    for (const conf of conferencePackages) {
+      if (conf.name == chosenPackage) {
+        for (const choiceConf of conf.choices) {
+          for (const choice of choices) {
+            if (choiceConf == choice.name) {
+              returnList.push(choice);
+            }
+          }
+        }
+      }
+    }
+    return returnList;
+  } catch (err) {
+    throw new Error("at dbAction.getConferencePrice()\n" + err);
+  }
+}
+
+async function getAccommodatioinPrice(conferenceId, chosenPackage) {
+  try {
+    const accommodations = await getAccommodations(conferenceId);
+    const rooms = accommodations.rooms
+    for (const room of rooms) {
+      verboseLog(room)
+      verboseLog(chosenPackage)
+      if (room.title == chosenPackage[1]) {
+        return room.price;
+      }
+    }
+  } catch (err) {
+    throw new Error("at dbAction.getAccommodatioinPrice()\n" + err);
   }
 }
 
@@ -384,6 +423,8 @@ export default {
   getAllConferencesOnRelease: getAllConferencesOnRelease,
   getConferencePackages: getConferencePackages,
   getAccommodations: getAccommodations,
+  getConferenceChoiceInChosenPackage: getConferenceChoiceInChosenPackage,
+  getAccommodatioinPrice: getAccommodatioinPrice,
 
   getDataWrapper: getDataWrapper,
   getData: getData,
