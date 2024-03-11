@@ -11,22 +11,24 @@
   </radio-group>
   <radio-group wx:if="{{chooseAccommodation}}">
     <view>
-      您选择参加了：{{chosenPackage}}
-    </view>
-    <view>
-      已自动为您选择以下入住日期
-    </view>
-    <label wx:for="{{accommodations.dates}}" wx:key="date_string">
-      <Spacer></Spacer>
       <view>
-        <radio value="{{item.date_string}}" checked="{{item.date_string == chosenDate ? true : false}}" disabled="{{(item.date_string != chosenDate) || (!isEditing) ? true : false}}"/>
-        <view>
-          <text>入住日期：{{item.date_string}}</text>
-          <view>适用于参加以下项目：</view>
-          <view wx:for="{{item.for_packages}}" wx:for-item="package" wx:key="package">{{package}}</view>
-        </view>
+        您选择参加了：{{chosenPackage}}
       </view>
-    </label>
+      <view>
+        已自动为您选择以下入住日期
+      </view>
+      <label wx:for="{{accommodations.dates}}" wx:key="date_string">
+        <Spacer></Spacer>
+        <view>
+          <radio value="{{item.date_string}}" checked="{{(item.date_string == chosenDate) ? true : false}}" disabled="{{(item.date_string != chosenDate) || (!isEditing) ? true : false}}"/>
+          <view>
+            <text>入住日期：{{item.date_string}}</text>
+            <view>适用于参加以下项目：</view>
+            <view wx:for="{{item.for_packages}}" wx:for-item="package" wx:key="package">{{package}}</view>
+          </view>
+        </view>
+      </label>
+    </view>
   </radio-group>
   <view>
     <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>

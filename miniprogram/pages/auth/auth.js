@@ -21,7 +21,7 @@ Page({
   async handleNav() {
     try {
       var status = await dbAction.getConferenceRegistrationStatus(this.data.conferenceId);
-
+      verboseLog("this is status:", status);
       switch (status) {
         case "personalInfo":
           let data = global.personalInfo;
@@ -36,6 +36,18 @@ Page({
           break;
         case "selectAccommodation":
           navTo("../registration-select-accommodation/registration-select-accommodation", {
+            conferenceId: this.data.conferenceId,
+            personalInfoDocId: global.personalInfoDocId,
+          });
+          break;
+        case "payment":
+          navTo("../registration-payment/registration-payment", {
+            conferenceId: this.data.conferenceId,
+            personalInfoDocId: global.personalInfoDocId,
+          });
+          break;
+        case "invoice":
+          navTo("../registration-invoice/registration-invoice", {
             conferenceId: this.data.conferenceId,
             personalInfoDocId: global.personalInfoDocId,
           });

@@ -200,11 +200,11 @@ async function selectConferencePackage(id, conferenceId, chosenPackage) {
   }
 }
 
-async function selectConferencePackageAndUpdateStatus(id, conferenceId, chosenPackage, status) {
+async function selectConferencePackageAndUpdateStatus(id, conferenceId, chosenPackage) {
   try {
     await updateConferenceRegistrationHelper(id, conferenceId, [
       ["chosenPackage", chosenPackage], 
-      ["status", status]
+      ["status", "selectAccommodation"]
     ]);
   } catch (err) {
     throw new Error("at dbAction.selectConferencePackageAndUpdateStatus()\n" + err);
@@ -221,6 +221,9 @@ async function getConferenceRegistrationHelper(conferenceId, field) {
           return reg[key][field];
         }
       }
+    }
+    else {
+      return "personalInfo";
     }
   } catch (err) {
     throw new Error("at dbAction.getConferenceRegistrationHelper()\n" + err);
@@ -240,6 +243,27 @@ async function getConferenceRegistrationChosenPackage(conferenceId) {
     return await getConferenceRegistrationHelper(conferenceId, "chosenPackage");
   } catch (err) {
     throw new Error("at dbAction.getConferenceRegistrationChosenPackage()\n" + err);
+  }
+}
+
+async function selectAccommodationPackage(id, conferenceId, chosenPackage) {
+  try {
+    await updateConferenceRegistrationHelper(id, conferenceId, [
+      ["chosenPackage", chosenPackage]
+    ]);
+  } catch (err) {
+    throw new Error("at dbAction.selectAccommodationPackage()\n" + err);
+  }
+}
+
+async function selectAccommodationPackageAndUpdateStatus(id, conferenceId, chosenPackage) {
+  try {
+    await updateConferenceRegistrationHelper(id, conferenceId, [
+      ["chosenPackage", chosenPackage], 
+      ["status", "payment"]
+    ]);
+  } catch (err) {
+    throw new Error("at dbAction.selectAccommodationPackageAndUpdateStatus()\n" + err);
   }
 }
 
@@ -337,6 +361,8 @@ export default {
   selectConferencePackageAndUpdateStatus: selectConferencePackageAndUpdateStatus,
   getConferenceRegistrationStatus: getConferenceRegistrationStatus,
   getConferenceRegistrationChosenPackage: getConferenceRegistrationChosenPackage,
+  selectAccommodationPackage: selectAccommodationPackage,
+  selectAccommodationPackageAndUpdateStatus: selectAccommodationPackageAndUpdateStatus,
 
   getAllConferencesOnRelease: getAllConferencesOnRelease,
   getConferencePackages: getConferencePackages,

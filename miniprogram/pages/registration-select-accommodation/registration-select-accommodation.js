@@ -1,6 +1,9 @@
 // pages/registration-select-accommodation/registration-select-accommodation.js
 import dbAction from "../../static/utils/dbAction";
 import {verboseLog} from "../../static/utils/logging";
+import { navTo, reLaunch, showSaving, showSaveSuccess, showSaveFailed, showSubmissionSuccess, showSubmissionFailed, showSubmitting } from "../../static/utils/wxapi";
+const updatePersonalInfo = getApp().updatePersonalInfo;
+
 Page({
 
   /**
@@ -12,7 +15,10 @@ Page({
     accommodations: Object,
     chosenPackage: String,
     chosenDate: String,
-    chooseAccommodation: true,
+    chooseAccommodation: {
+      type: Boolean,
+      value: true,
+    },
     isEditing: true,
     chooseAccommodationChoice: [
       {value: false, name: "不需要住宿"},
@@ -20,9 +26,16 @@ Page({
     ],
   },
 
+  toggleIsEditing() {
+    this.setData({
+      isEditing: !this.data.isEditing,
+    });
+  },
+
   handleChooseAccommodation(e) {
     this.setData({
       chooseAccommodation: e.detail.value,
+      a: e.detail.value,
     });
     verboseLog("chose", this.data.chooseAccommodation);
   },
@@ -37,6 +50,49 @@ Page({
           });
         }
       }
+    }
+  },
+
+  async saveAndExit() {
+    try {
+      showSaving();
+      this.toggleIsEditing();
+      verboseLog("registration-select-accommodation.saveAndExit()");
+
+      await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, this.data.chosenPackage);
+      await updatePersonalInfo();
+
+      wx.hideLoading();
+      showSaveSuccess();
+      reLaunch("../index/index");
+    } catch (err) {
+      console.error("registration-select-accommodation.saveAndExit() failed:\n", err);
+      wx.hideLoading();
+      showSaveFailed();
+      this.toggleIsEditing();
+    }
+  },
+
+  async btnSubmit() {
+    try {
+      showSubmitting();
+      this.toggleIsEditing();
+      verboseLog("registration-select-accommodation.btnSubmit()");
+
+      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, this.data.chosenPackage);
+      await updatePersonalInfo();
+
+      wx.hideLoading();
+      showSubmissionSuccess();
+      navTo("../registration-payment/registration-payment", {
+        conferenceId: this.data.conferenceId,
+        personalInfoDocId: this.data.personalInfoDocId,
+      });
+    } catch (err) {
+      console.error("registration-select-accommodation.btnSubmit() failed:\n", err);
+      wx.hideLoading();
+      showSubmissionFailed();
+      this.toggleIsEditing();
     }
   },
 
@@ -60,6 +116,7 @@ Page({
         conferenceId: item.conferenceId,
         accommodations: await dbAction.getAccommodations(item.conferenceId),
         chosenPackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
+        chooseAccommodation: true
       });
       this.setChosenDate();
       verboseLog("registration-select-accommodation.onLoad() got data:", this.data);

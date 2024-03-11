@@ -41,7 +41,7 @@ Page({
       wx.hideLoading();
       showSaveSuccess();
       reLaunch("../index/index");
-    } catch (error) {
+    } catch (err) {
       console.error("registration-select-package.saveAndExit() failed:\n", err);
       wx.hideLoading();
       showSaveFailed();
@@ -55,7 +55,7 @@ Page({
       this.toggleIsEditing();
       verboseLog("registration-select-package.btnSubmit()");
 
-      await dbAction.selectConferencePackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, this.data.chosenPackage, "selectAccommodation");
+      await dbAction.selectConferencePackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, this.data.chosenPackage);
       await updatePersonalInfo();
 
       wx.hideLoading();
@@ -91,6 +91,7 @@ Page({
         return;
       }
       const item = JSON.parse(options.item), chosenPackage = await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId);
+      console.log("here", item)
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,

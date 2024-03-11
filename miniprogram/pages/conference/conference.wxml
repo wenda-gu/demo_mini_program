@@ -17,6 +17,6 @@
   <view class="btn-row">
     <button class="blue-btn" bind:tap="handleSurvey">问卷调查</button>
     <button class="blue-btn" bind:tap="handleDownload">文件下载</button>
-    <button class="blue-btn" bind:tap="handleSponsor">企业风采</button>
+    <button class="blue-btn" bind:tap="handleSponsor">联系我们</button>
   </view>
 </view>

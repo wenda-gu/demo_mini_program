@@ -1,0 +1,7 @@
+<!--pages/registration-payment/registration-payment.wxml-->
+<view>
+金额：{{totalAmount}}
+</view>
+<view>
+
+</view>

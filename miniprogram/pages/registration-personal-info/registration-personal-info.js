@@ -139,6 +139,10 @@ Page({
     if (this.data.department == "其他") {
       department = this.data.otherDepartment;
     }
+    var currentRegistration = {};
+    currentRegistration[this.data.conferenceId] = {
+      status: "personalInfo",
+    };
 
     return {
       name: this.data.name,
@@ -156,6 +160,7 @@ Page({
       position: this.data.position,
 
       isFromLocal: this.data.isFromLocal,
+      registrations: currentRegistration,
     };
   },
 
@@ -326,12 +331,8 @@ Page({
       verboseLog("registration-personal-info.btnSubmit() submitting:", formData);
       // new user
       if (this.data.isNewUser) {
-        var currentRegistration = {};
-        currentRegistration[this.data.conferenceId] = {
-          status: "personalInfo",
-        };
-        formData.registrations = currentRegistration;
         formData.avatarUrl = defaultAvatarUrl;
+
         await dbAction.addPersonalInfo(formData);
         await updatePersonalInfo();
         verboseLog("registration-personal-info.btnSubmit() addPersonalInfo() success.");
@@ -345,14 +346,15 @@ Page({
       // existing user
       else {
         await dbAction.editPersonalInfo(this.data.personalInfoDocId, formData);
-        await dbAction.updateConferenceRegistrationStatus(this.data.personalInfoDocId, this.data.conferenceId, "personalInfo");
-        await updatePersonalInfo();
         verboseLog("registration-personal-info.btnSubmit() editPersonalInfo success.");
         wx.hideLoading();
         showEditSuccess();
       }
+      await dbAction.updateConferenceRegistrationStatus(this.data.personalInfoDocId, this.data.conferenceId, "selectPackage")
+      await updatePersonalInfo();
       navTo("../registration-select-package/registration-select-package", {
         personalInfoDocId: this.data.personalInfoDocId,
+        conferenceId: this.data.conferenceId,
       });
     } catch (err) {
       console.error("registration-personal-info.btnSubmit() failed:\n", err);
