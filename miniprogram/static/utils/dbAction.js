@@ -170,7 +170,6 @@ async function updateConferenceRegistrationHelper(id, conferenceId, updateList) 
         break;
       }
     }
-    console.log("here", items)
     await wx.cloud.database().collection("personal-info").doc(id).update({
       data: {
         registrations: items,
@@ -247,9 +246,10 @@ async function getConferenceRegistrationChosenPackage(conferenceId) {
   }
 }
 
-async function selectAccommodationPackage(id, conferenceId, chosenPackage) {
+async function selectAccommodationPackage(id, conferenceId, chosenPackage, chosenRoom) {
   try {
     await updateConferenceRegistrationHelper(id, conferenceId, [
+      ["chosenRoom", chosenRoom],
       ["chosenAccommodationPackage", chosenPackage]
     ]);
   } catch (err) {
@@ -257,9 +257,10 @@ async function selectAccommodationPackage(id, conferenceId, chosenPackage) {
   }
 }
 
-async function selectAccommodationPackageAndUpdateStatus(id, conferenceId, chosenPackage) {
+async function selectAccommodationPackageAndUpdateStatus(id, conferenceId, chosenPackage, chosenRoom) {
   try {
     await updateConferenceRegistrationHelper(id, conferenceId, [
+      ["chosenRoom", chosenRoom],
       ["chosenAccommodationPackage", chosenPackage], 
       ["status", "payment"]
     ]);

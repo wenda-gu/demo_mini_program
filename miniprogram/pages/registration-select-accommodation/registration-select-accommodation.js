@@ -1,7 +1,7 @@
 // pages/registration-select-accommodation/registration-select-accommodation.js
 import dbAction from "../../static/utils/dbAction";
 import {verboseLog} from "../../static/utils/logging";
-import { navTo, reLaunch, showSaving, showSaveSuccess, showSaveFailed, showSubmissionSuccess, showSubmissionFailed, showSubmitting } from "../../static/utils/wxapi";
+import { navTo, reLaunch, showSaving, showSaveSuccess, showSaveFailed, showSubmissionSuccess, showSubmissionFailed, showSubmitting, showError } from "../../static/utils/wxapi";
 const updatePersonalInfo = getApp().updatePersonalInfo;
 
 Page({
@@ -15,6 +15,7 @@ Page({
     accommodations: Object,
     chosenPackage: String,
     chosenDate: String,
+    chosenRoom: String,
     chooseAccommodation: {
       type: Boolean,
       value: true,
@@ -33,7 +34,6 @@ Page({
   },
 
   handleChooseAccommodation(e) {
-    verboseLog("this is evalue", e.detail.value)
     var chooseAccommodation = e.detail.value;
     if (chooseAccommodation == "true") {
       this.setData({
@@ -45,6 +45,12 @@ Page({
         chooseAccommodation: false,
       });
     }
+  },
+
+  handleChooseRoom(e) {
+    this.setData({
+      chosenRoom: e.detail.value,
+    });
   },
   
   setChosenDate() {
@@ -61,14 +67,19 @@ Page({
     }
   },
 
+  async isValid() {
+    if (this.data.chosenRoom == undefined || this.data.chosenRoom == null || this.data.chosenRoom == String) {
+      throw new Error("No room selection.");
+    }
+  },
+
   async saveAndExit() {
     try {
       showSaving();
       this.toggleIsEditing();
       verboseLog("registration-select-accommodation.saveAndExit()");
-
       let chosenDate = this.data.chooseAccommodation ? this.data.chosenDate : "none";
-      await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, chosenDate);
+      await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, chosenDate, this.data.chosenRoom);
       await updatePersonalInfo();
 
       wx.hideLoading();
@@ -87,8 +98,9 @@ Page({
       showSubmitting();
       this.toggleIsEditing();
       verboseLog("registration-select-accommodation.btnSubmit()");
+      await this.isValid();
       let chosenDate = this.data.chooseAccommodation ? this.data.chosenDate : "none";
-      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenDate);
+      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenDate, this.data.chosenRoom);
       await updatePersonalInfo();
 
       wx.hideLoading();
@@ -100,7 +112,14 @@ Page({
     } catch (err) {
       console.error("registration-select-accommodation.btnSubmit() failed:\n", err);
       wx.hideLoading();
-      showSubmissionFailed();
+      switch(err.message) {
+        case "No room selection.":
+          showError("请选择房型", "error");
+          break;
+        default:
+          showSubmissionFailed();
+          break;
+      }
       this.toggleIsEditing();
     }
   },

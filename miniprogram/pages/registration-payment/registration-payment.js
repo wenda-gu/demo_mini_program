@@ -14,7 +14,8 @@ Page({
     conferenceId: String,
     chosenConferencePackage: String,
     chosenAccommodationPackage: String,
-    totalAmount: Number,
+    conferencePrice: Number,
+    accommodationPrice: Number,
     chosenPaymentMethod: 0,
     paymentMethods: [
       {value: 0, name: "微信钱包"},
@@ -23,9 +24,9 @@ Page({
     isEditing: true,
   },
 
-  
 
-  calcTotal() {
+
+  calcPrice() {
     return dbAction.getPrice(this.chosenConferencePackage) + dbAction.getPrice(this.chosenAccommodationPackage);
   },
 

@@ -1,7 +1,25 @@
 <!--pages/registration-payment/registration-payment.wxml-->
+<view>金额：￥{{conferencePrice + accommodationPrice}}</view>
+<view>明细：</view>
 <view>
-金额：{{totalAmount}}
+{{chosenConferencePackage}} ￥{{conferencePrice}}
 </view>
 <view>
+{{chosenAccommodationPackage}} ￥{{accommodationPrice}}
+</view>
+<form bindsubmit="btnSubmit">
 
-</view>
+  <radio-group bindchange="handleChoosePaymentMethod">
+    <label wx:for="{{paymentMethods}}">
+      <view>
+        <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
+        <text>{{item.name}}</text>
+      </view>
+    </label>
+  </radio-group>
+
+  <view>
+    <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
+    <button class="blue-btn" form-type="submit">下一页</button>
+  </view>
+</form>
