@@ -170,6 +170,7 @@ async function updateConferenceRegistrationHelper(id, conferenceId, updateList) 
         break;
       }
     }
+    console.log("here", items)
     await wx.cloud.database().collection("personal-info").doc(id).update({
       data: {
         registrations: items,
@@ -249,7 +250,7 @@ async function getConferenceRegistrationChosenPackage(conferenceId) {
 async function selectAccommodationPackage(id, conferenceId, chosenPackage) {
   try {
     await updateConferenceRegistrationHelper(id, conferenceId, [
-      ["chosenPackage", chosenPackage]
+      ["chosenAccommodationPackage", chosenPackage]
     ]);
   } catch (err) {
     throw new Error("at dbAction.selectAccommodationPackage()\n" + err);
@@ -259,11 +260,25 @@ async function selectAccommodationPackage(id, conferenceId, chosenPackage) {
 async function selectAccommodationPackageAndUpdateStatus(id, conferenceId, chosenPackage) {
   try {
     await updateConferenceRegistrationHelper(id, conferenceId, [
-      ["chosenPackage", chosenPackage], 
+      ["chosenAccommodationPackage", chosenPackage], 
       ["status", "payment"]
     ]);
   } catch (err) {
     throw new Error("at dbAction.selectAccommodationPackageAndUpdateStatus()\n" + err);
+  }
+}
+
+async function getAccommodationRegistrationChosenPackage(conferenceId) {
+  try {
+    const reg = await getAllRegistrationsRaw();
+    const keys = Object.keys(reg);
+    for (const key of keys) {
+      if (key == conferenceId) {
+        return reg[key]["accommodation"];
+      }
+    }
+  } catch (err) {
+    throw new Error("at dbAction.getAccommodationRegistrationChosenPackage()\n" + err);
   }
 }
 
@@ -363,6 +378,7 @@ export default {
   getConferenceRegistrationChosenPackage: getConferenceRegistrationChosenPackage,
   selectAccommodationPackage: selectAccommodationPackage,
   selectAccommodationPackageAndUpdateStatus: selectAccommodationPackageAndUpdateStatus,
+  getAccommodationRegistrationChosenPackage: getAccommodationRegistrationChosenPackage,
 
   getAllConferencesOnRelease: getAllConferencesOnRelease,
   getConferencePackages: getConferencePackages,

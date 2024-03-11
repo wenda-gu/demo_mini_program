@@ -127,3 +127,5 @@
 ## 按钮：
 - 保存并退出
 - 提交
+
+select functions can't use update, needs validation funcs to check if update or add

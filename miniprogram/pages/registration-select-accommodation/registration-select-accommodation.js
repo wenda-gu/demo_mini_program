@@ -33,11 +33,18 @@ Page({
   },
 
   handleChooseAccommodation(e) {
-    this.setData({
-      chooseAccommodation: e.detail.value,
-      a: e.detail.value,
-    });
-    verboseLog("chose", this.data.chooseAccommodation);
+    verboseLog("this is evalue", e.detail.value)
+    var chooseAccommodation = e.detail.value;
+    if (chooseAccommodation == "true") {
+      this.setData({
+        chooseAccommodation: true,
+      });
+    }
+    else {
+      this.setData({
+        chooseAccommodation: false,
+      });
+    }
   },
   
   setChosenDate() {
@@ -48,6 +55,7 @@ Page({
           this.setData({
             chosenDate: date.date_string,
           });
+          return;
         }
       }
     }
@@ -59,7 +67,8 @@ Page({
       this.toggleIsEditing();
       verboseLog("registration-select-accommodation.saveAndExit()");
 
-      await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, this.data.chosenPackage);
+      let chosenDate = this.data.chooseAccommodation ? this.data.chosenDate : "none";
+      await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, chosenDate);
       await updatePersonalInfo();
 
       wx.hideLoading();
@@ -78,8 +87,8 @@ Page({
       showSubmitting();
       this.toggleIsEditing();
       verboseLog("registration-select-accommodation.btnSubmit()");
-
-      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, this.data.chosenPackage);
+      let chosenDate = this.data.chooseAccommodation ? this.data.chosenDate : "none";
+      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenDate);
       await updatePersonalInfo();
 
       wx.hideLoading();
