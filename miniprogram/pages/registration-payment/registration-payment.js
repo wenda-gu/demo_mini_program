@@ -64,7 +64,7 @@ Page({
       // payment logic
       // push this user to conference item
       // await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenDate, this.data.chosenRoom);
-
+      await dbAction.updateConferenceRegistrationHelper(this.data.personalInfoDocId, this.data.conferenceId, [["status", "invoice"]]);
       await updatePersonalInfo();
 
       wx.hideLoading();
@@ -107,7 +107,7 @@ Page({
       });
       this.setData({
         totalAmount: this.calcTotalAmount(),
-      })
+      });
       verboseLog("registration-payment.onLoad() got data:", this.data);
     } catch (err) {
       console.error("registration-payment.onLoad() failed:\n", err);

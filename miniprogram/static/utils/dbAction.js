@@ -338,8 +338,6 @@ async function getAccommodatioinPrice(conferenceId, chosenPackage) {
     const accommodations = await getAccommodations(conferenceId);
     const rooms = accommodations.rooms
     for (const room of rooms) {
-      verboseLog(room)
-      verboseLog(chosenPackage)
       if (room.title == chosenPackage[1]) {
         return room.price;
       }
@@ -428,4 +426,8 @@ export default {
 
   getDataWrapper: getDataWrapper,
   getData: getData,
+
+
+
+  updateConferenceRegistrationHelper: updateConferenceRegistrationHelper,
 }

@@ -67,6 +67,7 @@
     "FormInputSwitch": "components/form-input-switch/form-input-switch",
     "FormInputItem": "components/form-input-item/form-input-item",
     "FormInputBinary": "components/form-input-binary/form-input-binary",
+    "FormInputInvoicePicker": "components/form-input-invoice-picker/form-input-invoice-picker",
     "TextAsterisk": "components/text-asterisk/text-asterisk",
     "InvoiceTitle": "components/invoice-title/invoice-title",
     "IconItem": "components/icon-item/icon-item",

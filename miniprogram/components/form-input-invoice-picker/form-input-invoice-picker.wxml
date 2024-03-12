@@ -1,0 +1,14 @@
+<!--components/form-input-invoice-picker/form-input-invoice-picker.wxml-->
+<view class="form-input-format">
+  <TextAsterisk label="{{label}}" isRequired="{{isRequired}}" disabled="{{disabled}}"></TextAsterisk>
+  <view>
+    <picker bindchange="bindInvoiceChange" range="{{range}}" disabled="{{disabled}}">
+      <view wx:if="{{value}}" style="{{disabled ? fieldColorDisabled : ''}}">
+        {{value.companyName}}
+      </view>
+      <view wx:else style="{{disabled ? placeholderColorDisabled : placeholderColorEnabled}}">
+        {{placeholder}}
+      </view>
+    </picker>
+  </view>
+</view>

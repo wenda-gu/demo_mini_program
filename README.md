@@ -129,3 +129,4 @@
 - 提交
 
 select functions can't use update, needs validation funcs to check if update or add
+how to view registration after it's finished
