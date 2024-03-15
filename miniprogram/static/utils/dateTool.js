@@ -70,5 +70,25 @@ const dateTools = {
     }
     return retVal;
   },
+
+  beijingTime: function (year, month, day, hour, minute, second) {
+    const date = new Date(Date.UTC(year, month, day, hour, minute, second));
+    date.setHours(date.getHours() - 8);
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZone: 'Asia/Shanghai', // Specify the Shanghai timezone here
+      timeZoneName: 'short' // Optionally, include the timezone name
+    };
+    
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const formattedDate = formatter.format(date);
+    
+    return formattedDate;
+  }
 }
 module.exports = dateTools;

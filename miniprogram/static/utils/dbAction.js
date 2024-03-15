@@ -298,7 +298,16 @@ async function getConferencePackages(conferenceId) {
     var conference = await wx.cloud.database().collection("conferences").doc(conferenceId).get();
     var packages = conference.data.conference_page.registration.packages;
     // determine the current price based on the date and discount rate
-    
+    for (var choice of packages.choices) {
+      const full_price_after_date = choice.full_price_after_date;
+      const curr_date = new Date();
+      if (curr_date <= full_price_after_date) {
+        choice.price_current = choice.price_discounted;
+      }
+      else {
+        choice.price_current = choice.price_full;
+      }
+    }
     return packages;
   } catch (err) {
     throw new Error("at dbAction.getConferencePackages()\n" + err);

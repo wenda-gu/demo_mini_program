@@ -2,7 +2,7 @@
 
 import dbAction from "../../static/utils/dbAction";
 import {verboseLog} from "../../static/utils/logging";
-import {formatDate} from "../../static/utils/dateTool";
+import {formatDate, beijingTime} from "../../static/utils/dateTool";
 import { navTo, reLaunch, showSaving, showSaveSuccess, showSaveFailed, showSubmissionSuccess, showSubmissionFailed, showSubmitting } from "../../static/utils/wxapi";
 const updatePersonalInfo = getApp().updatePersonalInfo;
 
@@ -137,6 +137,7 @@ Page({
         chosenPackage: (chosenPackage == undefined ? '' : chosenPackage),
       });
       verboseLog("registration-select-package.onLoad() set data:", this.data);
+      verboseLog("this is bj time:", beijingTime(2024,3,31,0, 0, 0));
     } catch (err) {
       console.error("registration-select-package.onLoad() failed:\n", err);
     }

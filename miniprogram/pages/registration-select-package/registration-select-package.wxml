@@ -9,7 +9,7 @@
         <view>
           <text>{{item.name}}</text>
           <view>日期：{{item.date_string}}</view>
-          <view>金额：{{item.price_discounted}}</view>
+          <view>金额：{{item.price_current}}</view>
         </view>
       </view>
     </label>
