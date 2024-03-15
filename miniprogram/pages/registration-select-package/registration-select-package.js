@@ -2,8 +2,10 @@
 
 import dbAction from "../../static/utils/dbAction";
 import {verboseLog} from "../../static/utils/logging";
+import {formatDate} from "../../static/utils/dateTool";
 import { navTo, reLaunch, showSaving, showSaveSuccess, showSaveFailed, showSubmissionSuccess, showSubmissionFailed, showSubmitting } from "../../static/utils/wxapi";
 const updatePersonalInfo = getApp().updatePersonalInfo;
+
 Page({
 
   /**
@@ -13,7 +15,8 @@ Page({
     personalInfoDocId: String,
     conferenceId: String,
     packages: Object,
-    chosenPackage: String,
+    chosenPackage: [],
+    conflictFlag: false,
     isEditing: true,
   },
 
@@ -24,9 +27,27 @@ Page({
   },
 
   handlePackageChange(e) {
+    var packages = this.data.packages;
+    const values = e.detail.value;
+    for (var choice of packages.choices) {
+      if (choice.name == '大会') continue;
+      choice.checked = false;
+      for (const val of values) {
+        if (choice.name == val) {
+          choice.checked = true;
+        }
+      }
+    }
+    // set chosenPackage as a sorted checkbox value
     this.setData({
-      chosenPackage: e.detail.value,
+      packages,
+      chosenPackage: e.detail.value.sort(),
     });
+    const conflictCondition = (this.data.chosenPackage.includes("训练营二：第十一期外倒转训练营") || this.data.chosenPackage.includes("训练营三：第四期早产儿护理和母乳喂养训练营"));
+    this.setData({
+      conflictFlag: conflictCondition,
+    });
+    verboseLog("registration-select-package.handlePackageChange selected package:", this.data.chosenPackage);
   },
 
   async saveAndExit() {
@@ -90,12 +111,29 @@ Page({
         wx.navigateBack();
         return;
       }
-      const item = JSON.parse(options.item), chosenPackage = await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId);
-      console.log("here", item)
+
+      const item = JSON.parse(options.item);
+
+      const chosenPackage = await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId);
+      var packages = await dbAction.getConferencePackages(item.conferenceId);
+      for (var choice of packages.choices) {
+        const date_start_string = formatDate(choice.date_start, 'yyyy/mm/dd');
+        const date_end_string = formatDate(choice.date_end, 'yyyy/mm/dd');
+        choice.date_string = date_start_string == date_end_string ? date_start_string : date_start_string + '-' + date_end_string;
+
+        choice.checked = choice.name == '大会' ? true : false;
+        if (chosenPackage == undefined) continue;
+        for (const val of chosenPackage) {
+          if (choice.name == val) {
+            choice.checked = true;
+          }
+        }
+      }
+
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
-        packages: await dbAction.getConferencePackages(item.conferenceId),
+        packages: packages,
         chosenPackage: (chosenPackage == undefined ? '' : chosenPackage),
       });
       verboseLog("registration-select-package.onLoad() set data:", this.data);

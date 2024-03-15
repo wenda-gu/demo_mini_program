@@ -13,14 +13,9 @@ Page({
     personalInfoDocId: String,
     conferenceId: String,
     needInvoice: false,
-    isVAT: false,
     needInvoiceChoices: [
       {value: false, name: "不需要发票"},
       {value: true, name: "需要发票"},
-    ],
-    isVATChoices: [
-      {value: false, name: "增值税普通发票"},
-      {value: true, name: "增值税专用发票"},
     ],
     chosenTitle: String,
     invoiceList: [],
@@ -44,20 +39,6 @@ Page({
     else {
       this.setData({
         needInvoice: false,
-      });
-    }
-  },
-
-  handleIsVAT(e) {
-    var isVAT = e.detail.value;
-    if (isVAT == "true") {
-      this.setData({
-        isVAT: true,
-      });
-    }
-    else {
-      this.setData({
-        isVAT: false,
       });
     }
   },

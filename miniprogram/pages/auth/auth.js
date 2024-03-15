@@ -16,6 +16,7 @@ Page({
     loggedin: false,
     isNewUser: true,
     disabled: false,
+    conferenceId: String,
   },
 
   async handleNav() {
@@ -94,11 +95,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  async onLoad(options) {
     wx.setNavigationBarTitle({ title: '用户登录' });
     if (options.item == null || options.item == "") {
       console.error("auth no input");
-      wx.navigateBack();
+      await wx.navigateBack();
       return;
     }
     this.setData({

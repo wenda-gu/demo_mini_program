@@ -295,8 +295,11 @@ async function getAllConferencesOnRelease() {
 
 async function getConferencePackages(conferenceId) {
   try {
-    const conference = await wx.cloud.database().collection("conferences").doc(conferenceId).get();
-    return conference.data.conference_page.registration.packages;
+    var conference = await wx.cloud.database().collection("conferences").doc(conferenceId).get();
+    var packages = conference.data.conference_page.registration.packages;
+    // determine the current price based on the date and discount rate
+    
+    return packages;
   } catch (err) {
     throw new Error("at dbAction.getConferencePackages()\n" + err);
   }

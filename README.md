@@ -130,3 +130,5 @@
 
 select functions can't use update, needs validation funcs to check if update or add
 how to view registration after it's finished
+payment detect time and validate price
+calculate price in dbaction

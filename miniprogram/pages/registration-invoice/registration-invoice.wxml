@@ -12,14 +12,6 @@
     </label>
   </radio-group>
   <view wx:if="{{needInvoice}}">
-    <radio-group bindchange="handleIsVAT">
-      <label wx:for="{{isVATChoices}}">
-        <view>
-          <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
-          <text>{{item.name}}</text>
-        </view>
-      </label>
-    </radio-group>
     <!-- <FormInputInvoicePicker isRequired="{{true}}" label="发票抬头" placeholder="请添加发票抬头" value="{{chosenTitle}}" bindinput="handleTitleChange" disabled="{{!isEditing}}" range="{{invoiceList}}"></FormInputInvoicePicker> -->
     <button class="blue-btn" bind:tap="">添加抬头</button>
   </view>
