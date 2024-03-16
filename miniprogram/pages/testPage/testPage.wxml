@@ -1,3 +1,2 @@
 <!--pages/testPage/testPage.wxml-->
-<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机号快捷登录</button>
-<button open-type="getRealtimePhoneNumber" bindgetrealtimephonenumber="getRealTimePhoneNumber">手机号验证码登录</button>
+<button bind:tap="onTap">change conference full_price_since_date</button>

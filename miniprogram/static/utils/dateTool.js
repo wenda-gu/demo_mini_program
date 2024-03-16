@@ -72,8 +72,15 @@ const dateTools = {
   },
 
   beijingTime: function (year, month, day, hour, minute, second) {
-    const date = new Date(Date.UTC(year, month, day, hour, minute, second));
-    date.setHours(date.getHours() - 8);
+    var date = new Date();
+    // only 1 arg, as a Date obj
+    if (arguments.length === 1) {
+      date = year;
+    }
+    else {
+      date = new Date(Date.UTC(year, month-1, day, hour, minute, second));
+      date.setHours(date.getHours() - 8);
+    }
     const options = {
       year: 'numeric',
       month: 'numeric',

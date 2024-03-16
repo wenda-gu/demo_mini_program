@@ -1,5 +1,5 @@
 // pages/testPage/testPage.js
-import cloudAction from "../../static/utils/cloudAction.js";
+import {beijingTime} from "../../static/utils/dateTool";
 import {verboseLog} from "../../static/utils/logging.js";
 import {medicalDepartmentList} from "../../static/utils/staticData.js";
 
@@ -9,33 +9,33 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openid: String,
-    userInfo: Object,
-    items: medicalDepartmentList,
-    department: String,
-    region: Object,
-    customItem: '全部',
-    code: String,
-    countryCode: Number,
-    phoneNumber: Number,
   },
   
-  getPhoneNumber (e) {
-    cloudAction.cloudGetPhoneNumber(e.detail.cloudID).then((res) => {
-      verboseLog("this is res:", res);
-    })
-  },
+  async onTap() {
+    try {
+      const conference = await wx.cloud.database().collection("conferences").doc("cpb04").get();
+      var choices = conference.data.conference_page.registration.packages.choices
+      for (var choice of choices) {
+        verboseLog("this is choice.date_start", choice.date_start);
+        console.log(typeof choice.date_start);
+        choice.date_start.setHours(choice.date_start.getHours()-15);
+        verboseLog("this is choice.date_start in bj time", choice.date_start);
 
-  getRealTimePhoneNumber(e) {
-    cloudAction.cloudGetPhoneNumber(e.detail.cloudID).then((res) => {
-      verboseLog("this is res:", res);
-      this.setData({
-        countryCode: countryCode,
-        phoneNumber: res.purePhoneNumber,
-      });
-    }).catch((err) => {
+      }
+      // await wx.cloud.database().collection("conferences").doc("cpb04").update({
+      //   conference_page: {
+      //     registration: {
+      //       packages: {
+      //         choices: 
+      //       }
+      //     }
+      //   }
+      // });
+    }
+    catch (err) {
       console.error(err);
-    });
+    }
+    
   },
   
   

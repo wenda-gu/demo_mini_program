@@ -50,7 +50,6 @@ Page({
       wx.navigateBack();
       return;
     }
-    verboseLog("this is conference item:", options.item);
     const item = JSON.parse(options.item);
     this.setData({
       conference: item,

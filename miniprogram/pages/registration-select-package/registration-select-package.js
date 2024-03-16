@@ -129,15 +129,17 @@ Page({
           }
         }
       }
-
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
         packages: packages,
-        chosenPackage: (chosenPackage == undefined ? '' : chosenPackage),
+        chosenPackage: (chosenPackage == undefined ? [] : chosenPackage),
+      });
+      const conflictCondition = (this.data.chosenPackage.includes("训练营二：第十一期外倒转训练营") || this.data.chosenPackage.includes("训练营三：第四期早产儿护理和母乳喂养训练营"));
+      this.setData({
+        conflictFlag: conflictCondition,
       });
       verboseLog("registration-select-package.onLoad() set data:", this.data);
-      verboseLog("this is bj time:", beijingTime(2024,3,31,0, 0, 0));
     } catch (err) {
       console.error("registration-select-package.onLoad() failed:\n", err);
     }

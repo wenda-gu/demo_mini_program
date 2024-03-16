@@ -34,7 +34,7 @@
         <label wx:for="{{accommodations.rooms}}" wx:key="title">
           <Spacer></Spacer>
           <view>
-            <radio value="{{item.title}}" disabled="{{!isEditing}}"/>
+            <radio value="{{item.name}}" checked="{{item.name == chosenRoom}}" disabled="{{!isEditing}}"/>
             <view>
               <text>{{item.title}}</text>
             </view>

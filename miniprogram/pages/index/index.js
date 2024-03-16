@@ -20,7 +20,6 @@ Page({
         var data = this.data.conferences[i].conference_page;
         data.name_zh = this.data.conferences[i].name_zh;
         data._id = this.data.conferences[i]._id;
-        verboseLog("this is data:", data);
         navTo('../conference/conference', data);
       }
     }

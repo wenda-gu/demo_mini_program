@@ -52,12 +52,33 @@ Page({
       chosenRoom: e.detail.value,
     });
   },
-  
+
+  listsAreEqual(list1, list2) {
+    // Check if both lists have the same length
+    if (list1.length !== list2.length) {
+        return false;
+    }
+
+    // Sort both lists
+    list1.sort();
+    list2.sort();
+
+    // Iterate over each element and check if they are equal
+    for (let i = 0; i < list1.length; i++) {
+        if (list1[i] !== list2[i]) {
+            return false;
+        }
+    }
+
+    // If all elements are equal, return true
+    return true;
+  },
+
   setChosenDate() {
     const dates = this.data.accommodations.dates;
     for (const date of dates) {
       for (const p of date.for_packages) {
-        if (p == this.data.chosenPackage) {
+        if (this.listsAreEqual(p, this.data.chosenPackage)) {
           this.setData({
             chosenDate: date.date_string,
           });
@@ -139,12 +160,14 @@ Page({
         return;
       }
       const item = JSON.parse(options.item);
+      const chosenRoom = await dbAction.getConferenceRegistrationChosenRoom(item.conferenceId);
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
         accommodations: await dbAction.getAccommodations(item.conferenceId),
         chosenPackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
-        chooseAccommodation: true
+        chosenRoom: chosenRoom == undefined ? '' : chosenRoom,
+        chooseAccommodation: true,
       });
       this.setChosenDate();
       verboseLog("registration-select-accommodation.onLoad() got data:", this.data);

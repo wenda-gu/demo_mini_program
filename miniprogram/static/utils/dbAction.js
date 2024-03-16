@@ -240,7 +240,16 @@ async function getConferenceRegistrationStatus(conferenceId) {
 
 async function getConferenceRegistrationChosenPackage(conferenceId) {
   try {
-    return await getConferenceRegistrationHelper(conferenceId, "chosenPackage");
+    var p =  await getConferenceRegistrationHelper(conferenceId, "chosenPackage");
+    return p.sort();
+  } catch (err) {
+    throw new Error("at dbAction.getConferenceRegistrationChosenPackage()\n" + err);
+  }
+}
+
+async function getConferenceRegistrationChosenRoom(conferenceId) {
+  try {
+    return await getConferenceRegistrationHelper(conferenceId, "chosenRoom");
   } catch (err) {
     throw new Error("at dbAction.getConferenceRegistrationChosenPackage()\n" + err);
   }
@@ -299,9 +308,9 @@ async function getConferencePackages(conferenceId) {
     var packages = conference.data.conference_page.registration.packages;
     // determine the current price based on the date and discount rate
     for (var choice of packages.choices) {
-      const full_price_after_date = choice.full_price_after_date;
+      const full_price_since_date = choice.full_price_since_date;
       const curr_date = new Date();
-      if (curr_date <= full_price_after_date) {
+      if (curr_date <= full_price_since_date) {
         choice.price_current = choice.price_discounted;
       }
       else {
@@ -426,6 +435,7 @@ export default {
   selectConferencePackageAndUpdateStatus: selectConferencePackageAndUpdateStatus,
   getConferenceRegistrationStatus: getConferenceRegistrationStatus,
   getConferenceRegistrationChosenPackage: getConferenceRegistrationChosenPackage,
+  getConferenceRegistrationChosenRoom: getConferenceRegistrationChosenRoom,
   selectAccommodationPackage: selectAccommodationPackage,
   selectAccommodationPackageAndUpdateStatus: selectAccommodationPackageAndUpdateStatus,
   getAccommodationRegistrationChosenPackage: getAccommodationRegistrationChosenPackage,
