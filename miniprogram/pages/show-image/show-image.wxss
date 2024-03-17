@@ -1,0 +1,11 @@
+/* pages/show-image/show-image.wxss */
+@import "/static/styles/style.wxss";
+.container {
+  height: auto;
+  width: 100vw;
+  max-width: 100%;
+}
+
+.poster {
+  width: 100%;
+}

@@ -238,10 +238,11 @@ async function getConferenceRegistrationStatus(conferenceId) {
   }
 }
 
+// p.sort() sort undefined?
 async function getConferenceRegistrationChosenPackage(conferenceId) {
   try {
     var p =  await getConferenceRegistrationHelper(conferenceId, "chosenPackage");
-    return p.sort();
+    return p;
   } catch (err) {
     throw new Error("at dbAction.getConferenceRegistrationChosenPackage()\n" + err);
   }
@@ -255,10 +256,12 @@ async function getConferenceRegistrationChosenRoom(conferenceId) {
   }
 }
 
-async function selectAccommodationPackage(id, conferenceId, chosenPackage, chosenRoom) {
+async function selectAccommodationPackage(id, conferenceId, chosenPackage) {
   try {
+    if (chosenPackage[0] != "none") {
+      chosenPackage.push(await getAccommodationPackageNights(conferenceId, chosenPackage[0]));
+    }
     await updateConferenceRegistrationHelper(id, conferenceId, [
-      ["chosenRoom", chosenRoom],
       ["chosenAccommodationPackage", chosenPackage]
     ]);
   } catch (err) {
@@ -266,10 +269,12 @@ async function selectAccommodationPackage(id, conferenceId, chosenPackage, chose
   }
 }
 
-async function selectAccommodationPackageAndUpdateStatus(id, conferenceId, chosenPackage, chosenRoom) {
+async function selectAccommodationPackageAndUpdateStatus(id, conferenceId, chosenPackage) {
   try {
+    if (chosenPackage[0] != "none") {
+      chosenPackage.push(await getAccommodationPackageNights(conferenceId, chosenPackage[0]));
+    }
     await updateConferenceRegistrationHelper(id, conferenceId, [
-      ["chosenRoom", chosenRoom],
       ["chosenAccommodationPackage", chosenPackage], 
       ["status", "payment"]
     ]);
@@ -284,7 +289,7 @@ async function getAccommodationRegistrationChosenPackage(conferenceId) {
     const keys = Object.keys(reg);
     for (const key of keys) {
       if (key == conferenceId) {
-        return [reg[key]["chosenAccommodationPackage"], reg[key]["chosenRoom"]];
+        return reg[key]["chosenAccommodationPackage"];
       }
     }
   } catch (err) {
@@ -332,35 +337,46 @@ async function getAccommodations(conferenceId) {
   }
 }
 
-async function getConferenceChoiceInChosenPackage(conferenceId, chosenPackage) {
+async function getAccommodationPackageNights(conferenceId, chosenDate) {
   try {
-    var returnList = []
+    const accommodations = await getAccommodations(conferenceId);
+    const dates = accommodations.dates;
+    for (const date of dates) {
+      if (date.date_string == chosenDate) {
+        return date.nights;
+      }
+    }
+    throw new Error(`at dbAction.getAccommodationPackageNights() no matching accommodation package for ${chosenDate} in conference ${conferenceId}.\n`);
+  } catch (err) {
+    throw new Error("at dbAction.getAccommodationPackageNights()\n" + err);
+  }
+}
+
+async function getConferenceChoiceInChosenPackage(conferenceId) {
+  try {
+    var returnList = [];
+    const chosenPackage = await getConferenceRegistrationChosenPackage(conferenceId);
     const packages = await getConferencePackages(conferenceId);
-    const choices = packages.choices, conferencePackages = packages.packages;
-    for (const conf of conferencePackages) {
-      if (conf.name == chosenPackage) {
-        for (const choiceConf of conf.choices) {
-          for (const choice of choices) {
-            if (choiceConf == choice.name) {
-              returnList.push(choice);
-            }
-          }
-        }
+    const choices = packages.choices;
+    for (const choice of choices) {
+      if (chosenPackage.includes(choice.name)) {
+        returnList.push(choice);
       }
     }
     return returnList;
   } catch (err) {
-    throw new Error("at dbAction.getConferencePrice()\n" + err);
+    throw new Error("at dbAction.getConferenceChoiceInChosenPackage()\n" + err);
   }
 }
 
-async function getAccommodatioinPrice(conferenceId, chosenPackage) {
+async function getAccommodatioinPrice(conferenceId) {
   try {
     const accommodations = await getAccommodations(conferenceId);
+    const chosenPackage = await getAccommodationRegistrationChosenPackage(conferenceId);
     const rooms = accommodations.rooms
     for (const room of rooms) {
-      if (room.title == chosenPackage[1]) {
-        return room.price;
+      if (room.name == chosenPackage[1]) {
+        return room.price * chosenPackage[2];
       }
     }
   } catch (err) {

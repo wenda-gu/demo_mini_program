@@ -14,6 +14,7 @@ Page({
     conferenceId: String,
     accommodations: Object,
     chosenPackage: String,
+    chosenAccommodationPackage: [],
     chosenDate: String,
     chosenRoom: String,
     chooseAccommodation: {
@@ -89,7 +90,7 @@ Page({
   },
 
   async isValid() {
-    if (this.data.chosenRoom == undefined || this.data.chosenRoom == null || this.data.chosenRoom == String) {
+    if (this.data.chosenRoom == undefined || this.data.chosenRoom == null || this.data.chosenRoom == String || this.data.chosenRoom == '') {
       throw new Error("No room selection.");
     }
   },
@@ -99,9 +100,11 @@ Page({
       showSaving();
       this.toggleIsEditing();
       verboseLog("registration-select-accommodation.saveAndExit()");
-      let chosenDate = this.data.chooseAccommodation ? this.data.chosenDate : "none";
-      await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, chosenDate, this.data.chosenRoom);
-      await updatePersonalInfo();
+      if (this.data.chosenRoom != String || !this.data.chooseAccommodation) {
+        let chosenAccommodationPackage = this.data.chooseAccommodation ? [this.data.chosenDate, this.data.chosenRoom] : ["none"];
+        await dbAction.selectAccommodationPackage(this.data.personalInfoDocId, this.data.conferenceId, chosenAccommodationPackage);
+        await updatePersonalInfo();
+      }
 
       wx.hideLoading();
       showSaveSuccess();
@@ -119,9 +122,14 @@ Page({
       showSubmitting();
       this.toggleIsEditing();
       verboseLog("registration-select-accommodation.btnSubmit()");
-      await this.isValid();
-      let chosenDate = this.data.chooseAccommodation ? this.data.chosenDate : "none";
-      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenDate, this.data.chosenRoom);
+      let chosenAccommodationPackage = [this.data.chosenDate, this.data.chosenRoom];
+      if (this.data.chooseAccommodation) {
+        await this.isValid();
+      }
+      else {
+        chosenAccommodationPackage = ["none"];
+      }
+      await dbAction.selectAccommodationPackageAndUpdateStatus(this.data.personalInfoDocId, this.data.conferenceId, chosenAccommodationPackage);
       await updatePersonalInfo();
 
       wx.hideLoading();
@@ -160,16 +168,34 @@ Page({
         return;
       }
       const item = JSON.parse(options.item);
-      const chosenRoom = await dbAction.getConferenceRegistrationChosenRoom(item.conferenceId);
+      const chosenAccommodationPackage = await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId);
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
         accommodations: await dbAction.getAccommodations(item.conferenceId),
         chosenPackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
-        chosenRoom: chosenRoom == undefined ? '' : chosenRoom,
-        chooseAccommodation: true,
       });
       this.setChosenDate();
+      // never reached this page before
+      if (chosenAccommodationPackage == undefined) {
+        this.setData({
+          chosenAccommodationPackage: [],
+        });
+      }
+      // chose no need for accommodation and saved
+      else if (chosenAccommodationPackage[0] == "none") {
+        this.setData({
+          chosenAccommodationPackage,
+          chooseAccommodation: false,
+        });
+      }
+      // chose need accommodation and saved
+      else {
+        this.setData({
+          chosenAccommodationPackage,
+          chosenRoom: chosenAccommodationPackage[1],
+        });
+      }
       verboseLog("registration-select-accommodation.onLoad() got data:", this.data);
     } catch (err) {
       console.error("registration-select-accommodation.onLoad() failed:\n", err);

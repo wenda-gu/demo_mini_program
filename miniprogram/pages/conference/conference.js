@@ -14,31 +14,71 @@ Page({
   },
 
   handleWelcome() {
-    navTo('../welcome-letter/welcome-letter', this.data.conference.welcome_letter);
+    navTo('../show-image/show-image', {
+      imgUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/conferences/cpb04/welcome.jpg',
+      pageTitle: '欢迎致辞',
+    });
+    // navTo('../welcome-letter/welcome-letter', this.data.conference.welcome_letter);
   },
   handleOrganizers() {
-    navTo(comingSoonPage);
+    navTo('../show-image/show-image', {
+      imgUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/conferences/cpb04/organizers.jpg',
+      pageTitle: '组织机构',
+    });
   },
   handleSpeakers() {
-    navTo(comingSoonPage);
+    navTo('../show-image/show-image', {
+      imgUrl: '',
+      pageTitle: '讲者名单',
+    });
+  },
+  handleStreaming() {
+    navTo('../show-image/show-image', {
+      imgUrl: '',
+      pageTitle: '线上直播',
+    });
   },
   handleRegistration() {
     navTo('../auth/auth', this.data.conference._id);
   },
   handleAgenda() {
-    navTo(comingSoonPage);
+    navTo('../show-image/show-image', {
+      imgUrl: '',
+      pageTitle: '大会议程',
+    });
   },
   handleAccommodationInfo() {
-    navTo(comingSoonPage);
+    navTo('../show-image/show-image', {
+      imgUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/conferences/cpb04/accommodation-info.jpg',
+      pageTitle: '住宿安排',
+    });
+  },
+  handleBookSelling() {
+    navTo('../show-image/show-image', {
+      imgUrl: '',
+      pageTitle: '新书特卖',
+    });
   },
   handleSurvey() {
-    navTo(comingSoonPage);
+    navTo('../show-image/show-image', {
+      imgUrl: '',
+      pageTitle: '问卷调查',
+    });
   },
   handleDownload() {
     navTo('../download-files/download-files', this.data.conference.downloads);
   },
-  handleSponsor() {
-    navTo(comingSoonPage);
+  handlePhotos() {
+    navTo('../show-image/show-image', {
+      imgUrl: '',
+      pageTitle: '照片直播',
+    });
+  },
+  handleContactUs() {
+    navTo('../show-image/show-image', {
+      imgUrl: 'cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/conferences/cpb04/contact-us.jpg',
+      pageTitle: '联系我们',
+    });
   },
 
   /**

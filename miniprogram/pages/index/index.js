@@ -40,7 +40,7 @@ Page({
         // 如果有date_start_string，为时间待定会议
         else conferences[i].date_end_string = "";
       }
-      verboseLog("Current conferences:", conferences);
+      verboseLog("index.onLoad() Current conferences:", conferences);
       this.setData({
         conferences: conferences,
       });

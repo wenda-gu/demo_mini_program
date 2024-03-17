@@ -5,18 +5,24 @@
   <view class="btn-row">
     <button class="blue-btn" bind:tap="handleWelcome">欢迎致辞</button>
     <button class="blue-btn" bind:tap="handleOrganizers">组织机构</button>
-    <button class="blue-btn" bind:tap="handleSpeakers">讲者名单</button>
+    <button class="blue-btn" bind:tap="handleSpeakers" disabled="true">讲者名单</button>
   </view>
   <Spacer h="2"></Spacer>
   <view class="btn-row">
+    <button class="blue-btn" bind:tap="handleStreaming" disabled="true">线上直播</button>
     <button class="blue-btn" bind:tap="handleRegistration">会议报名</button>
-    <button class="blue-btn" bind:tap="handleAgenda">大会议程</button>
-    <button class="blue-btn" bind:tap="handleAccommodationInfo">住宿安排</button>
+    <button class="blue-btn" bind:tap="handleAgenda" disabled="true">大会议程</button>
   </view>
   <Spacer h="2"></Spacer>
   <view class="btn-row">
-    <button class="blue-btn" bind:tap="handleSurvey">问卷调查</button>
+    <button class="blue-btn" bind:tap="handleAccommodationInfo">住宿安排</button>
+    <button class="blue-btn" bind:tap="handleBookSelling" disabled="true">新书特卖</button>
+    <button class="blue-btn" bind:tap="handleSurvey" disabled="true">问卷调查</button>
+  </view>
+  <Spacer h="2"></Spacer>
+  <view class="btn-row">
     <button class="blue-btn" bind:tap="handleDownload">文件下载</button>
-    <button class="blue-btn" bind:tap="handleSponsor">联系我们</button>
+    <button class="blue-btn" bind:tap="handlePhotos" disabled="true">照片直播</button>
+    <button class="blue-btn" bind:tap="handleContactUs">联系我们</button>
   </view>
 </view>

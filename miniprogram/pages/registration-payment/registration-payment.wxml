@@ -2,9 +2,9 @@
 <view>金额：￥{{totalAmount}}</view>
 <view>明细：</view>
 <view wx:for="{{conferenceChoiceInChosenPackage}}" wx:key="name">
-  {{item.name}} ￥{{item.price_discounted}}
+  {{item.name}} ￥{{item.price_current}}
 </view>
-<view>
+<view wx:if="{{chooseAccommodation}}">
 {{chosenAccommodationPackage[0] + ', ' + chosenAccommodationPackage[1]}} ￥{{accommodationPrice}}
 </view>
 <form bindsubmit="btnSubmit">

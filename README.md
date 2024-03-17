@@ -7,6 +7,7 @@
 - [小程序登录案例](https://www.jianshu.com/p/7414a543c622)
 - [支付宝支付在微信小程序中也能实现？SpringBoot+沙箱教你一键搞定 —— 支付宝沙箱](https://www.bilibili.com/read/cv26705328/)
 - [完美适配最新微信小程序隐私协议开发指南，兼容uniapp版本](https://zhuanlan.zhihu.com/p/652937327)
+- [微信小程序Image图片实现width宽度100%，height高度自适应（解决图片变形问题）](https://blog.csdn.net/qq15577969/article/details/102664532)
 
 # improvement
 - `personal-info.医务工作者` 更改选项以后不应将内容清空，以便选择回来的时候不用重新输入。提交以后就可以清空了 
@@ -132,3 +133,4 @@ select functions can't use update, needs validation funcs to check if update or 
 how to view registration after it's finished
 payment detect time and validate price
 calculate price in dbaction
+p.sort() sort undefined? async function getConferenceRegistrationChosenPackage(conferenceId)

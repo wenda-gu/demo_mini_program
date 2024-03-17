@@ -16,6 +16,7 @@ Page({
     chosenAccommodationPackage: String,
     conferenceChoiceInChosenPackage: [],
     accommodationPrice: Number,
+    chooseAccommodation: Boolean,
     totalAmount: Number,
     chosenPaymentMethod: 0,
     paymentMethods: [
@@ -28,9 +29,9 @@ Page({
   calcTotalAmount() {
     let sum = 0;
     for (const choice of this.data.conferenceChoiceInChosenPackage) {
-      sum += choice.price_discounted;
+      sum += choice.price_current;
     }
-    sum += this.data.accommodationPrice;
+    sum += this.data.chooseAccommodation ? this.data.accommodationPrice : 0;
     return sum;
   },
 
@@ -100,10 +101,11 @@ Page({
         conferenceId: item.conferenceId,
         chosenAccommodationPackage: await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId),
         chosenConferencePackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
+        conferenceChoiceInChosenPackage: await dbAction.getConferenceChoiceInChosenPackage(item.conferenceId),
+        accommodationPrice: await dbAction.getAccommodatioinPrice(item.conferenceId),
       });
       this.setData({
-        conferenceChoiceInChosenPackage: await dbAction.getConferenceChoiceInChosenPackage(this.data.conferenceId, this.data.chosenConferencePackage),
-        accommodationPrice: await dbAction.getAccommodatioinPrice(this.data.conferenceId, this.data.chosenAccommodationPackage),
+        chooseAccommodation: this.data.chosenAccommodationPackage[0] != "none",
       });
       this.setData({
         totalAmount: this.calcTotalAmount(),

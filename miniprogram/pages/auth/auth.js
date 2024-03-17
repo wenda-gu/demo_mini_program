@@ -22,7 +22,7 @@ Page({
   async handleNav() {
     try {
       var status = await dbAction.getConferenceRegistrationStatus(this.data.conferenceId);
-      verboseLog("this is status:", status);
+      verboseLog("auth.handleNav() this is status:", status);
       switch (status) {
         case "personalInfo":
           let data = global.personalInfo;

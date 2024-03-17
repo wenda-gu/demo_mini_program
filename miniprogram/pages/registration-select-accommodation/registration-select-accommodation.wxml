@@ -4,7 +4,7 @@
   <radio-group bindchange="handleChooseAccommodation">
     <label wx:for="{{chooseAccommodationChoice}}">
       <view>
-        <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
+        <radio value="{{item.value}}" checked="{{chooseAccommodation == item.value}}" disabled="{{!isEditing}}"/>
         <text>{{item.name}}</text>
       </view>
     </label>

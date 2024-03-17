@@ -1,0 +1,4 @@
+<!--pages/show-image/show-image.wxml-->
+<view class="container">
+  <image class="poster" src="{{imgUrl}}" mode="widthFix"></image>
+</view>
