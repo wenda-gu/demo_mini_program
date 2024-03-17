@@ -32,12 +32,6 @@ Page({
       pageTitle: '讲者名单',
     });
   },
-  handleStreaming() {
-    navTo('../show-image/show-image', {
-      imgUrl: '',
-      pageTitle: '线上直播',
-    });
-  },
   handleRegistration() {
     navTo('../auth/auth', this.data.conference._id);
   },
@@ -53,12 +47,6 @@ Page({
       pageTitle: '住宿安排',
     });
   },
-  handleBookSelling() {
-    navTo('../show-image/show-image', {
-      imgUrl: '',
-      pageTitle: '新书特卖',
-    });
-  },
   handleSurvey() {
     navTo('../show-image/show-image', {
       imgUrl: '',
@@ -67,12 +55,6 @@ Page({
   },
   handleDownload() {
     navTo('../download-files/download-files', this.data.conference.downloads);
-  },
-  handlePhotos() {
-    navTo('../show-image/show-image', {
-      imgUrl: '',
-      pageTitle: '照片直播',
-    });
   },
   handleContactUs() {
     navTo('../show-image/show-image', {
