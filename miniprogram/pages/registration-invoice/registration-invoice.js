@@ -65,12 +65,13 @@ Page({
       this.toggleIsEditing();
       verboseLog("registration-invoice.btnSubmit()");
 
-      await dbAction.updateConferenceRegistrationHelper(this.data.personalInfoDocId, this.data.conferenceId, [["invoice", {
+      var invoiceData = this.data.needInvoice ? {
         needInvoice: this.data.needInvoice,
         title: this.data.chosenTitle,
         amount: await dbAction.getTotalPrice(this.data.conferenceId),
-      }],
-      ["status", "complete"]]);
+      } : {needInvoice: this.data.needInvoice,};
+      await dbAction.updateConferenceRegistrationHelper(this.data.personalInfoDocId, this.data.conferenceId, [["invoice", invoiceData],
+      ["status", "verifying"]]);
       await updatePersonalInfo();
 
       wx.hideLoading();

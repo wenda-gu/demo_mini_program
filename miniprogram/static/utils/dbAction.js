@@ -164,7 +164,7 @@ async function getAllRegistrations() {
           conference: conference.data.name_zh,
           conferenceId: key,
           date: formatDate(conference.data.date_start, 'yyyy/mm/dd'),
-          isComplete: (items[key].status == "complete" ? true : false),
+          status: items[key].status,
         });
       }
       return registrations;
@@ -313,7 +313,7 @@ async function getAccommodationRegistrationChosenPackage(conferenceId) {
   }
 }
 
-async function getTotalPriceAndSeparatePrice(conferenceId) {
+async function getTotalPriceAndSeparatePriceAndPackages(conferenceId) {
   try {
     const conferenceChoiceInChosenPackage = await getConferenceChoiceInChosenPackage(conferenceId);
     const chosenAccommodationPackage = await getAccommodationRegistrationChosenPackage(conferenceId);
@@ -338,7 +338,7 @@ async function getTotalPriceAndSeparatePrice(conferenceId) {
 
 async function getTotalPrice(conferenceId) {
   try {
-    const prices = await getTotalPriceAndSeparatePrice(conferenceId);
+    const prices = await getTotalPriceAndSeparatePriceAndPackages(conferenceId);
     return prices.totalAmount;
   } catch (err) {
     throw new Error("at dbAction.getTotalPrice()\n" + err);
@@ -503,7 +503,7 @@ export default {
   selectAccommodationPackage: selectAccommodationPackage,
   selectAccommodationPackageAndUpdateStatus: selectAccommodationPackageAndUpdateStatus,
   getAccommodationRegistrationChosenPackage: getAccommodationRegistrationChosenPackage,
-  getTotalPriceAndSeparatePrice: getTotalPriceAndSeparatePrice,
+  getTotalPriceAndSeparatePriceAndPackages: getTotalPriceAndSeparatePriceAndPackages,
   getTotalPrice: getTotalPrice,
 
   getAllConferencesOnRelease: getAllConferencesOnRelease,

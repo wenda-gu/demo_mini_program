@@ -53,6 +53,9 @@ Page({
             personalInfoDocId: global.personalInfoDocId,
           });
           break;
+        case "verifying":
+          wx.navigateBack();
+          break;
         case "complete":
           wx.navigateBack();
           break;

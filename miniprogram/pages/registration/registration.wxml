@@ -1,19 +1,12 @@
 <!--pages/registration/registration.wxml-->
 <Separator wx:if="{{registrationExists}}"></Separator>
 <view class="conference-item" wx:if="{{registrationExists}}" wx:for="{{dataObj}}">
-  <ConferenceItem conference="{{item.conference}}" conferenceId="{{item.conferenceId}}" conferenceDate="{{item.date}}" isComplete="{{item.isComplete}}"></ConferenceItem>
+  <ConferenceItem conference="{{item.conference}}" conferenceId="{{item.conferenceId}}" conferenceDate="{{item.date}}" status="{{item.status}}"></ConferenceItem>
   <Separator></Separator>
 </view>
 <Footer wx:if="{{registrationExists}}" content="到底啦"></Footer>
 <Footer wx:else content="您尚未报名任何会议"></Footer>
 
-
-<!-- <Separator></Separator>
-<ConferenceItem itemName="会议1但是分单位电饭锅水电费刚" itemDate="2024-02-08" itemIsComplete="{{true}}"></ConferenceItem>
-<Separator></Separator>
-<ConferenceItem itemName="会议2" itemDate="2024-03-08" itemIsComplete="{{false}}"></ConferenceItem>
-<Separator></Separator> 
-<Footer content="到底啦"></Footer> -->
 
 
 

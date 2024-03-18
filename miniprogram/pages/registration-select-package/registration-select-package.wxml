@@ -1,5 +1,13 @@
 <!--pages/registration-select-package/registration-select-package.wxml-->
-<view >说明：{{packages.ps}}</view>
+<view wx:if="{{packages.ps != undefined}}">
+  <view wx:if="{{packages.ps.length == 1}}">说明：{{packages.ps}}</view>
+  <view wx:else>
+    说明：
+    <view wx:for="{{packages.ps}}">
+      {{item}}
+    </view>
+  </view>
+</view>
 <form bindsubmit="btnSubmit">
   <checkbox-group bindchange="handlePackageChange">
     <label wx:for="{{packages.choices}}" wx:key="name">

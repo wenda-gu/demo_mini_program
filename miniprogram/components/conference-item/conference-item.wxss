@@ -40,7 +40,7 @@
   /* background-color: teal; */
 }
 
-.isComplete {
+.status {
   margin-left: auto;
   /* background-color: lightgreen; */
 }

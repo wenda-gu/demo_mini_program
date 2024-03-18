@@ -96,19 +96,16 @@ Page({
         return;
       }
       const item = JSON.parse(options.item);
+      const allPricesAndPackages = await dbAction.getTotalPriceAndSeparatePriceAndPackages(item.conferenceId);
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
         // chosenConferencePackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
-        conferenceChoiceInChosenPackage: await dbAction.getConferenceChoiceInChosenPackage(item.conferenceId),
-        chosenAccommodationPackage: await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId),
-        accommodationPrice: await dbAction.getAccommodatioinPrice(item.conferenceId),
-      });
-      this.setData({
-        chooseAccommodation: this.data.chosenAccommodationPackage[0] != "none",
-      });
-      this.setData({
-        totalAmount: this.calcTotalAmount(),
+        conferenceChoiceInChosenPackage: allPricesAndPackages.conferenceChoiceInChosenPackage,
+        chosenAccommodationPackage: allPricesAndPackages.chosenAccommodationPackage,
+        accommodationPrice: allPricesAndPackages.accommodationPrice,
+        chooseAccommodation: allPricesAndPackages.chooseAccommodation,
+        totalAmount: allPricesAndPackages.totalAmount,
       });
       verboseLog("registration-payment.onLoad() got data:", this.data);
     } catch (err) {

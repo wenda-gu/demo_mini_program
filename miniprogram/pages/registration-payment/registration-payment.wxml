@@ -7,19 +7,18 @@
 <view wx:if="{{chooseAccommodation}}">
 {{chosenAccommodationPackage[0] + ', ' + chosenAccommodationPackage[1]}} ￥{{accommodationPrice}}
 </view>
+<image src="cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/image/payment/alipay_qr_code.jpg" mode="widthFix"></image>
 <form bindsubmit="btnSubmit">
-
-  <radio-group bindchange="handleChoosePaymentMethod">
+  <!-- <radio-group bindchange="handleChoosePaymentMethod">
     <label wx:for="{{paymentMethods}}">
       <view>
         <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
         <text>{{item.name}}</text>
       </view>
     </label>
-  </radio-group>
-
+  </radio-group> -->
   <view>
     <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
-    <button class="blue-btn" form-type="submit">支付</button>
+    <button class="blue-btn" form-type="submit">支付完成</button>
   </view>
 </form>

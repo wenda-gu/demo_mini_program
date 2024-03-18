@@ -1,5 +1,13 @@
 <!--pages/registration-select-accommodation/registration-select-accommodation.wxml-->
-<view>说明：{{accommodations.ps}}</view>
+<view wx:if="{{accommodations.ps != undefined}}">
+  <view wx:if="{{accommodations.ps.length == 1}}">说明：{{accommodations.ps}}</view>
+  <view wx:else>
+    说明：
+    <view wx:for="{{accommodations.ps}}">
+      {{item}}
+    </view>
+  </view>
+</view>
 <form bindsubmit="btnSubmit">
   <radio-group bindchange="handleChooseAccommodation">
     <label wx:for="{{chooseAccommodationChoice}}">

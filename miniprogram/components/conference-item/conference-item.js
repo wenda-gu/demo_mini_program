@@ -13,10 +13,7 @@ Component({
       value: "../auth/auth",
     },
     conferenceDate: String,
-    isComplete: {
-      type: Boolean,
-      value: false,
-    },
+    status: String,
     registration: Object,
   },
 
