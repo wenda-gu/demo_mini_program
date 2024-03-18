@@ -1,5 +1,12 @@
 /* pages/registration-invoice/registration-invoice.wxss */
 @import "/static/styles/style.wxss";
+.note {
+  display: flex;
+  color: grey;
+  font-size: small;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 .container {
   margin: 2vh;
 }

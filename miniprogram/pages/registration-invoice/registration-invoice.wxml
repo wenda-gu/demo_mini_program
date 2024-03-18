@@ -14,6 +14,7 @@
       <Spacer></Spacer>
       <Separator></Separator>
       <Spacer></Spacer>
+      <view class="note">单击灰色区域选择发票抬头</view>
       <FormInputInvoicePicker isRequired="{{true}}" label="发票抬头" placeholder="请添加发票抬头" value="{{chosenTitle}}" bindinput="handleTitleChange" disabled="{{!isEditing}}" range="{{invoiceList}}"></FormInputInvoicePicker>
       <FormInputItem wx:if="{{chosenTitle.taxId != undefined}}" label="税号" value="{{chosenTitle.taxId == undefined ? '' : chosenTitle.taxId }}" disabled="true"></FormInputItem>
       <Spacer></Spacer>

@@ -17,7 +17,7 @@ Page({
     chosenAccommodationPackage: [],
     chosenDate: String,
     chosenRoom: String,
-    chooseAccommodation: true,
+    chooseAccommodation: false,
     isEditing: true,
     chooseAccommodationChoice: [
       {value: false, name: "不需要住宿"},
@@ -184,7 +184,6 @@ Page({
       else if (chosenAccommodationPackage[0] == "none") {
         this.setData({
           chosenAccommodationPackage,
-          chooseAccommodation: false,
         });
       }
       // chose need accommodation and saved
@@ -192,6 +191,7 @@ Page({
         this.setData({
           chosenAccommodationPackage,
           chosenRoom: chosenAccommodationPackage[1],
+          chooseAccommodation: true,
         });
       }
       verboseLog("registration-select-accommodation.onLoad() got data:", this.data);
