@@ -145,6 +145,10 @@ const wxapi = {
     showSuccess('下载成功');
   },
 
+  showRegistrationSucess: () => {
+    showSuccess('报名成功');
+  },
+
   showError: (msg, iconStr) => {
     wx.showToast({
       title: msg,

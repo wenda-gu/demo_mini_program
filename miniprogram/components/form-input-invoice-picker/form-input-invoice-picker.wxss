@@ -1,6 +1,8 @@
 /* components/form-input-invoice-picker/form-input-invoice-picker.wxss */
 @import "/static/styles/style.wxss";
-
+.picker-box {
+  background-color: rgb(238, 238, 238);
+}
 picker[disabled] {
   color: rgb(124, 124, 124);
 }

@@ -53,6 +53,9 @@ Page({
             personalInfoDocId: global.personalInfoDocId,
           });
           break;
+        case "complete":
+          wx.navigateBack();
+          break;
       }
     } catch (err) {
       console.error("auth.handleNav() failed:\n", err);
@@ -74,6 +77,7 @@ Page({
       if (validation.validateCountryCode(res.countryCode)) {
         redirectTo('/pages/registration-personal-info/registration-personal-info', {
           phonePersonal: res.purePhoneNumber,
+          conferenceId: this.data.conferenceId,
         });
       }
       else {

@@ -1,7 +1,7 @@
 // pages/registration-invoice/registration-invoice.js
 import dbAction from "../../static/utils/dbAction";
 import {verboseLog} from "../../static/utils/logging";
-import { navTo, reLaunch, showSaving, showSaveSuccess, showSaveFailed, showSubmissionSuccess, showSubmissionFailed, showSubmitting, showError } from "../../static/utils/wxapi";
+import { navTo, reLaunch, showRegistrationSucess, showSubmitting } from "../../static/utils/wxapi";
 const updatePersonalInfo = getApp().updatePersonalInfo;
 
 Page({
@@ -17,7 +17,7 @@ Page({
       {value: false, name: "不需要发票"},
       {value: true, name: "需要发票"},
     ],
-    chosenTitle: String,
+    chosenTitle: Object,
     invoiceList: [],
 
     isEditing: true,
@@ -43,6 +43,12 @@ Page({
     }
   },
 
+  handleTitleChange(e) {
+    this.setData({
+      chosenTitle: e.detail,
+    });
+  },
+
   handleAddTitle(e) {
     navTo('/pages/invoice-add/invoice-add', {
       src: {
@@ -51,6 +57,32 @@ Page({
         conferenceId: this.data.conferenceId,
       }
     });
+  },
+
+  async btnSubmit() {
+    try {
+      showSubmitting();
+      this.toggleIsEditing();
+      verboseLog("registration-invoice.btnSubmit()");
+
+      await dbAction.updateConferenceRegistrationHelper(this.data.personalInfoDocId, this.data.conferenceId, [["invoice", {
+        needInvoice: this.data.needInvoice,
+        title: this.data.chosenTitle,
+        amount: await dbAction.getTotalPrice(this.data.conferenceId),
+      }],
+      ["status", "complete"]]);
+      await updatePersonalInfo();
+
+      wx.hideLoading();
+      await showRegistrationSucess();
+      setTimeout(function () {
+        reLaunch("../index/index");
+      }, 800);
+    } catch (err) {
+      console.error("registration-invoice.btnSubmit() failed:\n", err);
+      wx.hideLoading();
+      this.toggleIsEditing();
+    }
   },
 
   /**
@@ -86,6 +118,7 @@ Page({
       }
       this.setData({
         chosenTitle: item.taxId == undefined ? defaultTitle : await dbAction.getInvoiceByTaxId(item.taxId),
+        needInvoice: item.taxId != undefined,
       });
       verboseLog("registration-invoice.onLoad() got data:", this.data);
     } catch (err) {

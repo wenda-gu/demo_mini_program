@@ -34,11 +34,9 @@ Page({
   async onShow() {
     try {
       var items = await dbAction.getDataWrapper("show", "registration");
-      var l = false;
-      if (items.length) l = true;
       this.setData({
         dataObj: items,
-        registrationExists: l,
+        registrationExists: items.length ? true : false,
       });
       verboseLog("This is dataObj:", this.data.dataObj);
     } catch (err) {

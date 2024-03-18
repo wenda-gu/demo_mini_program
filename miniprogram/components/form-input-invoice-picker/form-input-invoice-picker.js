@@ -21,9 +21,8 @@ Component({
       type: String,
       value: "请选择",
     },
-    name: String,
     value: Object,
-    range: [],
+    range: Object,
   },
 
   /**

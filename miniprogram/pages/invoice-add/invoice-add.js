@@ -209,7 +209,7 @@ Page({
               wx.navigateBack({
                 delta: 1,
               })
-            }, 800);;
+            }, 800);
           }).catch((err) => {
             console.error("invoice-add.btnSubmit() editInvoiceTitleById() failed:", err);
             wx.hideLoading();

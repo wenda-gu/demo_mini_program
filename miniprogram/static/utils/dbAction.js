@@ -74,7 +74,7 @@ async function getInvoiceByTaxId(taxId) {
         return title;
       }
     }
-    throw new Error("at dbAction.getInvoiceByTaxId() no matching taxId.\n");
+    throw new Error(`at dbAction.getInvoiceByTaxId() no matching taxId for ${taxId}.\n`);
   }
   catch (err) {
     throw new Error("at dbAction.getInvoiceByTaxId()\n" + err);
@@ -312,6 +312,37 @@ async function getAccommodationRegistrationChosenPackage(conferenceId) {
   }
 }
 
+async function getTotalPriceAndSeparatePrice(conferenceId) {
+  try {
+    const conferenceChoiceInChosenPackage = await getConferenceChoiceInChosenPackage(conferenceId);
+    const chosenAccommodationPackage = await getAccommodationRegistrationChosenPackage(conferenceId);
+    const accommodationPrice = await getAccommodatioinPrice(conferenceId);
+    const chooseAccommodation = chosenAccommodationPackage[0] != "none";
+    let sum = 0;
+    for (const choice of conferenceChoiceInChosenPackage) {
+      sum += choice.price_current;
+    }
+    sum += chooseAccommodation ? accommodationPrice : 0;
+    return {
+      conferenceChoiceInChosenPackage,
+      chosenAccommodationPackage,
+      chooseAccommodation,
+      accommodationPrice,
+      totalAmount: sum,
+    };
+  } catch (err) {
+    throw new Error("at dbAction.getTotalPriceAndSeparatePrice()\n" + err);
+  }
+}
+
+async function getTotalPrice(conferenceId) {
+  try {
+    const prices = await getTotalPriceAndSeparatePrice(conferenceId);
+    return prices.totalAmount;
+  } catch (err) {
+    throw new Error("at dbAction.getTotalPrice()\n" + err);
+  }
+}
 
 // conference info
 async function getAllConferencesOnRelease() {
@@ -471,6 +502,8 @@ export default {
   selectAccommodationPackage: selectAccommodationPackage,
   selectAccommodationPackageAndUpdateStatus: selectAccommodationPackageAndUpdateStatus,
   getAccommodationRegistrationChosenPackage: getAccommodationRegistrationChosenPackage,
+  getTotalPriceAndSeparatePrice: getTotalPriceAndSeparatePrice,
+  getTotalPrice: getTotalPrice,
 
   getAllConferencesOnRelease: getAllConferencesOnRelease,
   getConferencePackages: getConferencePackages,

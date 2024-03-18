@@ -31,6 +31,7 @@ Component({
    */
   methods: {
     onTap(e) {
+      console.log(this.data.registration)
       navTo(this.data.route, this.data.registration);
     }
   }

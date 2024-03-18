@@ -1,5 +1,4 @@
 import { verboseLog } from "../../static/utils/logging";
-import {comingSoonPage} from "../../static/utils/staticData";
 import {navTo} from "../../static/utils/wxapi";
 
 

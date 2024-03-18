@@ -12,7 +12,7 @@ Page({
   data: {
     personalInfoDocId: String,
     conferenceId: String,
-    chosenConferencePackage: String,
+    // chosenConferencePackage: String,
     chosenAccommodationPackage: String,
     conferenceChoiceInChosenPackage: [],
     accommodationPrice: Number,
@@ -99,9 +99,9 @@ Page({
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
-        chosenAccommodationPackage: await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId),
-        chosenConferencePackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
+        // chosenConferencePackage: await dbAction.getConferenceRegistrationChosenPackage(item.conferenceId),
         conferenceChoiceInChosenPackage: await dbAction.getConferenceChoiceInChosenPackage(item.conferenceId),
+        chosenAccommodationPackage: await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId),
         accommodationPrice: await dbAction.getAccommodatioinPrice(item.conferenceId),
       });
       this.setData({

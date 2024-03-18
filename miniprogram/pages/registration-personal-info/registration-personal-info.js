@@ -323,6 +323,7 @@ Page({
       }
       showError(msg, iconStr);
       this.toggleIsEditing();
+      return;
     }
 
     // prepare form
