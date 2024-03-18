@@ -34,7 +34,7 @@ function wxcallCloudFunction(name) {
 // Get basic user info: openid, appid, unionid
 function wxgetBasicUserInfo() {
   return new Promise((resolve, reject) => {
-    wxcallCloudFunction("test")
+    wxcallCloudFunction("getBasicUserInfo")
     .then((res) => {
       resolve(res.result);
     }).catch((err) => {
@@ -112,7 +112,6 @@ async function cloudGetPhoneNumber(cloudID) {
 }
 
 async function cloudDownload(fileID, downloadToPath) {
-  verboseLog(fileID);
   try {
     const temp = await wx.cloud.downloadFile({
       fileID: fileID,
@@ -121,7 +120,6 @@ async function cloudDownload(fileID, downloadToPath) {
       tempFilePath: temp.tempFilePath,
       filePath: downloadToPath,
       success: function (res) {
-        verboseLog("this is the path:", res.savedFilePath);
         wx.openDocument({
           filePath: res.savedFilePath,
           showMenu: true,

@@ -43,6 +43,16 @@ Page({
     }
   },
 
+  handleAddTitle(e) {
+    navTo('/pages/invoice-add/invoice-add', {
+      src: {
+        page: "registration-invoice",
+        personalInfoDocId: this.data.personalInfoDocId,
+        conferenceId: this.data.conferenceId,
+      }
+    });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -58,10 +68,24 @@ Page({
         return;
       }
       const item = JSON.parse(options.item);
+      console.log(item)
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
-        invoiceList: await dbAction.getDataWrapper("show", "invoice"),
+        invoiceList: await dbAction.getAllInvoiceTitles(),
+      });
+      var defaultTitle = undefined;
+      for (const title of this.data.invoiceList) {
+        if (title.isDefault) {
+          defaultTitle = title;
+          break;
+        }
+      }
+      if (defaultTitle == undefined) {
+        defaultTitle = this.data.invoiceList.length ? this.data.invoiceList[0] : {companyName : "请添加发票抬头"};
+      }
+      this.setData({
+        chosenTitle: item.taxId == undefined ? defaultTitle : await dbAction.getInvoiceByTaxId(item.taxId),
       });
       verboseLog("registration-invoice.onLoad() got data:", this.data);
     } catch (err) {

@@ -66,6 +66,21 @@ async function getAllInvoiceTitles() {
   });
 }
 
+async function getInvoiceByTaxId(taxId) {
+  try {
+    const titles = await getAllInvoiceTitles();
+    for (const title of titles) {
+      if (title.taxId == taxId) {
+        return title;
+      }
+    }
+    throw new Error("at dbAction.getInvoiceByTaxId() no matching taxId.\n");
+  }
+  catch (err) {
+    throw new Error("at dbAction.getInvoiceByTaxId()\n" + err);
+  }
+}
+
 
 
 // Personal Info
@@ -438,6 +453,7 @@ export default {
   deleteInvoiceTitleById: deleteInvoiceTitleById,
   editInvoiceTitleById: editInvoiceTitleById,
   getAllInvoiceTitles: getAllInvoiceTitles,
+  getInvoiceByTaxId: getInvoiceByTaxId,
 
   getPersonalInfo: getPersonalInfo,
   addPersonalInfo: addPersonalInfo,

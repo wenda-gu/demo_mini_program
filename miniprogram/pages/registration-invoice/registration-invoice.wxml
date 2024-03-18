@@ -1,7 +1,4 @@
 <!--pages/registration-invoice/registration-invoice.wxml-->
-<text>pages/registration-invoice/registration-invoice.wxml</text>
-- 显示默认发票抬头，点击▽弹出下拉框可选择更多自己的抬头
-- 添加抬头
 <form bindsubmit="btnSubmit">
   <radio-group bindchange="handleNeedInvoice">
     <label wx:for="{{needInvoiceChoices}}">
@@ -13,7 +10,7 @@
   </radio-group>
   <view wx:if="{{needInvoice}}">
     <!-- <FormInputInvoicePicker isRequired="{{true}}" label="发票抬头" placeholder="请添加发票抬头" value="{{chosenTitle}}" bindinput="handleTitleChange" disabled="{{!isEditing}}" range="{{invoiceList}}"></FormInputInvoicePicker> -->
-    <button class="blue-btn" bind:tap="">添加抬头</button>
+    <button class="blue-btn" bind:tap="handleAddTitle">添加抬头</button>
   </view>
   <Spacer></Spacer>
   <view>

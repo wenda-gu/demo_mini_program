@@ -3,7 +3,7 @@
 import validation from "../../static/utils/validation.js";
 import dbAction from "../../static/utils/dbAction.js";
 import {verboseLog} from "../../static/utils/logging";
-import {showSubmitting, showAddSuccess, showAddFailed, showSubmissionFailed, showEditSuccess, showEditFailed, showError} from "../../static/utils/wxapi";
+import {showSubmitting, showAddSuccess, showAddFailed, showSubmissionFailed, showEditSuccess, showEditFailed, showError, navTo} from "../../static/utils/wxapi";
 
 Page({
 
@@ -12,7 +12,6 @@ Page({
    */
   data: {
     id: String,
-    // isVAT: false,
     companyName: String,
     taxId: String,
     isDefault: false,
@@ -23,6 +22,9 @@ Page({
     bankAccount: Number,
     phoneReceive: Number,
     emailReceive: String,
+    src: {
+      page: "invoice"
+    },
     isEditing: true,
   },
 
@@ -66,14 +68,6 @@ Page({
       emailReceive: e.detail
     })
   },
-
-  // toggleVAT() {
-  //   verboseLog("invoice-add.toggleVAT() isVAT before:", this.data.isVAT);
-  //   this.setData({
-  //     isVAT: !this.data.isVAT
-  //   });
-  //   verboseLog("invoice-add.toggleVAT() isVAT after:", this.data.isVAT);
-  // },
 
   toggleDefault() {
     verboseLog("invoice-add.toggleVAT() isDefault before:", this.data.isDefault);
@@ -130,7 +124,6 @@ Page({
 
   prepareForm() {
     return {
-      // isVAT: this.data.isVAT,
       companyName: this.data.companyName,
       taxId: this.data.taxId,
       isDefault: this.data.isDefault,
@@ -231,11 +224,20 @@ Page({
             wx.disableAlertBeforeUnload();
             wx.hideLoading();
             showAddSuccess();
-            setTimeout(function () {
-              wx.navigateBack({
-                delta: 1,
-              })
-            }, 800);
+            if (this.data.src.page == "registration-invoice") {
+              this.data.src.taxId = this.data.taxId;
+              const src = this.data.src;
+              setTimeout(function () {
+                navTo("../registration-invoice/registration-invoice", src);
+              }, 800);
+            }
+            else {
+              setTimeout(function () {
+                wx.navigateBack({
+                  delta: 1,
+                });
+              }, 800);
+            }
           }).catch((err) => {
             console.error("invoice-add.btnSubmit() addInvoiceTitle() failed:", err);
             wx.hideLoading();
@@ -256,44 +258,35 @@ Page({
       switch(err) {
         case "No companyName.":
           msg = "请填写单位名称";
-          this.toggleIsEditing();
           break;
         case "No taxId.":
           msg = "请填写税号";
-          this.toggleIsEditing();
           break;
         case "No phoneReceive.":
           msg = "请填写个人手机";
-          this.toggleIsEditing();
           break;
         case "No emailReceive.":
           msg = "请填写个人邮箱";
-          this.toggleIsEditing();
           break;
         case "Wrong format taxId.":
           msg = "税号格式错误";
           iconStr = "none";
-          this.toggleIsEditing();
           break;
         case "Wrong format phoneCompany.":
           msg = "单位电话格式错误";
           iconStr = "none";
-          this.toggleIsEditing();
           break;
         case "Wrong format bankAccount.":
           msg = "银行账号格式错误";
           iconStr = "none";
-          this.toggleIsEditing();
           break;
         case "Wrong format phoneReceive.":
           msg = "个人手机号格式错误";
           iconStr = "none";
-          this.toggleIsEditing();
           break;
         case "Wrong format emailReceive.":
           msg = "个人邮箱格式错误";
           iconStr = "none";
-          this.toggleIsEditing();
           break;
       }
       showError(msg, iconStr);
@@ -309,31 +302,28 @@ Page({
     wx.enableAlertBeforeUnload({
       message: '尚未保存，是否返回',
     });
+    if (options.item == undefined) return; // add
+
     const item = JSON.parse(options.item);
-    verboseLog("invoice-add.onLoad() got item:", item);
-    // check if field is undefined
-    var address, phoneCompany, bankName, bankAccount;
-    if (!item.isVAT) {
-      if (item.address == undefined) address = '';
-      else address = item.address;
-      if ( item.phoneCompany == undefined) phoneCompany = '';
-      else phoneCompany = item.phoneCompany;
-      if ( item.bankName == undefined) bankName = '';
-      else bankName = item.bankName;
-      if ( item.bankAccount == undefined) bankAccount = '';
-      else bankAccount = item.bankAccount;
+    // add from registration-invoice
+    if (item.src.page == "registration-invoice") {
+      this.setData({
+        src: item.src,
+      });
+      return;
     }
+    // edit
+    verboseLog("invoice-add.onLoad() got item:", item);
     this.setData({
       id: item._id,
-      // isVAT: item.isVAT,
       companyName: item.companyName,
       taxId: item.taxId,
       isDefault: item.isDefault,
       isDefaultOriginal: item.isDefault,
-      address: address,
-      phoneCompany: phoneCompany,
-      bankName: bankName,
-      bankAccount: bankAccount,
+      address: item.address == undefined ? String : item.address,
+      phoneCompany: item.phoneCompany == undefined ? Number : item.phoneCompany,
+      bankName: item.bankName == undefined ? String : item.bankName,
+      bankAccount: item.bankAccount == undefined ? Number : item.bankAccount,
       phoneReceive: item.phoneReceive,
       emailReceive: item.emailReceive,
     }); 

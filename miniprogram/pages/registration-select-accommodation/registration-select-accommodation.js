@@ -17,10 +17,7 @@ Page({
     chosenAccommodationPackage: [],
     chosenDate: String,
     chosenRoom: String,
-    chooseAccommodation: {
-      type: Boolean,
-      value: true,
-    },
+    chooseAccommodation: true,
     isEditing: true,
     chooseAccommodationChoice: [
       {value: false, name: "不需要住宿"},
