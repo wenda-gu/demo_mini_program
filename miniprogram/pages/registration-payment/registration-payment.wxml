@@ -1,24 +1,40 @@
 <!--pages/registration-payment/registration-payment.wxml-->
-<view>金额：￥{{totalAmount}}</view>
-<view>明细：</view>
-<view wx:for="{{conferenceChoiceInChosenPackage}}" wx:key="name">
-  {{item.name}} ￥{{item.price_current}}
-</view>
-<view wx:if="{{chooseAccommodation}}">
-{{chosenAccommodationPackage[0] + ', ' + chosenAccommodationPackage[1]}} ￥{{accommodationPrice}}
-</view>
-<image src="cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/image/payment/alipay_qr_code.jpg" mode="widthFix"></image>
-<form bindsubmit="btnSubmit">
-  <!-- <radio-group bindchange="handleChoosePaymentMethod">
-    <label wx:for="{{paymentMethods}}">
-      <view>
-        <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
-        <text>{{item.name}}</text>
-      </view>
-    </label>
-  </radio-group> -->
-  <view>
-    <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
-    <button class="blue-btn" form-type="submit">支付完成</button>
+<view class="container">
+  <view class="choice"><text>总金额：</text><text>￥{{totalAmount}}</text></view>
+  <!-- <view>总金额：￥{{totalAmount}}</view> -->
+  <Spacer></Spacer>
+  <Separator></Separator>
+  <Spacer></Spacer>
+  <view>明细：</view>
+  <view wx:for="{{conferenceChoiceInChosenPackage}}" wx:key="name">
+    <Spacer></Spacer>
+    <view class="choice">
+      <view class="text-dot-choice"><text>·</text><text>{{item.name}}</text></view>
+      <view>￥{{item.price_current}}</view>
+    </view>
   </view>
-</form>
+  <Spacer></Spacer>
+  <view wx:if="{{chooseAccommodation}}" class="choice">
+    <view class="text-dot-choice"><text>·</text><text>{{chosenAccommodationPackage[0] + ', ' + chosenAccommodationPackage[1]}}</text></view>
+    <view>￥{{accommodationPrice}}</view>
+  </view>
+  <image class="qr-code" src="cloud://bsc-db-6g55uugs8cdb24fc.6273-bsc-db-6g55uugs8cdb24fc-1318124633/resource/image/payment/alipay_qr_code.jpg" mode="widthFix"></image>
+  <form bindsubmit="btnSubmit">
+    <!-- <radio-group bindchange="handleChoosePaymentMethod">
+      <label wx:for="{{paymentMethods}}">
+        <view>
+          <radio value="{{item.value}}" checked="true" disabled="{{!isEditing}}"/>
+          <text>{{item.name}}</text>
+        </view>
+      </label>
+    </radio-group> -->
+    <Spacer></Spacer>
+    <Spacer></Spacer>
+    <view class="btn-row">
+      <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
+      <button class="blue-btn" form-type="submit">支付完成</button>
+    </view>
+    <Spacer></Spacer>
+    <Spacer></Spacer>
+  </form>
+</view>

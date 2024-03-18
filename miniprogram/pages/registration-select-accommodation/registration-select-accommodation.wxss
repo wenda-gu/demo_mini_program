@@ -1,1 +1,18 @@
 /* pages/registration-select-accommodation/registration-select-accommodation.wxss */
+@import "/static/styles/style.wxss";
+.container {
+  margin: 2vh;
+}
+.text-dot-choice {
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  /* align-items: center; Center vertically */
+}
+.choice {
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+  /* align-items: center; Center vertically */
+}
+.blue-btn {
+  width: 45vw!important;
+}

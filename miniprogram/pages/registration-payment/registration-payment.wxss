@@ -1,1 +1,22 @@
 /* pages/registration-payment/registration-payment.wxss */
+@import "/static/styles/style.wxss";
+.container {
+  margin: 2vh;
+}
+.text-dot-choice {
+  display: grid;
+  grid-template-columns: 1fr 15fr;
+  /* align-items: center; Center vertically */
+}
+.choice {
+  display: grid;
+  grid-template-columns: 12fr 3fr;
+  gap: 2vw;
+  /* align-items: center; Center vertically */
+}
+.qr-code {
+  width: 100%;
+}
+.blue-btn {
+  width: 45vw!important;
+}

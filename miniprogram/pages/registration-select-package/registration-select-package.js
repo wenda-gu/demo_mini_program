@@ -30,7 +30,7 @@ Page({
     var packages = this.data.packages;
     const values = e.detail.value;
     for (var choice of packages.choices) {
-      if (choice.name == '大会') continue;
+      if (choice.name == '第四届早产大会') continue;
       choice.checked = false;
       for (const val of values) {
         if (choice.name == val) {
@@ -105,7 +105,7 @@ Page({
       wx.enableAlertBeforeUnload({
         message: '尚未保存，是否返回',
       });
-      wx.setNavigationBarTitle({ title: '大会报名' });
+      wx.setNavigationBarTitle({ title: '第四届早产大会报名' });
       if (options.item == null || options.item == "") {
         console.error("registration-select-package no input");
         wx.navigateBack();
@@ -121,7 +121,7 @@ Page({
         const date_end_string = formatDate(choice.date_end, 'yyyy/mm/dd');
         choice.date_string = date_start_string == date_end_string ? date_start_string : date_start_string + '-' + date_end_string;
 
-        choice.checked = choice.name == '大会' ? true : false;
+        choice.checked = choice.name == '第四届早产大会' ? true : false;
         if (chosenPackage == undefined) continue;
         for (const val of chosenPackage) {
           if (choice.name == val) {
@@ -133,7 +133,7 @@ Page({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,
         packages: packages,
-        chosenPackage: (chosenPackage == undefined ? [] : chosenPackage),
+        chosenPackage: (chosenPackage == undefined ? ["第四届早产大会"] : chosenPackage),
       });
       const conflictCondition = (this.data.chosenPackage.includes("训练营二：第十一期外倒转训练营") || this.data.chosenPackage.includes("训练营三：第四期早产儿护理和母乳喂养训练营"));
       this.setData({

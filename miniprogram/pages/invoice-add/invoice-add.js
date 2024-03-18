@@ -306,7 +306,7 @@ Page({
 
     const item = JSON.parse(options.item);
     // add from registration-invoice
-    if (item.src.page == "registration-invoice") {
+    if (item.hasOwnProperty("src")) {
       this.setData({
         src: item.src,
       });

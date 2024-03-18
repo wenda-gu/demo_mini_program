@@ -1,61 +1,101 @@
 <!--pages/registration-select-accommodation/registration-select-accommodation.wxml-->
-<view wx:if="{{accommodations.ps != undefined}}">
-  <view wx:if="{{accommodations.ps.length == 1}}">说明：{{accommodations.ps}}</view>
-  <view wx:else>
-    说明：
-    <view wx:for="{{accommodations.ps}}">
-      {{item}}
+<view class="container">
+  <view wx:if="{{accommodations.ps != undefined}}">
+    <view wx:if="{{accommodations.ps.length == 1}}">
+      说明：{{accommodations.ps}}
+      <Spacer></Spacer>
+    </view>
+    <view wx:else class="choice">
+      <view>说明</view>
+      <view>
+        <view wx:for="{{accommodations.ps}}">
+          <view class="text-dot-choice"><text>·</text><text>{{item}}</text></view>
+          <Spacer></Spacer>
+        </view>
+      </view>
     </view>
   </view>
-</view>
-<form bindsubmit="btnSubmit">
-  <radio-group bindchange="handleChooseAccommodation">
-    <label wx:for="{{chooseAccommodationChoice}}">
-      <view>
-        <radio value="{{item.value}}" checked="{{chooseAccommodation == item.value}}" disabled="{{!isEditing}}"/>
-        <text>{{item.name}}</text>
-      </view>
-    </label>
-  </radio-group>
-  <view wx:if="{{chooseAccommodation}}">
-    <view>您选择参加了：{{chosenPackage}}</view>
-    <view>已自动为您选择以下入住日期：{{chosenDate}}</view>
-    <!-- <radio-group>
-      <view>
-        <view>您选择参加了：{{chosenPackage}}</view>
-        <view>已自动为您选择以下入住日期：{{chosenDate}}</view>
-        <label wx:for="{{accommodations.dates}}" wx:key="date_string">
-          <Spacer></Spacer>
-          <view>
-            <radio value="{{item.date_string}}" checked="{{item.date_string == chosenDate}}" disabled="{{(item.date_string != chosenDate) || (!isEditing)}}"/>
-            <view style="{{(item.date_string != chosenDate) || (!isEditing) ? 'color: grey' : ''}}">
-              <text>入住日期：{{item.date_string}}</text>
-              <view>适用于参加以下项目：</view>
-              <view wx:for="{{item.for_packages}}" wx:for-item="package" wx:key="package">{{package}}</view>
-            </view>
-          </view>
-        </label>
-      </view>
-    </radio-group> -->
-    <Separator></Separator>
-    <radio-group bindchange="handleChooseRoom">
-      <view>
-        <view>房型：</view>
-        <label wx:for="{{accommodations.rooms}}" wx:key="title">
-          <Spacer></Spacer>
-          <view>
-            <radio value="{{item.name}}" checked="{{item.name == chosenRoom}}" disabled="{{!isEditing}}"/>
-            <view>
-              <text>{{item.title}}</text>
-            </view>
-          </view>
-        </label>
-      </view>
-    </radio-group>
-  </view>
   <Spacer></Spacer>
-  <view>
-    <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
-    <button class="blue-btn" form-type="submit">下一页</button>
-  </view>
-</form>
+  <Separator></Separator>
+  <Spacer></Spacer>
+  <form bindsubmit="btnSubmit">
+    <radio-group bindchange="handleChooseAccommodation">
+      <label wx:for="{{chooseAccommodationChoice}}">
+        <view>
+          <radio value="{{item.value}}" checked="{{chooseAccommodation == item.value}}" disabled="{{!isEditing}}"/>
+          <text>{{item.name}}</text>
+          <Spacer></Spacer>
+        </view>
+      </label>
+    </radio-group>
+    <view wx:if="{{chooseAccommodation}}">
+      <Separator></Separator>
+      <Spacer></Spacer>
+      <view wx:if="{{chosenPackage.length == 1}}">
+        您选择参加了：{{chosenPackage}}
+      </view>
+      <view wx:else>
+        <view>您选择参加了：</view>
+        <view>
+          <view wx:for="{{chosenPackage}}">
+            <Spacer></Spacer>
+            <view class="text-dot-choice"><text>·</text><text>{{item}}</text></view>
+          </view>
+        </view>
+      </view>
+
+      <Spacer></Spacer>
+      <Separator></Separator>
+      <Spacer></Spacer>
+      <view>已自动为您选择以下入住日期：{{chosenDate}}</view>
+      <!-- <radio-group>
+        <view>
+          <view>您选择参加了：{{chosenPackage}}</view>
+          <view>已自动为您选择以下入住日期：{{chosenDate}}</view>
+          <label wx:for="{{accommodations.dates}}" wx:key="date_string">
+            <Spacer></Spacer>
+            <view>
+              <radio value="{{item.date_string}}" checked="{{item.date_string == chosenDate}}" disabled="{{(item.date_string != chosenDate) || (!isEditing)}}"/>
+              <view style="{{(item.date_string != chosenDate) || (!isEditing) ? 'color: grey' : ''}}">
+                <text>入住日期：{{item.date_string}}</text>
+                <view>适用于参加以下项目：</view>
+                <view wx:for="{{item.for_packages}}" wx:for-item="package" wx:key="package">{{package}}</view>
+              </view>
+            </view>
+          </label>
+        </view>
+      </radio-group> -->
+      
+      <Spacer></Spacer>
+      <Separator></Separator>
+      <Spacer></Spacer>
+      <radio-group bindchange="handleChooseRoom">
+        <view>
+          <view>房型：</view>
+          <view wx:if="{{chooseAccommodation}}">
+            <label wx:for="{{accommodations.rooms}}" wx:key="title">
+              <Spacer></Spacer>
+              <view class="choice">
+                <radio value="{{item.name}}" checked="{{item.name == chosenRoom}}" disabled="{{!isEditing}}"/>
+                <view>
+                  <text>{{item.title}}</text>
+                </view>
+              </view>
+            </label>
+          </view>
+          
+        </view>
+      </radio-group>
+    </view>
+    <Spacer></Spacer>
+    <Separator></Separator>
+    <Spacer></Spacer>
+    <Spacer></Spacer>
+    <view class="btn-row">
+      <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
+      <button class="blue-btn" form-type="submit">下一页</button>
+    </view>
+    <Spacer></Spacer>
+    <Spacer></Spacer>
+  </form>
+</view>

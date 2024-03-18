@@ -8,9 +8,6 @@
   padding-left: 3vw;
   padding-right: 3vw;
 }
-.btn-row {
-  display: flex;
-}
 .blue-btn {
   width: 25vw!important;
 }

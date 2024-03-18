@@ -13,6 +13,33 @@
 .btn-hover {
   background-color: #0085b9;
 }
+.btn-row {
+  display: flex;
+}
+
+/* checkbox style */
+/* checked */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+  border: 1rpx solid #00adef;
+  background: #00adef;
+}
+/* checked tick */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+  color:#fff; 
+  background: transparent;
+}
+
+/* radio style */
+/* checked */
+radio .wx-radio-input.wx-radio-input-checked{
+  border: 1rpx solid #00adef;
+  background: #00adef;
+}
+/* checked tick */
+radio .wx-radio-input.wx-radio-input-checked::before{
+  color:#fff; 
+  background: transparent;
+}
 
 
 /* generic item */

@@ -1,44 +1,44 @@
 <!--pages/registration-select-package/registration-select-package.wxml-->
-<view wx:if="{{packages.ps != undefined}}">
-  <view wx:if="{{packages.ps.length == 1}}">说明：{{packages.ps}}</view>
-  <view wx:else>
-    说明：
-    <view wx:for="{{packages.ps}}">
-      {{item}}
-    </view>
-  </view>
-</view>
-<form bindsubmit="btnSubmit">
-  <checkbox-group bindchange="handlePackageChange">
-    <label wx:for="{{packages.choices}}" wx:key="name">
+<view class="container">
+  <view wx:if="{{packages.ps != undefined}}">
+    <view wx:if="{{packages.ps.length == 1}}">
+      说明：{{packages.ps}}
       <Spacer></Spacer>
+    </view>
+    <view wx:else class="choice">
+      <view>说明</view>
       <view>
-        <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.name == '大会' || ((!item.checked) && item.name == '训练营二：第十一期外倒转训练营' && conflictFlag) || ((!item.checked) && item.name == '训练营三：第四期早产儿护理和母乳喂养训练营' && conflictFlag)}}"/>
-        <view>
-          <text>{{item.name}}</text>
-          <view>日期：{{item.date_string}}</view>
-          <view>金额：{{item.price_current}}</view>
+        <view wx:for="{{packages.ps}}">
+          <view class="text-dot-choice"><text>·</text><text>{{item}}</text></view>
+          <Spacer></Spacer>
         </view>
       </view>
-    </label>
-  </checkbox-group>
-  <view>
-    <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
-    <button class="blue-btn" form-type="submit">下一页</button>
-  </view>
-</form>
-
-<!-- <view class="page-section">
-    <view class="page-section-title">推荐展示样式</view>
-    <view class="weui-cells weui-cells_after-title">
-      <radio-group bindchange="radioChange">
-        <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.value}}">
-
-          <view class="weui-cell__hd">
-            <radio value="{{item.name}}" checked="true"/>
-          </view>
-          <view class="weui-cell__bd">{{item.name}}</view>
-        </label>
-      </radio-group>
     </view>
-  </view> -->
+  </view>
+  <Spacer></Spacer>
+  <Separator></Separator>
+  <Spacer></Spacer>
+  <form bindsubmit="btnSubmit">
+    <checkbox-group bindchange="handlePackageChange">
+      <label wx:for="{{packages.choices}}" wx:key="name">
+        <view class="choice">
+          <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled="{{item.name == '第四届早产大会' || ((!item.checked) && item.name == '训练营二：第十一期外倒转训练营' && conflictFlag) || ((!item.checked) && item.name == '训练营三：第四期早产儿护理和母乳喂养训练营' && conflictFlag)}}"/>
+          <view>
+            <text>{{item.name}}</text>
+            <view>日期：{{item.date_string}}</view>
+            <view>金额：{{item.price_current}}</view>
+          </view>
+        </view>
+        <Spacer></Spacer>
+        <Separator></Separator>
+        <Spacer></Spacer>
+      </label>
+    </checkbox-group>
+    <view class="btn-row">
+      <button class="blue-btn" bind:tap="saveAndExit">保存并退出</button>
+      <button class="blue-btn" form-type="submit">下一页</button>
+    </view>
+    <Spacer></Spacer>
+    <Spacer></Spacer>
+  </form>
+</view>

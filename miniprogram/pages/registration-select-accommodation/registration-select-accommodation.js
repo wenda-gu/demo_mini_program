@@ -166,6 +166,7 @@ Page({
       }
       const item = JSON.parse(options.item);
       const chosenAccommodationPackage = await dbAction.getAccommodationRegistrationChosenPackage(item.conferenceId);
+      console.log(item.conferenceId,await dbAction.getAccommodations(item.conferenceId))
       this.setData({
         personalInfoDocId: item.personalInfoDocId,
         conferenceId: item.conferenceId,

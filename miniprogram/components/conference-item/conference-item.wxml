@@ -4,7 +4,7 @@
     <IconItem img="/static/images/icons/content.png" w="70" h="70" scaler="1"></IconItem>
     <text class="title">{{conference}}</text>
     <text class="date">{{conferenceDate}}</text>
-    <text class="status">{{status == "complete" ? "已报名" : "正在报名"}}</text>
+    <text class="status">{{status == "complete" || status == "verifying" ? "已报名" : "正在报名"}}</text>
     <IconItem img="/static/images/icons/arrow.png" w="35" h="70" scaler="1"></IconItem>
   </view>
 </view>
