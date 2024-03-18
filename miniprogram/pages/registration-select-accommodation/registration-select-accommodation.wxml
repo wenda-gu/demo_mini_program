@@ -10,10 +10,12 @@
     </label>
   </radio-group>
   <view wx:if="{{chooseAccommodation}}">
-    <radio-group>
+    <view>您选择参加了：{{chosenPackage}}</view>
+    <view>已自动为您选择以下入住日期：{{chosenDate}}</view>
+    <!-- <radio-group>
       <view>
         <view>您选择参加了：{{chosenPackage}}</view>
-        <view>已自动为您选择以下入住日期</view>
+        <view>已自动为您选择以下入住日期：{{chosenDate}}</view>
         <label wx:for="{{accommodations.dates}}" wx:key="date_string">
           <Spacer></Spacer>
           <view>
@@ -26,7 +28,7 @@
           </view>
         </label>
       </view>
-    </radio-group>
+    </radio-group> -->
     <Separator></Separator>
     <radio-group bindchange="handleChooseRoom">
       <view>

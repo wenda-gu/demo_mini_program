@@ -162,6 +162,7 @@ async function getAllRegistrations() {
         var conference = await wx.cloud.database().collection("conferences").doc(key).get();
         registrations.push({
           conference: conference.data.name_zh,
+          conferenceId: key,
           date: formatDate(conference.data.date_start, 'yyyy/mm/dd'),
           isComplete: (items[key].status == "complete" ? true : false),
         });

@@ -7,9 +7,10 @@ Component({
    */
   properties: {
     conference: String,
+    conferenceId: String,
     route: {
       type: String,
-      value: "../registration-personal-info/registration-personal-info",
+      value: "../auth/auth",
     },
     conferenceDate: String,
     isComplete: {
@@ -31,8 +32,7 @@ Component({
    */
   methods: {
     onTap(e) {
-      console.log(this.data.registration)
-      navTo(this.data.route, this.data.registration);
+      navTo(this.data.route, this.data.conferenceId);
     }
   }
 })
