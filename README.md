@@ -8,7 +8,7 @@ This is a demo Wechat mini program made by myself.
 # Set Up
 1. Git clone the project
 ```bash
-git clone https://github.com/wenda-gu/test_mini_program.git
+git clone https://github.com/wenda-gu/demo_mini_program.git
 ```
 2. Open Wechat Devtools and login. Click the `import` button to load the project you just cloned.
 3. Load your cloud environment: [tutorial](https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/basis/concepts/account.html)
