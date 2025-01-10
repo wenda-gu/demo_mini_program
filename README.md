@@ -1,3 +1,20 @@
+# Intro
+This is a demo Wechat mini program made by myself.
+
+# Prerequisites
+- [Wechat Devtools](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html) for Wechat mini program development and phone emulator.
+- A Wechat cloud development environment to be able to run the server and database.
+
+# Set Up
+1. Git clone the project
+```bash
+git clone https://github.com/wenda-gu/test_mini_program.git
+```
+2. Open Wechat Devtools and login. Click the `import` button to load the project you just cloned.
+3. Load your cloud environment: [tutorial](https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloud/basis/concepts/account.html)
+4. Start viewing this project.
+
+<!-- 
 # Glitch
 - add env id in `app.js` to set up cloud dev env
 - `wx.startPullDownRefresh()` and `wx.stopPullDownRefresh()` can only be used in `onPullDownRefresh()`. They cannot be written in another function and be called by `onPullDownRefresh()`.
@@ -133,4 +150,4 @@ select functions can't use update, needs validation funcs to check if update or 
 how to view registration after it's finished
 payment detect time and validate price
 calculate price in dbaction
-p.sort() sort undefined? async function getConferenceRegistrationChosenPackage(conferenceId)
+p.sort() sort undefined? async function getConferenceRegistrationChosenPackage(conferenceId) -->
